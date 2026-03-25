@@ -19,3 +19,9 @@
 - Thoughts are arbitrarily-organized by Datasets, which are essentially tags that are represented by a Thought.
 
 - Thoughts can have multiple Attributes, which are attached data points that represent a relation, value, or something else. These are still conceptually experimental.
+
+# Marketing
+
+## Offer
+
+- We named this version of the project "altered-4200" because we're redefining the core product to optimize it for a $4,200 offer.
