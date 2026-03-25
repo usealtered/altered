@@ -12,6 +12,8 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - Always read `.altered/CONTEXT.md` before starting any work that entails specificity, data models, branding, or any work that is NOT super generic in flavour.
 
+- For up-to-date status on the current implementation, always reference `./altered/CURRENT.md`. This is helpful for persisting context across chats, as well as planning and tracking the current set of changes.
+
 # Workflow
 
 - Never start any long-running processes or persistent tasks (such as a dev server) unless explicitly asked.
@@ -21,6 +23,8 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 - Prefer multiple specific, surgical files over a bloated file.
 
 - Generate code in small, manageable chunks of 2-3 main functions, files, or topics at a time - then end your turn so that the code can be manually reviewed and committed.
+
+- The files in the following glob patterns are blacklisted from being modified, never touch them without explicit instruction: `.altered/**`, `AGENTS.md`.
 
 - ALWAYS provide a reminder at the end of each code generation turn for the user to review and update the agent context files. Pull all critical points from the latest messages and code changes into a list of suggestions, then provide them to the user within the chat.
 
