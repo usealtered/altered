@@ -6,6 +6,8 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - We are currently working to re-build the ALTERED app from scratch in this repo. For any given implementation, first inspect the project for any relevant patterns (including relevant git branches and stashes) at `/Users/inducingchaos/Workspace/containers/altered/`, and copy the code directly in a way that fits the current objective.
 
+- If you have suggestions for better naming, structuring, or any other sort of improvements over the old codebase, always suggest them before copying the existing patterns.
+
 # Context
 
 - Always read `.altered/CONTEXT.md` before starting any work that entails specificity, data models, branding, or any work that is NOT super generic in flavour.
