@@ -14,6 +14,8 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - For up-to-date status on the current implementation, always reference `./altered/CURRENT.md`. This is helpful for persisting context across chats, as well as planning and tracking the current set of changes.
 
+- For any code with an `@index` TSDoc tag, look in `./altered/INDEX.md` for the corresponding ID. You can also search this file for anything related to TODOs or code state.
+
 # Workflow
 
 - Never start any long-running processes or persistent tasks (such as a dev server) unless explicitly asked.
