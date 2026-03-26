@@ -40,9 +40,11 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 # Conventions
 
-- Always generate an expanded TSDoc block (even if empty) at the top of each file.
+- Always generate an expanded TSDoc block (even if empty) at the top of each file for aesthetic and consistency.
 
 - If a package version is likely to be shared across multiple apps or packages, always define it as a catalog item in the `pnpm-workspace.yaml` file. use `catalog` if the dependency has no obvious topic-based grouping, otherwise use `catalogs` with a minimalistic group name.
+
+- Inline comments should have 2 spaces before the content to aesthetically match indentation, rather than 1 space: `//  <\content>`.
 
 # Technologies
 
