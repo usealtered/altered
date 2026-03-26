@@ -44,7 +44,11 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - If a package version is likely to be shared across multiple apps or packages, always define it as a catalog item in the `pnpm-workspace.yaml` file. use `catalog` if the dependency has no obvious topic-based grouping, otherwise use `catalogs` with a minimalistic group name.
 
-- Inline comments should have 2 spaces before the content to aesthetically match indentation, rather than 1 space: `//  <\content>`.
+- Inline comments should have 2 spaces before the content to aesthetically match indentation, rather than 1 space: `//  <content>`.
+
+- TODOs should follow the format `@todo P<0-3> <description>` for TSDoc, and `TODO P<0-3> <description>` for inline comments.
+
+- Comments should use the `@remarks` flag in TSDoc.
 
 # Technologies
 
