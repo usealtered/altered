@@ -10,9 +10,9 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 # Context
 
-- Always read `.context/PRODUCT.md` before starting any work that entails specificity, data models, branding, or any work that is NOT super generic in flavour.
+- Read `.context/PRODUCT.md` before starting any product or domain-specific work.
 
-- For up-to-date status on the current implementation, always reference `.context/NOW.md`. This is helpful for persisting context across chats, as well as planning and tracking the current set of changes.
+- For up-to-date status on the current implementation, reference `.context/CURRENT.md`. This file helps us persist development direction and state across chats.
 
 # Workflow
 
