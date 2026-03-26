@@ -1,4 +1,4 @@
-# Status
+# Up Next
 
 We are currently setting up agent infrastructure for this repository, then we will start to stub out apps, plugins, etc.
 

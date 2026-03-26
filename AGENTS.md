@@ -10,11 +10,9 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 # Context
 
-- Always read `.altered/CONTEXT.md` before starting any work that entails specificity, data models, branding, or any work that is NOT super generic in flavour.
+- Always read `.context/PRODUCT.md` before starting any work that entails specificity, data models, branding, or any work that is NOT super generic in flavour.
 
-- For up-to-date status on the current implementation, always reference `./altered/CURRENT.md`. This is helpful for persisting context across chats, as well as planning and tracking the current set of changes.
-
-- For any code with an `@index` TSDoc tag, look in `./altered/INDEX.md` for the corresponding ID. You can also search this file for anything related to TODOs or code state.
+- For up-to-date status on the current implementation, always reference `.context/NOW.md`. This is helpful for persisting context across chats, as well as planning and tracking the current set of changes.
 
 # Workflow
 
@@ -26,7 +24,9 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - Generate code in small, manageable chunks of 2-3 main functions, files, or topics at a time - then end your turn so that the code can be manually reviewed and committed.
 
-- The files in the following glob patterns are blacklisted from being modified, never touch them without explicit instruction: `.altered/**`, `AGENTS.md`.
+- The following glob patterns represent the blacklist for modifying files - never touch them without explicit instruction: `.context/**`, `!/.context/generated/**`, `AGENTS.md`.
+
+- When saving a plan to the workspace, do so in `.context/generated/plans`.
 
 - ALWAYS provide a reminder at the end of each code generation turn for the user to review and update the agent context files. Pull all critical points from the latest messages and code changes into a list of suggestions, then provide them to the user within the chat.
 
