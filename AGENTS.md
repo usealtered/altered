@@ -32,7 +32,7 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - Generate code in small, manageable chunks of 2-3 main functions, files, or topics at a time - then end your turn so that the code can be manually reviewed and committed.
 
-- The following glob patterns represent the blacklist for modifying files - never touch them without explicit instruction: `.context/**`, `!/.context/generated/**`, `AGENTS.md`.
+- The following glob patterns represent the blacklist for modifying files - never touch them without explicit instruction: `.context/**`, `!.context/generated/**`, `AGENTS.md`.
 
 - When saving a plan to the workspace, do so in `.context/_generated/plans`.
 
@@ -40,21 +40,19 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 # Style
 
-- Make generous use of single line-break gaps between code lines within a block to increase readability. If 2-5 lines are semantically groupable, then it's acceptable to keep them together.
+- Make generous use of 1-line gaps between code lines within a block to increase readability. If 2-4 lines are semantically groupable, then it's acceptable to keep them together.
 
 - We should aim for a minimal, yet scalable and functional, perfectionistic codebase. Our architecture and quality should never be sacrificed for the sake of speed, convenience, or otherwise.
 
-- We should aim to cap complexity for cognitive load and maintenance reasons. This extends to advanced types, program composition, and anything else that could be deemed over-engineered or too heavy. As a solution, we can likely achieve the same capability and aesthetic by simply writing a bit more code, or doing it in a different way.
+- We should aim to cap complexity for cognitive load, efficiency, and maintenance reasons. This extends to advanced types, program composition, and anything else that could be deemed over-engineered or too heavy. As a solution, we can likely achieve the same capability and aesthetic by simply writing a bit more code, or doing it in a different way.
 
 - For colors, I prefer a monochromatic palette with an optional, natural-tone accent color. Purpose-driven colors, such as status indicator colors may exist as well.
 
-- I have a taste for minimalist brutalist design. This statement might seem contradictory, but it really implies a controlled tension, deeply intentional design, and perfection in both neutrality and extremity. Think: balancing the bold and light with uniformity, negative space with density, and ranging styles with monotonous language. It reminds me in a sense of linear vs logarithmic/exponential graph curves - where "typical" design would be categorized as linear, and we shift our lens to use a non-linear methodology.
+- I have a taste for minimalist brutalist design. This statement might seem contradictory, but at core it implies a controlled tension, deeply intentional design, and perfection in both neutrality and extremity. Think: balancing the bold and light with uniformity, negative space with density, and ranging styles with monotonous language. Every design decision is grounded in calculation.
 
 - Our base-layer inspiration is [Midday.ai](https://midday.ai), mainly for their brutalist monochromatic UI design but also for their open source app architecture: https://github.com/midday-ai/midday.
 
 # Conventions
-
-- Always generate an expanded TSDoc block (even if empty) at the top of each file for aesthetic and consistency.
 
 - If a package version is likely to be shared across multiple apps or packages, always define it as a catalog item in the `pnpm-workspace.yaml` file. use `catalog` if the dependency has no obvious topic-based grouping, otherwise use `catalogs` with a minimalistic group name.
 
