@@ -1,0 +1,17 @@
+packages:
+  - apps/*
+  - packages/*
+  - tooling/*
+
+catalog:
+  "@types/node": 25.6.0
+
+catalogs:
+  typescript:
+    typescript: 6.0.3
+
+onlyBuiltDependencies:
+  - esbuild
+  - msw
+  - sharp
+  - unrs-resolver
