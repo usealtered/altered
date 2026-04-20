@@ -1,0 +1,47 @@
+{
+    "$schema": "https://turborepo.com/schema.json",
+    "ui": "tui",
+
+    "globalDependencies": [".env.*", ".env"],
+
+    "tasks": {
+        "dev": {
+            "persistent": true,
+            "cache": false
+        },
+
+        "check:types": {
+            "dependsOn": ["^check:types"]
+        },
+        "//#check:style": {},
+
+        "//#fix:style": {
+            "cache": false
+        },
+
+        "db:push": {
+            "cache": false,
+            "interactive": true
+        },
+        "db:studio": {
+            "persistent": true,
+            "cache": false
+        },
+
+        "build": {
+            "dependsOn": ["^build"],
+            "inputs": ["$TURBO_DEFAULT$"],
+            "outputs": [".next/**", "!.next/cache/**"]
+        }
+    },
+
+    "globalPassThroughEnv": [
+        "NODE_ENV",
+        "PORT",
+
+        "VERCEL_ENV",
+        "VERCEL_URL",
+        "VERCEL_BRANCH_URL",
+        "VERCEL_PROJECT_PRODUCTION_URL"
+    ]
+}
