@@ -1,5 +1,11 @@
-We are currently setting up agent infrastructure for this repository, then we will start to stub out apps, plugins, etc.
+We are currently setting up agent infrastructure for this repository, then we will start to stub out apps, packages, etc.
 
-Our first main milestone is to build and deploy a message server that integrates with Linq, a new enterprise-grade iMessage API. We should use the AI SDK with OpenRouter to build a conversational agent that persists messages in Convex.
+Our first objective will be to establish and solidify an iMessage agent chat with persistent memory, very similar to what we prototyped in `/Users/inducingchaos/Workspace/containers/imessage-apple-notes-demo/`. You can reference this for inspiration.
 
-Then, we will choose to either: build out the Next.js app with user login features, solidify the backend with auth and our desired stack, re-build our Raycast launcher, or develop an Apple Notes account provider to connect to from an iPhone and sync notes from.
+We will initialize our auth infrastructure to support guest/anon users, identifying them by the phone number they message our iMessage number from. Then when they eventually create an account within our web app, their account will be linked.
+
+From there, we will proceed to enhance the iMessage chat with more tools and knowledge (such as the ability to self-schedule messages as CRONs, provide the users with specialized iMessage shortcuts to install, etc.) and then develop a basic web app and landing page to support that.
+
+---
+
+Once that is done - we will consider what the next high-leverage task is to prepare ALTERED for early-access or a pre-sale demo.
