@@ -30,7 +30,7 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - Prefer more fine-grained files over less all-in-one files.
 
-- Generate code in small, manageable chunks of 2-3 main functions, files, or topics at a time - then end your turn so that the code can be manually reviewed and committed.
+- Generate code in small, manageable chunks of 2-3 main functions, files, or topics at a time - then end your turn so that the code can be manually reviewed and committed. Never generate more than 80 lines or so unless the intent is explicit.
 
 - The following glob patterns represent the blacklist for modifying files - never touch them without explicit instruction: `.context/**`, `!.context/generated/**`, `AGENTS.md`.
 
