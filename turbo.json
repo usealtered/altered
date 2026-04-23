@@ -5,6 +5,12 @@
     "globalDependencies": [".env.*", ".env"],
 
     "tasks": {
+        "//#tunnel": {
+            "persistent": true,
+            "cache": false,
+            "env": ["API_PORT", "PROVIDER_NGROK_SECRET", "PROVIDER_NGROK_URL"]
+        },
+
         "dev": {
             "persistent": true,
             "cache": false
