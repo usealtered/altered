@@ -38,6 +38,8 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - ALWAYS provide a reminder at the end of each code generation turn for the user to review and update the agent context files. Pull all critical points from the latest messages and code changes into a list of suggestions, then provide them to the user within the chat.
 
+- For database migrations with Drizzle, we should use `pnpm db:push` instead of manually writing migrations unless absolutely necessary.
+
 # Style
 
 - Make generous use of 1-line gaps between code lines within a block to increase readability. If 2-4 lines are semantically groupable, then it's acceptable to keep them together.
@@ -66,7 +68,7 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - Prefer the use of types over interfaces when possible.
 
-- We should maintain a "feature-based" folder structure that categorizes features in a top-level "domains" folder.
+- We should maintain a feature-based `domains/` folder structure inside applications (e.g. where runtime framework entrypoints and configurations live). Shared packages (under `packages/`) should group by feature at `src/<feature>/` without an extra domains segment unless a single package intentionally mixes unrelated top-level concerns.
 
 - Plumb key infrastructure such as logging, retries, and concurrency consistently from the start to ensure the codebase is optimized for scale, observability, durability, etc.
 
@@ -92,7 +94,7 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - For frontend async state management, we should use React Query.
 
-- We should use Hono as HTTP server framework, set up for serverless on Vercel. I've considered using the HTTP and RPC modules from Effect, but those are not serverless-ready (I prefer the ergonomics of serverless). I've used tRPC and oRPC up until this point but since we're adding Effect, I want to reduce library overlap and use Hono-wrapped Effect functions as a lighter-weight alternative. Since we're not bundling the functions with Next.js we will need to manually implement skew protection (or, just really good API error handling).
+- We should use Hono as HTTP server framework, set up for serverless on Vercel. I've considered using the HTTP and RPC modules from Effect, but those are not serverless-ready (I prefer the ergonomics of serverless). I've used tRPC and oRPC up until this point but since we're adding Effect, I want to reduce library overlap and use Hono-wrapped Effect functions with Hono RPC as a lighter-weight alternative. Since we're not bundling the functions with Next.js we will need to manually implement skew protection (or, just really good API error handling).
 
 - I prefer Vercel for almost all deployments, but when it falls short (e.g., for long-running servers) I choose Railway.
 
@@ -109,3 +111,23 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 # Documentation
 
 - When using Effect, until v4 is stable, always fetch the migration docs: `https://raw.githubusercontent.com/Effect-TS/effect-smol/refs/heads/main/MIGRATION.md`. Then, if you want info about any non-obvious APIs, fetch `https://effect.website/llms-full.txt`. Lastly, some functions cannot be found in the documentation, so consider searching the source code directly.
+
+# Repository Structure
+
+- Deployable apps (under `apps/`) should be a thin configuration shell for each build that simply re-exports imported modules from the respective composition package. Each composition package (under `packages/<app>-components-*/`) should combine all necessary layers for a build using the remaining scoped workspace packages. Each scoped package denotes to a specific axis and variant of the structure we outline in this section.
+
+## Axes of Intention
+
+- Server vs client (and shared): split for data & credential security, source code privacy, runtime isolation, and separation of concerns.
+
+- 3-tier quality grade separation & release channel staging: stable (default - aligned, perfected, low churn), pre-release (generally useful & reliable, may be pruned/revised), and experimental (initial working, human-approved prototype).
+
+- Public vs internal features: defines a build variant that extends the app with team-only behavior.
+
+- Lightweight bundle optimization: for limited clients and incompetent bundlers (e.g. Raycast extensions and their memory management), size-based package boundaries may be necessary.
+
+### Package Inheritance
+
+- For each tiered package variant, each less-refined edition should import and extend its successor. An example of this could be `@altered/core-experimental` importing `@altered/core-pre-release`, or `@altered/core-pre-release` importing `@altered/core` (stable). Composition packages follow the same pattern as scoped packages to form a layered inheritance graph without code duplication.
+
+- Secondary variant chains such as `internal` are stacked as their own standalone inheritance tree - defining a separate layer for each variant rather than extending the primary code path (the release channel chain). Then, at the composition layer (the top-level packages that apps import), these layers are merged with the primary code path in their respective variants.
