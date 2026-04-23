@@ -2,26 +2,20 @@
     "name": "altered",
     "version": "0.1.0",
     "private": true,
-
     "scripts": {
         "dev": "turbo dev",
-
         "check:types": "turbo check:types",
         "check:style": "ultracite check",
         "check": "turbo check:types check:style",
-
         "fix:style": "ultracite fix",
         "fix:style:force": "ultracite fix --unsafe",
         "fix": "turbo fix:style",
-
         "build": "turbo build"
     },
-
     "devDependencies": {
-        "@biomejs/biome": "2.4.12",
+        "@biomejs/biome": "^2.4.13",
         "turbo": "^2.9.6",
-        "ultracite": "7.6.0"
+        "ultracite": "^7.6.1"
     },
-
     "packageManager": "pnpm@10.20.0"
 }
