@@ -38,6 +38,8 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - ALWAYS provide a reminder at the end of each code generation turn for the user to review and update the agent context files. Pull all critical points from the latest messages and code changes into a list of suggestions, then provide them to the user within the chat.
 
+- For database migrations with Drizzle, we should use `pnpm db:push` instead of manually writing migrations unless absolutely necessary.
+
 # Style
 
 - Make generous use of 1-line gaps between code lines within a block to increase readability. If 2-4 lines are semantically groupable, then it's acceptable to keep them together.
@@ -66,7 +68,7 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - Prefer the use of types over interfaces when possible.
 
-- We should maintain a "feature-based" folder structure that categorizes features in a top-level "domains" folder.
+- We should maintain a feature-based `domains/` folder structure inside applications (e.g. where runtime framework entrypoints and configurations live). Shared packages (under `packages/`) should group by feature at `src/<feature>/` without an extra domains segment unless a single package intentionally mixes unrelated top-level concerns.
 
 - Plumb key infrastructure such as logging, retries, and concurrency consistently from the start to ensure the codebase is optimized for scale, observability, durability, etc.
 
