@@ -1,18 +1,18 @@
 ---
 name: api Sendblue vertical
-overview: "First API vertical on the experimental channel per monorepo-architecture: `@altered/server-experimental`, `@altered/api-components-experimental`, `apps/api-experimental`. Sendblue webhook, BA sendblue plugin (no session), Redis Chat state, Drizzle app tables, Effect+AI SDK, computed origins (api.usealtered.com vs apex)."
+overview: "First API vertical on the experimental channel per monorepo-architecture: `@altered/server-experimental`, `@altered/api-experimental`, `apps/api-experimental`. Sendblue webhook, BA sendblue plugin (no session), Redis Chat state, Drizzle app tables, Effect+AI SDK, computed origins (api.usealtered.com vs apex)."
 todos:
   - id: catalog-workspace
-    content: "pnpm catalog: deps for server-experimental, api-components-experimental, api-experimental, tooling/ngrok"
+    content: "pnpm catalog: deps for server-experimental, api-experimental (package), altered-api-experimental (app), tooling/ngrok"
     status: pending
   - id: pkg-server-experimental
     content: "@altered/server-experimental: auth+sendblue plugin, Drizzle app schema+Effect pg, mergeSchema for BA"
     status: pending
-  - id: pkg-api-components-experimental
-    content: "@altered/api-components-experimental: compose Hono app from server-experimental (thin merge layer)"
+  - id: pkg-api-experimental
+    content: "@altered/api-experimental: compose Hono app from server-experimental (thin merge layer)"
     status: pending
   - id: app-api-experimental
-    content: "apps/api-experimental: Vercel shell, imports api-components-experimental only, vercel.json, .env"
+    content: "apps/api-experimental: Vercel shell, imports @altered/api-experimental only, vercel.json, .env"
     status: pending
   - id: config-origins-effect
     content: "Effect Config: ROUTING_* / ORIGIN_API, NODE_ENV|VERCEL_ENV derivation, webhook URL = origin + /webhooks/sendblue"
@@ -40,7 +40,7 @@ isProject: false
 
 # API vertical: Sendblue + Better Auth + Effect
 
-**Canonical monorepo rules:** `[.context/_generated/plans/monorepo-architecture.md](file:///Users/inducingchaos/Workspace/containers/altered-4200/.context/_generated/plans/monorepo-architecture.md)` — thin apps, fat packages, import matrix, no `api-experimental` importing `server-internal-*` directly (composition lives in `api-components-experimental`). **This plan does not duplicate that doc;** naming and layering below must match it.
+**Canonical monorepo rules:** `[.context/_generated/plans/monorepo-architecture.md](file:///Users/inducingchaos/Workspace/containers/altered-4200/.context/_generated/plans/monorepo-architecture.md)` — thin apps, fat packages, import matrix, no deployable app importing `server-internal-*` directly (composition lives in `@altered/api-experimental`). **This plan does not duplicate that doc;** naming and layering below must match it.
 
 **Scope lock:** scaffold **experimental channel only** for this slice (`*-experimental`). Stable / pre-release packages and apps come later per the arch checklist.
 
@@ -50,8 +50,8 @@ isProject: false
 | Layer                 | Workspace                                                                                                             |
 | --------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | Server implementation | `@altered/server-experimental` — Drizzle (app tables), Better Auth + **sendblue** plugin, Effect `PgClient` / Drizzle |
-| Composed Hono app     | `@altered/api-components-experimental` — mounts routes from `server-experimental`                                     |
-| Deployable shell      | `apps/api-experimental` — Vercel config, **imports `api-components-experimental` only**                               |
+| Composed Hono app     | `@altered/api-experimental` — mounts routes from `server-experimental`                                               |
+| Deployable shell      | `apps/api-experimental` — Vercel config, **imports `@altered/api-experimental` only**                                |
 
 
 Add `@altered/server-internal-experimental` later when needed; not in v0.

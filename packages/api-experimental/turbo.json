@@ -1,0 +1,10 @@
+{
+    "$schema": "https://turborepo.com/schema.json",
+    "extends": ["//"],
+
+    "tasks": {
+        "build": {
+            "env": ["API_CONFIG_PORT", "SHARED_PROVIDER_NGROK_URL"]
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "name": "@altered/server-experimental",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts",
+        "./*": "./src/*.ts"
+    },
+    "scripts": {
+        "check:types": "tsc",
+
+        "clean": "git clean -xdf .cache .turbo dist node_modules"
+    },
+    "dependencies": {
+        "@altered/core-experimental": "workspace:*",
+        "hono": "catalog:"
+    },
+    "devDependencies": {
+        "@types/node": "catalog:",
+        "typescript": "catalog:"
+    }
+}

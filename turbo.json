@@ -2,49 +2,50 @@
     "$schema": "https://turborepo.com/schema.json",
     "ui": "tui",
 
-    "globalDependencies": [".env.*", ".env"],
+    "globalDependencies": [".env", "tooling/typescript/*.json"],
 
     "tasks": {
         "//#tunnel": {
             "persistent": true,
-            "cache": false,
-            "env": ["API_PORT", "PROVIDER_NGROK_SECRET", "PROVIDER_NGROK_URL"]
+            "cache": false
         },
 
         "dev": {
             "persistent": true,
-            "cache": false
+            "cache": false,
+            "with": ["//#tunnel", "view:db"]
         },
 
         "check:types": {
             "dependsOn": ["^check:types"]
         },
         "//#check:style": {},
-
         "//#fix:style": {
             "cache": false
         },
 
-        "db:push": {
+        "push:db": {
             "cache": false,
             "interactive": true
         },
-        "db:studio": {
+        "view:db": {
             "persistent": true,
+            "cache": false
+        },
+
+        "clean": {
             "cache": false
         },
 
         "build": {
             "dependsOn": ["^build"],
             "inputs": ["$TURBO_DEFAULT$"],
-            "outputs": [".next/**", "!.next/cache/**"]
+            "outputs": [".next/**", "!.next/cache/**", "dist/**"]
         }
     },
 
     "globalPassThroughEnv": [
-        "NODE_ENV",
-        "PORT",
-
+        "VERCEL",
         "VERCEL_ENV",
         "VERCEL_URL",
         "VERCEL_BRANCH_URL",

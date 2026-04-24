@@ -10,6 +10,8 @@ Design rationale and back-and-forth live in Cursor **parent** agent transcripts 
 
 The thread that produced this plan is most likely the newest file by mtime (for example `…/9ac99a4f-c5f9-47f0-8597-038af1ee33b6/9ac99a4f-c5f9-47f0-8597-038af1ee33b6.jsonl`). If you need more nuance than this plan, open that JSONL in an editor or grep for keywords such as `composition`, `Hono`, or `Biome`.
 
+**EDIT: ALL PLAN REFERENCES TO `<app_name>-components*` SHOULD BE UPDATED TO `@altered/<app_name>*`. THESE WILL STILL REMAIN AS TARGET COMPOSITION PACKAGES - WE JUST DON'T INCLUDE `-components` IN THE NAME.**
+
 ---
 
 ## Why this shape exists (design axes)

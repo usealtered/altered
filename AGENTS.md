@@ -62,7 +62,9 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - Inline comments should have 2 spaces before the content to aesthetically match indentation, rather than 1 space: `//  <content>`.
 
-- TODOs should follow the format `@todo P<0-3> <description>` for TSDoc, and `TODO P<0-3> <description>` for inline comments.
+- TODOs should follow the format `@todo P<0-3>: <description>` for TSDoc, and `TODO P<0-3>: <description>` for inline comments.
+
+- All (non-data) commentary text (TODOs, remarks, etc.) should use proper sentence grammar, including proper capitalization punctuation (including periods).
 
 - Comments should use the `@remarks` flag in TSDoc.
 
@@ -116,7 +118,7 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 # Repository Structure
 
-- Deployable apps (under `apps/`) should be a thin configuration shell for each build that simply re-exports imported modules from the respective composition package. Each composition package (under `packages/<app>-components-*/`) should combine all necessary layers for a build using the remaining scoped workspace packages. Each scoped package denotes to a specific axis and variant of the structure we outline in this section.
+- Deployable apps (under `apps/`) should be a thin configuration shell for each build that simply re-exports imported modules from the respective composition package. Each composition package (under `packages/<app_name>*/`) should combine all necessary layers for a build using the remaining scoped workspace packages. Each scoped package denotes to a specific axis and variant of the structure we outline in this section.
 
 ## Axes of Intention
 
