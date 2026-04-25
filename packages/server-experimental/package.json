@@ -13,8 +13,7 @@
         "clean": "git clean -xdf .cache .turbo dist node_modules"
     },
     "dependencies": {
-        "@altered/core-experimental": "workspace:*",
-        "hono": "catalog:"
+        "@altered/core-experimental": "workspace:*"
     },
     "devDependencies": {
         "@types/node": "catalog:",
