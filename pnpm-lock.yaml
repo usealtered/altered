@@ -63,6 +63,9 @@ importers:
       '@hono/node-server':
         specifier: 'catalog:'
         version: 2.0.0(hono@4.12.15)
+      hono:
+        specifier: 'catalog:'
+        version: 4.12.15
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
@@ -85,9 +88,6 @@ importers:
       '@altered/core-experimental':
         specifier: workspace:*
         version: link:../core-experimental
-      hono:
-        specifier: 'catalog:'
-        version: 4.12.15
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
