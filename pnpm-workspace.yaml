@@ -4,9 +4,14 @@ packages:
   - tooling/*
 
 catalog:
+  "@chat-adapter/state-redis": ^4.26.0
   "@hono/node-server": ^2.0.0
   "@types/node": ^25.6.0
+  "@vercel/functions": ^3.4.4
+  chat: ^4.26.0
+  "chat-adapter-sendblue": ^0.2.0
   hono: 4.12.15
+  redis: ^5.12.1
   tsx: ^4.21.0
   typescript: ^6.0.3
 

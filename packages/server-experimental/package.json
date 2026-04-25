@@ -13,7 +13,11 @@
         "clean": "git clean -xdf .cache .turbo dist node_modules"
     },
     "dependencies": {
-        "@altered/core-experimental": "workspace:*"
+        "@altered/core-experimental": "workspace:*",
+        "@chat-adapter/state-redis": "catalog:",
+        "chat": "catalog:",
+        "chat-adapter-sendblue": "catalog:",
+        "redis": "catalog:"
     },
     "devDependencies": {
         "@types/node": "catalog:",

@@ -16,6 +16,7 @@
         "@altered/core-experimental": "workspace:*",
         "@altered/server-experimental": "workspace:*",
         "@hono/node-server": "catalog:",
+        "@vercel/functions": "catalog:",
         "hono": "catalog:"
     },
     "devDependencies": {
