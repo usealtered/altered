@@ -62,6 +62,8 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - Inline comments should have 2 spaces before the content to aesthetically match indentation, rather than 1 space: `//  <content>`.
 
+- TSDoc definitions should always be in their expanded, multiline form.
+
 - TODOs should follow the format `@todo P<0-3>: <description>` for TSDoc, and `TODO P<0-3>: <description>` for inline comments.
 
 - All (non-data) commentary text (TODOs, remarks, etc.) should use proper sentence grammar, including proper capitalization punctuation (including periods).
@@ -115,6 +117,10 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 # Documentation
 
 - When using Effect, until v4 is stable, always fetch the migration docs: `https://raw.githubusercontent.com/Effect-TS/effect-smol/refs/heads/main/MIGRATION.md`. Then, if you want info about any non-obvious APIs, fetch `https://effect.website/llms-full.txt`. Lastly, some functions cannot be found in the documentation, so consider searching the source code directly.
+
+# Configuration
+
+- Never modify the package.json `exports` entries of any package that uses a `"./*": "./src/*.ts"` pattern. This allows us to use dynamic import paths without having to specify them individually, or revert to using a performance-heavy barrel file pattern.
 
 # Repository Structure
 

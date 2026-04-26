@@ -93,6 +93,10 @@ importers:
         version: 6.0.3
 
   packages/core-experimental:
+    dependencies:
+      arktype:
+        specifier: ^2.2.0
+        version: 2.2.0
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
@@ -129,6 +133,12 @@ importers:
   tooling/typescript: {}
 
 packages:
+
+  '@ark/schema@0.56.0':
+    resolution: {integrity: sha512-ECg3hox/6Z/nLajxXqNhgPtNdHWC9zNsDyskwO28WinoFEnWow4IsERNz9AnXRhTZJnYIlAJ4uGn3nlLk65vZA==}
+
+  '@ark/util@0.56.0':
+    resolution: {integrity: sha512-BghfRC8b9pNs3vBoDJhcta0/c1J1rsoS1+HgVUreMFPdhz/CRAKReAu57YEllNaSy98rWAdY1gE+gFup7OXpgA==}
 
   '@biomejs/biome@2.4.13':
     resolution: {integrity: sha512-gLXOwkOBBg0tr7bDsqlkIh4uFeKuMjxvqsrb1Tukww1iDmHcfr4Uu8MoQxp0Rcte+69+osRNWXwHsu/zxT6XqA==}
@@ -450,6 +460,12 @@ packages:
 
   '@workflow/serde@4.1.0-beta.2':
     resolution: {integrity: sha512-8kkeoQKLDaKXefjV5dbhBj2aErfKp1Mc4pb6tj8144cF+Em5SPbyMbyLCHp+BVrFfFVCBluCtMx+jjvaFVZGww==}
+
+  arkregex@0.0.5:
+    resolution: {integrity: sha512-ncYjBdLlh5/QnVsAA8De16Tc9EqmYM7y/WU9j+236KcyYNUXogpz3sC4ATIZYzzLxwI+0sEOaQLEmLmRleaEXw==}
+
+  arktype@2.2.0:
+    resolution: {integrity: sha512-t54MZ7ti5BhOEvzEkgKnWvqj+UbDfWig+DHr5I34xatymPusKLS0lQpNJd8M6DzmIto2QGszHfNKoFIT8tMCZQ==}
 
   bail@2.0.2:
     resolution: {integrity: sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw==}
@@ -823,6 +839,12 @@ packages:
 
 snapshots:
 
+  '@ark/schema@0.56.0':
+    dependencies:
+      '@ark/util': 0.56.0
+
+  '@ark/util@0.56.0': {}
+
   '@biomejs/biome@2.4.13':
     optionalDependencies:
       '@biomejs/cli-darwin-arm64': 2.4.13
@@ -1022,6 +1044,16 @@ snapshots:
   '@vercel/oidc@3.2.1': {}
 
   '@workflow/serde@4.1.0-beta.2': {}
+
+  arkregex@0.0.5:
+    dependencies:
+      '@ark/util': 0.56.0
+
+  arktype@2.2.0:
+    dependencies:
+      '@ark/schema': 0.56.0
+      '@ark/util': 0.56.0
+      arkregex: 0.0.5
 
   bail@2.0.2: {}
 

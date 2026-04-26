@@ -4,7 +4,6 @@
     "private": true,
     "type": "module",
     "exports": {
-        ".": "./src/index.ts",
         "./*": "./src/*.ts"
     },
     "scripts": {
@@ -15,5 +14,8 @@
     "devDependencies": {
         "@types/node": "catalog:",
         "typescript": "catalog:"
+    },
+    "dependencies": {
+        "arktype": "catalog:"
     }
 }

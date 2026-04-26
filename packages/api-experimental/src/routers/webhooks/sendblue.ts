@@ -1,8 +1,9 @@
-import { handleSendblueWebhook } from "@altered/server-experimental/sendblue/handler"
+import { processSendblueWebhook } from "@altered/server-experimental/chat/imessage/handler"
+import { waitUntil } from "@vercel/functions"
 import { Hono } from "hono"
 
 const app = new Hono()
 
-app.post("/", handleSendblueWebhook)
+app.post("/", context => processSendblueWebhook(context.req.raw, { waitUntil }))
 
 export { app as sendblueWebhookRouter }
