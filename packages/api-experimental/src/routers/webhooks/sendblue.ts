@@ -1,4 +1,4 @@
-import { processSendblueWebhook } from "@altered/server-experimental/chat/imessage/handler"
+import { processSendblueWebhook } from "@altered/server-experimental/chat/imessage/webhook"
 import { waitUntil } from "@vercel/functions"
 import { Hono } from "hono"
 

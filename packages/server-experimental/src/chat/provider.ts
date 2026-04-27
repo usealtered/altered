@@ -6,6 +6,7 @@ import {
     createSendblueAdapter,
     type SendblueAdapter
 } from "chat-adapter-sendblue"
+import { registerImessageChatEventHandlers } from "./imessage/events/registrar"
 
 type ALTEREDChat = Chat<{ sendblue: SendblueAdapter }>
 
@@ -32,6 +33,8 @@ function getAlteredChat(): ALTEREDChat {
             state: createRedisState({ url: kv.url }),
             userName: botUsername
         })
+
+        registerImessageChatEventHandlers(alteredChat)
     }
 
     return alteredChat

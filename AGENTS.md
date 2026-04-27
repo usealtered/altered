@@ -4,7 +4,7 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 # \[TEMPORARY\] Codebase Migration
 
-- We are currently working to re-build the ALTERED app from scratch in this repo. For any given implementation, first inspect the project for any relevant patterns (including relevant git branches and stashes) at `/Users/inducingchaos/Workspace/containers/altered/`, and copy the code directly in a way that fits the current objective.
+- We are currently working to re-build the ALTERED app from scratch in this repo (often referenced as the "old" codebase). For any given implementation, first inspect the project for any relevant patterns (including relevant git branches and stashes) at `/Users/inducingchaos/Workspace/containers/altered/`, and copy the code directly in a way that fits the current objective. There are other `altered-*/` projects also in `containers/` (as well as a sub-path inside the `rileybarabash/` project), each an older version that I rebuilt from scratch in search of a better architecture - these older projects will rarely be useful, but can be referenced for tougher problems or deeper inspiration. Weigh their significance using the average date of the last 2-3 developmental commits.
 
 - If you have suggestions for better naming, structuring, or any other sort of improvements over the old codebase, always suggest them before copying the existing patterns.
 
@@ -70,6 +70,8 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - Comments should use the `@remarks` flag in TSDoc.
 
+- Don't litter our code with comments unless absolutely necessary. If I don't understand something, or it's a special implementation that requires explanation, or a TODO is needed, then a comment is appropriate. Keep it extremely minimal with only the details needed.
+
 - When generating code segments that allow block-statements such as "if" conditions or "for" loops, prefer to inline the logic if possible, condensing it into a single line.
 
 - Prefer the use of types over interfaces when possible.
@@ -110,6 +112,8 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - I prefer using ArkType over Zod.
 
+- For almost all unique ID requirements, let's use the `nanoid` library with the default alphabet and 21-character length.
+
 - For any substantial programmatic video generation, prefer Remotion.
 
 - For message-based agent integration, we will use iMessage via the Vercel Chat SDK and the Sendblue adapter. In the future, we may migrate from Sendblue to the Linq Blue API for features and reliability (costs much more, but it may be worth it).
@@ -121,6 +125,10 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 # Configuration
 
 - Never modify the package.json `exports` entries of any package that uses a `"./*": "./src/*.ts"` pattern. This allows us to use dynamic import paths without having to specify them individually, or revert to using a performance-heavy barrel file pattern.
+
+- Regarding `turbo.json` and environment variables for caching, only add newly-used variables in the co-located `turbo.json` of the consuming application - not in packages. Only add them for tasks that have caching enabled (e.g. `build`). `globalPassThroughEnv` should only be used for system environment variables.
+
+- Do not add redundant configurations to files like `vercel.json` if the consuming tool can auto-detect or use a reasonable default.
 
 # Repository Structure
 
