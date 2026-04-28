@@ -10,9 +10,11 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 # Context
 
+- Before planning or implementation, always read `.context/_generated/STATE.md` and update it after each substantial turn to keep the plan execution synchronized.
+
 - Read `.context/PRODUCT.md` before starting any product or domain-specific work.
 
-- For up-to-date status on the current implementation, reference `.context/CURRENT.md`. This file helps us persist development direction and state across chats.
+- For a user-defined, macro-level definition of the direction and goal for the project, read `.context/CURRENT.md`. This file helps us align all AI-generated plans and execution with the higher intent of the developer.
 
 # Chat
 
