@@ -10,7 +10,7 @@ catalog:
   "@vercel/functions": ^3.4.4
   arktype: ^2.2.0
   chat: ^4.26.0
-  "chat-adapter-sendblue": ^0.2.0
+  "chat-adapter-sendblue": "github:inducingchaos/chat-adapter-sendblue#8e60245d50ca4713e88b562a4bd39a15aa9ac23c"
   hono: 4.12.15
   redis: ^5.12.1
   tsx: ^4.21.0

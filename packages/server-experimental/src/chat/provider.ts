@@ -40,4 +40,4 @@ function getAlteredChat(): ALTEREDChat {
     return alteredChat
 }
 
-export { getAlteredChat }
+export { type ALTEREDChat, getAlteredChat }

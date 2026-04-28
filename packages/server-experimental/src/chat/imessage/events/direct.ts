@@ -1,15 +1,15 @@
 import type { DirectMessageHandler, Message, Thread } from "chat"
+import type { ALTEREDChat } from "../../provider"
 import { typeAndRespond } from "../behaviors/type-and-respond"
 
-function handleDirectMessage(
-    handle: (content: string) => string | Promise<string>
-): DirectMessageHandler {
+function handleDirectMessage(chat: ALTEREDChat): DirectMessageHandler {
     return async (thread: Thread, message: Message): Promise<void> => {
-        //  TODO P1: Update to omit subscription once we fix the adapter.
+        console.log("Direct message received:", message)
 
-        await thread.subscribe()
-
-        await typeAndRespond(thread, message, handle)
+        await typeAndRespond(
+            { chat, thread, message },
+            content => `[direct] Received: "${content}"`
+        )
     }
 }
 

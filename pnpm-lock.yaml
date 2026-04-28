@@ -18,11 +18,14 @@ catalogs:
     '@vercel/functions':
       specifier: ^3.4.4
       version: 3.4.4
+    arktype:
+      specifier: ^2.2.0
+      version: 2.2.0
     chat:
       specifier: ^4.26.0
       version: 4.26.0
     chat-adapter-sendblue:
-      specifier: ^0.2.0
+      specifier: github:inducingchaos/chat-adapter-sendblue#8e60245d50ca4713e88b562a4bd39a15aa9ac23c
       version: 0.2.0
     hono:
       specifier: 4.12.15
@@ -95,7 +98,7 @@ importers:
   packages/core-experimental:
     dependencies:
       arktype:
-        specifier: ^2.2.0
+        specifier: 'catalog:'
         version: 2.2.0
     devDependencies:
       '@types/node':
@@ -118,7 +121,7 @@ importers:
         version: 4.26.0
       chat-adapter-sendblue:
         specifier: 'catalog:'
-        version: 0.2.0(chat@4.26.0)
+        version: https://codeload.github.com/inducingchaos/chat-adapter-sendblue/tar.gz/8e60245d50ca4713e88b562a4bd39a15aa9ac23c(chat@4.26.0)
       redis:
         specifier: 'catalog:'
         version: 5.12.1
@@ -484,8 +487,9 @@ packages:
   character-entities@2.0.2:
     resolution: {integrity: sha512-shx7oQ0Awen/BRIdkjkvz54PnEEI/EjwXDSIZp86/KKdbafHh1Df/RYGBhn4hbe2+uKC9FnT5UCEdyPz3ai9hQ==}
 
-  chat-adapter-sendblue@0.2.0:
-    resolution: {integrity: sha512-JKqRa5KyoBsndRrq2LuGhob1uCdO1goWAbqaSLCld3KE9q288CnEo999GdWuDVWa9yqt1uf5F9/Oe3iFkSrW2w==}
+  chat-adapter-sendblue@https://codeload.github.com/inducingchaos/chat-adapter-sendblue/tar.gz/8e60245d50ca4713e88b562a4bd39a15aa9ac23c:
+    resolution: {tarball: https://codeload.github.com/inducingchaos/chat-adapter-sendblue/tar.gz/8e60245d50ca4713e88b562a4bd39a15aa9ac23c}
+    version: 0.2.0
     peerDependencies:
       chat: '>=4.0.0'
 
@@ -750,8 +754,8 @@ packages:
   resolve-pkg-maps@1.0.0:
     resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
 
-  sendblue@3.8.0:
-    resolution: {integrity: sha512-jG47SQsZpWjVOxbX9NGeP9Rh15L9rKzoJDp5APSEXbw91y1aNJFQ7pbVMchr8g2nC0tldbbmKqoXgZa1Aum9oQ==}
+  sendblue@3.9.0:
+    resolution: {integrity: sha512-JoInW3nQO/q2Sxjz9Tnl5YzQka13cJ+xQ3fa75+xv2Ov+dXDXCzwE00xFfbCi97Awlz1zmkLgT1NjVNnH5KcuQ==}
 
   shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
@@ -1067,10 +1071,10 @@ snapshots:
 
   character-entities@2.0.2: {}
 
-  chat-adapter-sendblue@0.2.0(chat@4.26.0):
+  chat-adapter-sendblue@https://codeload.github.com/inducingchaos/chat-adapter-sendblue/tar.gz/8e60245d50ca4713e88b562a4bd39a15aa9ac23c(chat@4.26.0):
     dependencies:
       chat: 4.26.0
-      sendblue: 3.8.0
+      sendblue: 3.9.0
 
   chat@4.26.0:
     dependencies:
@@ -1539,7 +1543,7 @@ snapshots:
 
   resolve-pkg-maps@1.0.0: {}
 
-  sendblue@3.8.0: {}
+  sendblue@3.9.0: {}
 
   shebang-command@2.0.0:
     dependencies:

@@ -1,15 +1,15 @@
 import type { MentionHandler, Message, Thread } from "chat"
+import type { ALTEREDChat } from "../../provider"
 import { typeAndRespond } from "../behaviors/type-and-respond"
 
-function handleMessageWithMention(
-    handle: (content: string) => string | Promise<string>
-): MentionHandler {
+function handleMessageWithMention(chat: ALTEREDChat): MentionHandler {
     return async (thread: Thread, message: Message): Promise<void> => {
-        //  TODO P1: Update to remove irrelevant components once we fix the adapter and migrate to just using the DM handler.
+        console.log("Message with mention received:", message)
 
-        await thread.subscribe()
-
-        await typeAndRespond(thread, message, handle)
+        await typeAndRespond(
+            { chat, thread, message },
+            content => `[mention] Received: "${content}"`
+        )
     }
 }
 

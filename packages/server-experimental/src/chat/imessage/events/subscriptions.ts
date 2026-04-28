@@ -1,13 +1,17 @@
 import type { Message, SubscribedMessageHandler, Thread } from "chat"
+import type { ALTEREDChat } from "../../provider"
 import { typeAndRespond } from "../behaviors/type-and-respond"
 
 function handleSubscriptionMessage(
-    handle: (content: string) => string | Promise<string>
+    chat: ALTEREDChat
 ): SubscribedMessageHandler {
     return async (thread: Thread, message: Message): Promise<void> => {
-        //  TODO P1: Update once we fix the adapter.
+        console.log("Subscription message received:", message)
 
-        await typeAndRespond(thread, message, handle)
+        await typeAndRespond(
+            { chat, thread, message },
+            content => `[subscription] Received: "${content}"`
+        )
     }
 }
 
