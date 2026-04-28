@@ -25,7 +25,7 @@ catalogs:
       specifier: ^4.26.0
       version: 4.26.0
     chat-adapter-sendblue:
-      specifier: github:inducingchaos/chat-adapter-sendblue#8e60245d50ca4713e88b562a4bd39a15aa9ac23c
+      specifier: github:inducingchaos/chat-adapter-sendblue#d925dbca1e17a3a7dfc9f9dddfd33a112b908388
       version: 0.2.0
     hono:
       specifier: 4.12.15
@@ -121,7 +121,7 @@ importers:
         version: 4.26.0
       chat-adapter-sendblue:
         specifier: 'catalog:'
-        version: https://codeload.github.com/inducingchaos/chat-adapter-sendblue/tar.gz/8e60245d50ca4713e88b562a4bd39a15aa9ac23c(chat@4.26.0)
+        version: https://codeload.github.com/inducingchaos/chat-adapter-sendblue/tar.gz/d925dbca1e17a3a7dfc9f9dddfd33a112b908388(chat@4.26.0)
       redis:
         specifier: 'catalog:'
         version: 5.12.1
@@ -487,8 +487,8 @@ packages:
   character-entities@2.0.2:
     resolution: {integrity: sha512-shx7oQ0Awen/BRIdkjkvz54PnEEI/EjwXDSIZp86/KKdbafHh1Df/RYGBhn4hbe2+uKC9FnT5UCEdyPz3ai9hQ==}
 
-  chat-adapter-sendblue@https://codeload.github.com/inducingchaos/chat-adapter-sendblue/tar.gz/8e60245d50ca4713e88b562a4bd39a15aa9ac23c:
-    resolution: {tarball: https://codeload.github.com/inducingchaos/chat-adapter-sendblue/tar.gz/8e60245d50ca4713e88b562a4bd39a15aa9ac23c}
+  chat-adapter-sendblue@https://codeload.github.com/inducingchaos/chat-adapter-sendblue/tar.gz/d925dbca1e17a3a7dfc9f9dddfd33a112b908388:
+    resolution: {tarball: https://codeload.github.com/inducingchaos/chat-adapter-sendblue/tar.gz/d925dbca1e17a3a7dfc9f9dddfd33a112b908388}
     version: 0.2.0
     peerDependencies:
       chat: '>=4.0.0'
@@ -1071,7 +1071,7 @@ snapshots:
 
   character-entities@2.0.2: {}
 
-  chat-adapter-sendblue@https://codeload.github.com/inducingchaos/chat-adapter-sendblue/tar.gz/8e60245d50ca4713e88b562a4bd39a15aa9ac23c(chat@4.26.0):
+  chat-adapter-sendblue@https://codeload.github.com/inducingchaos/chat-adapter-sendblue/tar.gz/d925dbca1e17a3a7dfc9f9dddfd33a112b908388(chat@4.26.0):
     dependencies:
       chat: 4.26.0
       sendblue: 3.9.0
