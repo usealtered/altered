@@ -42,6 +42,8 @@ isProject: false
 
 **Canonical monorepo rules:** `[.context/_generated/plans/monorepo-architecture.md](file:///Users/inducingchaos/Workspace/containers/altered-4200/.context/_generated/plans/monorepo-architecture.md)` — thin apps, fat packages, import matrix, no deployable app importing `server-internal-*` directly (composition lives in `@altered/api-experimental`). **This plan does not duplicate that doc;** naming and layering below must match it.
 
+**Sendblue adapter fork, owned Drizzle history, explicit read receipts, DM routing, AI bridge:** when executing webhook work, handler routing, Postgres message tables, or AI context wiring for this vertical, **read and follow** `[.context/_generated/plans/chat-sdk-history-sendblue-adapter-resolution.md](file:///Users/inducingchaos/Workspace/containers/altered-4200/.context/_generated/plans/chat-sdk-history-sendblue-adapter-resolution.md)` first. That document is the **detailed** source of truth for those concerns; **this POC plan does not duplicate it**—only stay aligned with scope and package layout here.
+
 **Scope lock:** scaffold **experimental channel only** for this slice (`*-experimental`). Stable / pre-release packages and apps come later per the arch checklist.
 
 ## Channel and packages (first slice)
