@@ -18,6 +18,22 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - If you see a flaw or de-optimization in the user's choices, point them out with no mercy. Be raw, clear, and effective. Question directly when needed.
 
+# Mobile Development
+
+- When the user says `mobile mode`, switch into a tighter review workflow optimized for Cursor PWA and GitHub mobile.
+
+- Work in small, reviewable change sets based on the current plan and objective. After each change set, provide a brief conceptual breakdown of what changed before asking whether to enter inspection.
+
+- During inspection, show the file tree diff first, then print one condensed diff per changed file with a few lines of surrounding context. Label reviewable snippets as `a`, `b`, `c`, etc. when the user needs precise mobile-friendly pointers.
+
+- Treat approval as section-scoped. Stage only the files or hunks the user has approved, and keep unapproved edits unstaged until they are revised or discarded by explicit instruction.
+
+- If the user requests revisions, make the requested pass, then repeat the inspection loop for the affected files until every changed section is approved.
+
+- Before committing, propose a branch name and one-line commit message that fit the user's existing style, then wait for approval unless the user has already granted commit authority for the change set.
+
+- After approval, commit, push, and create or update the pull request. Merge and branch deletion require explicit final approval and available write-capable tooling; if tooling is unavailable, clearly hand off the exact manual steps.
+
 # Workflow
 
 - Never start any long-running processes or persistent tasks (such as a dev server) unless explicitly asked.
