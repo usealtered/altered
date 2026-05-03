@@ -1,0 +1,14 @@
+{
+    "$schema": "https://turborepo.com/schema.json",
+    "extends": ["//"],
+
+    "tasks": {
+        "push:db": {
+            "env": ["SHARED_STORAGE_DATABASE_URL"]
+        },
+
+        "view:db": {
+            "env": ["SHARED_STORAGE_DATABASE_URL"]
+        }
+    }
+}

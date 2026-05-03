@@ -8,7 +8,10 @@
     },
     "scripts": {
         "check:types": "tsc",
-        "clean": "git clean -xdf .cache .turbo dist node_modules"
+        "clean": "git clean -xdf .cache .turbo dist node_modules",
+
+        "push:db": "drizzle-kit push",
+        "view:db": "drizzle-kit studio"
     },
     "dependencies": {
         "@altered/core-experimental": "workspace:*",
@@ -25,6 +28,8 @@
     "devDependencies": {
         "@types/node": "catalog:",
         "@types/pg": "catalog:",
+        "dotenv": "catalog:",
+        "drizzle-kit": "catalog:",
         "typescript": "catalog:"
     }
 }
