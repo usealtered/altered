@@ -1,13 +1,18 @@
+import type { ModelMessage } from "ai"
 import { index, jsonb, pgTable, text, timestamp } from "drizzle-orm/pg-core"
 import { nanoid } from "nanoid"
 import { conversations } from "../conversations/schema"
 
-const MESSAGE_ROLES = ["system", "user", "assistant", "tool"] as const
-type MessageRole = (typeof MESSAGE_ROLES)[number]
+type MessageRole = ModelMessage["role"]
+const MESSAGE_ROLES = [
+    "system",
+    "user",
+    "assistant",
+    "tool"
+] as const satisfies MessageRole[]
 
-/**
- * @todo P0: Replace `unknown` in `parts` and `attachments` with AI SDK types.
- */
+type MessageContent = ModelMessage["content"]
+
 const messages = pgTable(
     "chat_messages",
     {
@@ -23,7 +28,7 @@ const messages = pgTable(
             .references(() => conversations.id, { onDelete: "cascade" }),
 
         role: text({ enum: MESSAGE_ROLES }).$type<MessageRole>().notNull(),
-        parts: jsonb().$type<unknown[]>().notNull(),
+        content: jsonb().$type<MessageContent>().notNull(),
 
         createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
         updatedAt: timestamp({ withTimezone: true })
