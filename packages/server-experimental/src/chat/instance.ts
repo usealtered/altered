@@ -1,13 +1,16 @@
 import { botUsername } from "@altered/core-experimental/config/app"
-import { getChatConfig } from "@altered/core-experimental/config/chat"
+import { getEnvironmentConfig } from "@altered/core-experimental/config/environment"
 import { createRedisState } from "@chat-adapter/state-redis"
 import { Chat } from "chat"
 import {
     createSendblueAdapter,
     type SendblueAdapter
 } from "chat-adapter-sendblue"
-import { registerImessageChatEventHandlers } from "./imessage/events/registrar"
+import { registerImessageChatEventHandlers } from "./providers/imessage/events/registrar"
 
+/**
+ * @remarks Consider renaming to `Chat`.
+ */
 type ALTEREDChat = Chat<{ sendblue: SendblueAdapter }>
 
 let alteredChat: ALTEREDChat | undefined
@@ -19,7 +22,7 @@ function getAlteredChat(): ALTEREDChat {
                 storage: { kv },
                 providers: { sendblue }
             }
-        } = getChatConfig()
+        } = getEnvironmentConfig()
 
         alteredChat = new Chat({
             adapters: {

@@ -1,0 +1,57 @@
+import { type } from "arktype"
+
+//  TODO P0: Convert to Effect Config.
+
+const environmentConfigSchema = type({
+    shared: {
+        storage: {
+            database: {
+                url: "string"
+            },
+            kv: {
+                url: "string"
+            }
+        },
+
+        providers: {
+            sendblue: {
+                public: "string",
+                secret: "string",
+                number: "string",
+                signing: "string"
+            }
+        }
+    }
+})
+
+type EnvironmentConfig = typeof environmentConfigSchema.infer
+
+let environmentConfig: EnvironmentConfig | undefined
+
+function getEnvironmentConfig(): EnvironmentConfig {
+    environmentConfig ??= environmentConfigSchema.assert({
+        shared: {
+            storage: {
+                database: {
+                    url: process.env.SHARED_STORAGE_DATABASE_URL
+                },
+                kv: {
+                    url: process.env.SHARED_STORAGE_KV_URL
+                }
+            },
+
+            providers: {
+                sendblue: {
+                    public: process.env.SHARED_PROVIDER_SENDBLUE_PUBLIC,
+                    secret: process.env.SHARED_PROVIDER_SENDBLUE_SECRET,
+                    number: process.env.SHARED_PROVIDER_SENDBLUE_NUMBER,
+                    signing: process.env.SHARED_PROVIDER_SENDBLUE_SIGNING
+                }
+            }
+        }
+    })
+
+    return environmentConfig
+}
+
+export { type EnvironmentConfig, getEnvironmentConfig }

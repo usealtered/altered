@@ -4,7 +4,7 @@ Last updated: 2026-04-28
 
 ## Focus
 
-Current focus is the iMessage POC path with Sendblue + Chat SDK integration, moving now into owned memory/history and AI integration.
+Current focus is the iMessage POC path with Sendblue + Chat SDK integration, moving into owned Postgres history, then AI bridge and memory-backed replies.
 
 ## Plan linkage
 
@@ -26,39 +26,48 @@ Current focus is the iMessage POC path with Sendblue + Chat SDK integration, mov
 - Known upstream Chat SDK quirk around DM mention/subscription semantics:
   - `vercel/chat` issue `#432`.
 
+## Repository layout (this slice)
+
+- **Environment / config:** `packages/core-experimental/src/config/environment.ts` — `getEnvironmentConfig()` (singleton via `??=`) validates shared **database URL**, **KV URL**, and Sendblue provider secrets from env.
+
+- **Chat singleton:** `packages/server-experimental/src/chat/instance.ts` — `getAlteredChat()` (or equivalent) for the Chat SDK instance.
+
+- **Provider constants:** `packages/server-experimental/src/chat/providers/definitions.ts` — opaque **provider ids** and metadata for conversations and cross-cutting use.
+
+- **Drizzle:** `packages/server-experimental/src/storage/database/`
+  - `connection.ts` — `getDatabase()` uses `getEnvironmentConfig()` and `drizzle({ connection: { connectionString }, schema, relations, casing: "snake_case" })`.
+  - `schema.ts` — exports a **`schema` object** `{ conversations, messages, externalResources }` passed into `defineRelations` and `drizzle`.
+  - `relations.ts` — `defineRelations(schema, …)`.
+  - `external-resources/schema.ts` — **`external_resources`** polymorphic link table (`conversation_id` XOR `message_id` via `CHECK`), **`resource_type_id`** + **`reference_id`**, partial uniques per parent + type, global unique on `(resource_type_id, reference_id)`.
+  - `external-resources/definitions.ts` — in-code **resource type** registry (ids, keys, names, owning `providerId`).
+
+- **Chat tables:** `packages/server-experimental/src/chat/conversations/schema.ts`, `…/messages/schema.ts` — `chat_conversations` (includes **`provider_id`**), `chat_messages` (**`parts` not null**, **`attachments` nullable**, `brain_id`, timestamptz).
+
+- **iMessage provider implementation:** `packages/server-experimental/src/chat/providers/imessage/**` (webhook, events, behaviors).
+
 ## Completion map (high-level)
 
-- Owned Postgres history schema and storage: **not started**.
+- Owned Postgres history schema (tables + relations + DB client wiring): **in progress** (structure landed; **persistence helpers + handler writes** not started).
 
 - AI history bridge and memory-backed generation: **not started**.
 
 ## Next execution order
 
-1. Implement owned chat history storage in `@altered/server-experimental` (Drizzle tables + write/read access functions).
+1. Add small **repository / insert helpers** (conversation upsert, message insert, external resource upsert) using `getDatabase()`.
 
-2. Wire handler persistence so inbound and outbound message turns are inserted into the owned store.
+2. Wire **iMessage handlers** to persist inbound/outbound rows and link **Sendblue** / **Chat SDK** ids via `external_resources`.
 
-3. Build a minimal bridge from owned rows to AI SDK v6/LMS v3 message format.
+3. Build a minimal **AI SDK v6 / LMS V3** message bridge from stored rows.
 
-4. Wire first memory-backed AI response loop using owned history as context source.
-
-## Immediate implementation target
-
-Start with Step 1 and Step 2 together:
-
-- Database connection/init placement in `packages/server-experimental/src/database`.
-
-- Chat-owned tables and storage functions in feature folders under `packages/server-experimental/src/chat`.
-
-- Keep schema minimal and forward-compatible (Nanoid ids, `external_id`, timestamps, role/content).
+4. Wire first **memory-backed** reply loop.
 
 ## Risks and caveats to remember
 
 - Upstream Chat SDK routing behavior can make DM mention/subscription semantics odd in edge flows.
 
-- If we accidentally rely on Chat SDK thread history iterators as source of truth, we may reintroduce platform-fetch coupling and lose control over context semantics.
+- Do not use Chat SDK thread iterators as **source of truth** for LLM context; use owned rows.
 
-- Keep read receipt behavior explicit at the app layer according to current adapter capabilities and policy.
+- Keep read receipt behavior explicit at the app layer.
 
 ## Working assumptions
 
@@ -68,4 +77,4 @@ Start with Step 1 and Step 2 together:
 
 - Owned Postgres tables are the canonical memory/history source for AI context.
 
-- Implementation should stay in small, reviewable chunks with separate commits.
+- Implementation stays in small, reviewable chunks with separate commits.

@@ -1,5 +1,5 @@
 import type { Message, SubscribedMessageHandler, Thread } from "chat"
-import type { ALTEREDChat } from "../../provider"
+import type { ALTEREDChat } from "../../../instance"
 import { typeAndRespond } from "../behaviors/type-and-respond"
 
 function handleSubscriptionMessage(

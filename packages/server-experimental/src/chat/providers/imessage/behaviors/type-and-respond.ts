@@ -1,5 +1,5 @@
 import type { Message, Thread } from "chat"
-import type { ALTEREDChat } from "../../provider"
+import type { ALTEREDChat } from "../../../instance"
 
 async function typeAndRespond(
     context: {

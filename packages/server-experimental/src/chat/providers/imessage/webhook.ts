@@ -1,4 +1,4 @@
-import { getAlteredChat } from "../provider"
+import { getAlteredChat } from "../../instance"
 
 function processSendblueWebhook(
     request: Request,
@@ -6,9 +6,7 @@ function processSendblueWebhook(
 ): Promise<Response> {
     const chat = getAlteredChat()
 
-    return chat.webhooks.sendblue(request, {
-        waitUntil: options?.waitUntil
-    })
+    return chat.webhooks.sendblue(request, options)
 }
 
 export { processSendblueWebhook }
