@@ -2,6 +2,9 @@ import { type } from "arktype"
 
 //  TODO P0: Convert to Effect Config.
 
+/**
+ * @remarks Mirrors `example.env`.
+ */
 const environmentConfigSchema = type({
     shared: {
         storage: {
@@ -19,6 +22,9 @@ const environmentConfigSchema = type({
                 secret: "string",
                 number: "string",
                 signing: "string"
+            },
+            openrouter: {
+                secret: "string"
             }
         }
     }
@@ -46,6 +52,9 @@ function getEnvironmentConfig(): EnvironmentConfig {
                     secret: process.env.SHARED_PROVIDER_SENDBLUE_SECRET,
                     number: process.env.SHARED_PROVIDER_SENDBLUE_NUMBER,
                     signing: process.env.SHARED_PROVIDER_SENDBLUE_SIGNING
+                },
+                openrouter: {
+                    secret: process.env.SHARED_PROVIDER_OPENROUTER_SECRET
                 }
             }
         }

@@ -36,7 +36,7 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - Never add extra placeholder code or demonstrative cruft unless told to do so. I would prefer an incomplete or even non-functioning half-chunk of useful code, over a pile of useless showy code.
 
-- The following glob patterns represent the blacklist for modifying files - never touch them without explicit instruction: `.context/**`, `!.context/generated/**`, `AGENTS.md`.
+- The following glob patterns represent the blacklist for modifying files - never touch them without explicit instruction: `.context/**`, `AGENTS.md`. Exceptions: `.context/generated/**`.
 
 - When saving a plan to the workspace, do so in `.context/_generated/plans`.
 

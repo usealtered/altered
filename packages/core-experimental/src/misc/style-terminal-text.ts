@@ -1,7 +1,7 @@
 import { type InspectColor, styleText } from "node:util"
 import { terminalTextAccentStyle } from "../config/app"
 
-export type TerminalTextStyle = InspectColor
+type TerminalTextStyle = InspectColor
 
 const defaultStyle = terminalTextAccentStyle
 
@@ -18,3 +18,5 @@ export function styleTerminalText(
 
     return styleText(resolvedStyle, text)
 }
+
+export type { TerminalTextStyle }

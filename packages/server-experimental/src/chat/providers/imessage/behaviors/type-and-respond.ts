@@ -15,11 +15,12 @@ async function typeAndRespond(
     await adapter.sendReadReceipt(thread.id)
 
     await thread.startTyping()
-    await new Promise(resolve => setTimeout(resolve, 3000))
 
     const inboundMessage = message.text.trim()
     const outboundMessage = await createResponse(inboundMessage)
     await thread.post(outboundMessage)
+
+    //  TODO: Remove this demo code once we have replacement behaviour.
 
     if (inboundMessage.toLowerCase().startsWith("/sub"))
         if (await thread.isSubscribed()) {

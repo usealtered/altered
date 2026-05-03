@@ -8,12 +8,13 @@
     },
     "scripts": {
         "check:types": "tsc",
-
         "clean": "git clean -xdf .cache .turbo dist node_modules"
     },
     "dependencies": {
         "@altered/core-experimental": "workspace:*",
         "@chat-adapter/state-redis": "catalog:",
+        "@openrouter/ai-sdk-provider": "catalog:",
+        "ai": "catalog:",
         "chat": "catalog:",
         "chat-adapter-sendblue": "catalog:",
         "drizzle-orm": "catalog:",
