@@ -42,4 +42,4 @@ const messages = pgTable(
     ]
 )
 
-export { MESSAGE_ROLES, type MessageRole, messages }
+export { MESSAGE_ROLES, type MessageContent, type MessageRole, messages }
