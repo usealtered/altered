@@ -7,10 +7,7 @@ import { saveChatMessage } from "../../../../messages/save"
 import { toModelMessages } from "../../../../messages/to-model-messages"
 import { IMESSAGE_SYSTEM_PROMPT } from "../../behaviors/generation/prompt"
 import type { ChatResponseContext } from "../../behaviors/type-and-respond"
-import {
-    containsTriggerPhrase,
-    isCommandTriggerMessage
-} from "./is-command-trigger"
+import { containsCommandTriggerPhrase } from "./contains-command-trigger"
 
 async function buildDirectMessageResponse({
     thread,
@@ -19,8 +16,10 @@ async function buildDirectMessageResponse({
     const { text: inboundMessageText } = message
 
     if (
-        isCommandTriggerMessage(inboundMessageText) &&
-        containsTriggerPhrase(inboundMessageText, ["/reset", "/new", "/clear"])
+        containsCommandTriggerPhrase({
+            message: inboundMessageText,
+            phrases: ["/reset", "/new", "/clear"]
+        })
     ) {
         await startNewConversationForThread({
             chatProvider: "sendblue",
