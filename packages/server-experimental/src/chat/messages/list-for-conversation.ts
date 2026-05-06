@@ -1,15 +1,15 @@
 import { asc, eq } from "drizzle-orm"
 import { getDatabase } from "../../storage/database/connection"
-import { messages } from "./schema"
+import { chatMessages } from "./schema"
 
-function listMessagesForConversation(conversationId: string) {
+function listChatMessagesForConversation(conversationId: string) {
     const db = getDatabase()
 
     return db
         .select()
-        .from(messages)
-        .where(eq(messages.conversationId, conversationId))
-        .orderBy(asc(messages.createdAt))
+        .from(chatMessages)
+        .where(eq(chatMessages.conversationId, conversationId))
+        .orderBy(asc(chatMessages.createdAt))
 }
 
-export { listMessagesForConversation }
+export { listChatMessagesForConversation }

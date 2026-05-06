@@ -10,18 +10,18 @@ import { conversations } from "./schema"
  * @todo P1: Convert errors to Effect.
  */
 function startNewConversationForThread({
-    provider,
+    chatProvider,
 
     threadId
 }: {
-    provider: ProviderKey
+    chatProvider: ProviderKey
 
     threadId: string
 }) {
-    const providerId = getProviderId(provider)
+    const chatProviderId = getProviderId(chatProvider)
 
-    const resourceTypeId = getExternalResourceTypeId({
-        provider,
+    const chatSdkThreadResourceTypeId = getExternalResourceTypeId({
+        provider: "chat-sdk",
         type: "thread"
     })
 
@@ -30,7 +30,7 @@ function startNewConversationForThread({
     return db.transaction(async tx => {
         const [conversation] = await tx
             .insert(conversations)
-            .values({ providerId })
+            .values({ providerId: chatProviderId })
             .returning()
 
         if (!conversation) throw new Error("Failed to insert conversation row.")
@@ -40,7 +40,10 @@ function startNewConversationForThread({
             .from(externalResources)
             .where(
                 and(
-                    eq(externalResources.resourceTypeId, resourceTypeId),
+                    eq(
+                        externalResources.resourceTypeId,
+                        chatSdkThreadResourceTypeId
+                    ),
                     eq(externalResources.referenceId, threadId)
                 )
             )
@@ -55,7 +58,7 @@ function startNewConversationForThread({
             await tx.insert(externalResources).values({
                 conversationId: conversation.id,
                 referenceId: threadId,
-                resourceTypeId
+                resourceTypeId: chatSdkThreadResourceTypeId
             })
         }
 

@@ -9,7 +9,7 @@ import {
 } from "drizzle-orm/pg-core"
 import { nanoid } from "nanoid"
 import { conversations } from "../../../chat/conversations/schema"
-import { messages } from "../../../chat/messages/schema"
+import { chatMessages } from "../../../chat/messages/schema"
 import type { ExternalResourceTypeID } from "./definitions"
 
 const externalResources = pgTable(
@@ -23,7 +23,7 @@ const externalResources = pgTable(
         conversationId: text().references(() => conversations.id, {
             onDelete: "cascade"
         }),
-        messageId: text().references(() => messages.id, {
+        messageId: text().references(() => chatMessages.id, {
             onDelete: "cascade"
         }),
 

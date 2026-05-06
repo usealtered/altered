@@ -10,7 +10,7 @@ function handleSubscriptionMessage(
 
         await typeAndRespond(
             { chat, thread, message },
-            content => `[subscription] Received: "${content}"`
+            context => `[subscription] Received: "${context.message.text}"`
         )
     }
 }

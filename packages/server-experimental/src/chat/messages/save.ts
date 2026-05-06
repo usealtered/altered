@@ -1,26 +1,33 @@
 import { getDatabase } from "../../storage/database/connection"
-import { type MessageContent, type MessageRole, messages } from "./schema"
+import {
+    type ChatMessageContent,
+    type ChatMessageRole,
+    chatMessages
+} from "./schema"
 
 /**
  * @todo P1: When auth is implemented, make the `userId` and `brainId` non-nullable.
  *
  * @todo P1: Convert errors to Effect.
  */
-async function saveMessage(values: {
+async function saveChatMessage(values: {
     userId: string | null
     brainId: string | null
     conversationId: string
 
-    role: MessageRole
-    content: MessageContent
+    role: ChatMessageRole
+    content: ChatMessageContent
 }) {
     const db = getDatabase()
 
-    const [row] = await db.insert(messages).values(values).returning()
+    const [savedMessage] = await db
+        .insert(chatMessages)
+        .values(values)
+        .returning()
 
-    if (!row) throw new Error("Failed to save message.")
+    if (!savedMessage) throw new Error("Failed to save chat message.")
 
-    return row
+    return savedMessage
 }
 
-export { saveMessage }
+export { saveChatMessage }

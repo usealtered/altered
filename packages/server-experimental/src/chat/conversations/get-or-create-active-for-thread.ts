@@ -7,18 +7,18 @@ import { getProviderId } from "../providers/get-id"
 import { conversations } from "./schema"
 
 async function getOrCreateActiveConversationForThread({
-    provider,
+    chatProvider,
 
     threadId
 }: {
-    provider: ProviderKey
+    chatProvider: ProviderKey
 
     threadId: string
 }) {
-    const providerId = getProviderId(provider)
+    const chatProviderId = getProviderId(chatProvider)
 
-    const resourceTypeId = getExternalResourceTypeId({
-        provider,
+    const chatSdkThreadResourceTypeId = getExternalResourceTypeId({
+        provider: "chat-sdk",
         type: "thread"
     })
 
@@ -29,7 +29,10 @@ async function getOrCreateActiveConversationForThread({
         .from(externalResources)
         .where(
             and(
-                eq(externalResources.resourceTypeId, resourceTypeId),
+                eq(
+                    externalResources.resourceTypeId,
+                    chatSdkThreadResourceTypeId
+                ),
                 eq(externalResources.referenceId, threadId)
             )
         )
@@ -50,7 +53,7 @@ async function getOrCreateActiveConversationForThread({
     return db.transaction(async tx => {
         const [newConversation] = await tx
             .insert(conversations)
-            .values({ providerId })
+            .values({ providerId: chatProviderId })
             .returning()
 
         if (!newConversation)
@@ -59,7 +62,7 @@ async function getOrCreateActiveConversationForThread({
         await tx.insert(externalResources).values({
             conversationId: newConversation.id,
             referenceId: threadId,
-            resourceTypeId
+            resourceTypeId: chatSdkThreadResourceTypeId
         })
 
         return newConversation

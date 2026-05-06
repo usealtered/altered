@@ -1,5 +1,5 @@
 import type { ALTEREDChat } from "../../../instance"
-import { handleDirectMessage } from "./direct"
+import { handleDirectMessage } from "./direct-message/handler"
 import { handleMessageWithMention } from "./mentions"
 import { handleSubscriptionMessage } from "./subscriptions"
 

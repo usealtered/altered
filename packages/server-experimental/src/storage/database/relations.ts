@@ -3,9 +3,9 @@ import { schema } from "./schema"
 
 const relations = defineRelations(schema, r => ({
     conversations: {
-        messages: r.many.messages({
+        chatMessages: r.many.chatMessages({
             from: r.conversations.id,
-            to: r.messages.conversationId
+            to: r.chatMessages.conversationId
         }),
         externalResources: r.many.externalResources({
             from: r.conversations.id,
@@ -13,13 +13,13 @@ const relations = defineRelations(schema, r => ({
         })
     },
 
-    messages: {
+    chatMessages: {
         conversation: r.one.conversations({
-            from: r.messages.conversationId,
+            from: r.chatMessages.conversationId,
             to: r.conversations.id
         }),
         externalResources: r.many.externalResources({
-            from: r.messages.id,
+            from: r.chatMessages.id,
             to: r.externalResources.messageId
         })
     },
@@ -29,9 +29,9 @@ const relations = defineRelations(schema, r => ({
             from: r.externalResources.conversationId,
             to: r.conversations.id
         }),
-        message: r.one.messages({
+        message: r.one.chatMessages({
             from: r.externalResources.messageId,
-            to: r.messages.id
+            to: r.chatMessages.id
         })
     }
 }))

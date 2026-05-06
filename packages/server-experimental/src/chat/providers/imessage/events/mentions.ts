@@ -8,7 +8,7 @@ function handleMessageWithMention(chat: ALTEREDChat): MentionHandler {
 
         await typeAndRespond(
             { chat, thread, message },
-            content => `[mention] Received: "${content}"`
+            context => `[mention] Received: "${context.message.text}"`
         )
     }
 }
