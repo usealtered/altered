@@ -1,10 +1,10 @@
 # PLAN STATE (Generated)
 
-Last updated: 2026-04-28
+Last updated: 2026-05-07
 
 ## Focus
 
-Current focus is the iMessage POC path with Sendblue + Chat SDK integration, moving into owned Postgres history, then AI bridge and memory-backed replies.
+Current focus is the iMessage POC path with production webhook flow, owned Postgres memory, and controlled local-dev routing for rapid message testing.
 
 ## Plan linkage
 
@@ -19,62 +19,76 @@ Current focus is the iMessage POC path with Sendblue + Chat SDK integration, mov
 
 ## Confirmed status
 
-- Adapter fork and API-surface alignment: **completed (current phase)**.
+- Adapter fork baseline and DM routing for direct messages: **completed**.
 
-- DM routing enablement for iMessage 1:1: **completed (current phase)**.
+- Drizzle CLI integration in `@altered/server-experimental`:
+  - `drizzle.config.ts` with repo-root `.env` load and required `SHARED_STORAGE_DATABASE_URL`.
+  - Scripts: `push:db`, `view:db` (+ root aliases `db:push`, `db:studio`).
+  - Package-level `turbo.json` env wiring for DB tasks.
+  - `pnpm check`: **passing**.
 
-- Known upstream Chat SDK quirk around DM mention/subscription semantics:
-  - `vercel/chat` issue `#432`.
+- Owned history data-access layer:
+  - Conversation resolution by thread id via `external_resources`.
+  - Reset/new conversation flow by re-pointing active thread anchor.
+  - Message save/list helpers and message-to-model transform.
+
+- Memory-backed AI response loop:
+  - Persist inbound user message.
+  - Load conversation history from Postgres.
+  - Generate assistant reply from model messages.
+  - Persist assistant reply.
+  - Status: **working in manual verification**.
+
+- Command trigger behavior:
+  - `/reset`, `/new`, `/clear` behavior corrected in latest iteration.
 
 ## Repository layout (this slice)
 
-- **Environment / config:** `packages/core-experimental/src/config/environment.ts` — `getEnvironmentConfig()` (singleton via `??=`) validates shared **database URL**, **KV URL**, and Sendblue provider secrets from env.
+- **Environment/config:** `packages/core-experimental/src/config/environment.ts`.
 
-- **Chat singleton:** `packages/server-experimental/src/chat/instance.ts` — `getAlteredChat()` (or equivalent) for the Chat SDK instance.
+- **AI generation:** `packages/server-experimental/src/ai/generate/response-from-model-messages.ts`.
 
-- **Provider constants:** `packages/server-experimental/src/chat/providers/definitions.ts` — opaque **provider ids** and metadata for conversations and cross-cutting use.
+- **Chat persistence helpers:**
+  - `packages/server-experimental/src/chat/conversations/get-or-create-active-for-thread.ts`
+  - `packages/server-experimental/src/chat/conversations/start-new-for-thread.ts`
+  - `packages/server-experimental/src/chat/messages/save.ts`
+  - `packages/server-experimental/src/chat/messages/list-for-conversation.ts`
+  - `packages/server-experimental/src/chat/messages/to-model-messages.ts`
 
-- **Drizzle:** `packages/server-experimental/src/storage/database/`
-  - `connection.ts` — `getDatabase()` uses `getEnvironmentConfig()` and `drizzle({ connection: { connectionString }, schema, relations, casing: "snake_case" })`.
-  - `schema.ts` — exports a **`schema` object** `{ conversations, messages, externalResources }` passed into `defineRelations` and `drizzle`.
-  - `relations.ts` — `defineRelations(schema, …)`.
-  - `external-resources/schema.ts` — **`external_resources`** polymorphic link table (`conversation_id` XOR `message_id` via `CHECK`), **`resource_type_id`** + **`reference_id`**, partial uniques per parent + type, global unique on `(resource_type_id, reference_id)`.
-  - `external-resources/definitions.ts` — in-code **resource type** registry (ids, keys, names, owning `providerId`).
+- **iMessage direct-message flow:**
+  - `packages/server-experimental/src/chat/providers/imessage/events/direct-message/handler.ts`
+  - `packages/server-experimental/src/chat/providers/imessage/events/direct-message/build-response.ts`
+  - `packages/server-experimental/src/chat/providers/imessage/events/direct-message/is-command-trigger.ts`
 
-- **Chat tables:** `packages/server-experimental/src/chat/conversations/schema.ts`, `…/messages/schema.ts` — `chat_conversations` (includes **`provider_id`**), `chat_messages` (**`parts` not null**, **`attachments` nullable**, `brain_id`, timestamptz).
-
-- **iMessage provider implementation:** `packages/server-experimental/src/chat/providers/imessage/**` (webhook, events, behaviors).
+- **Database schema wiring:**
+  - `packages/server-experimental/src/storage/database/schema.ts` now exports `{ conversations, chatMessages, externalResources }`.
+  - `packages/server-experimental/src/storage/database/relations.ts` aligned to `chatMessages`.
+  - `packages/server-experimental/src/storage/database/external-resources/*` includes `thread` type and provider-aware id resolution.
 
 ## Completion map (high-level)
 
-- Owned Postgres history schema (tables + relations + DB client wiring): **in progress** (structure landed; **persistence helpers + handler writes** not started).
+- Owned Postgres history schema + relations + data access: **completed for POC scope**.
 
-- AI history bridge and memory-backed generation: **not started**.
+- Memory-backed direct-message response path: **completed for POC scope**.
+
+- Message-id dedupe for replay/webhook duplicates: **queued (not started)**.
+
+- Production-to-dev rerouting from one webhook endpoint: **next planned work**.
+
+- Effect conversion/retries/hardening pass: **deferred until post-POC stabilization**.
+
+## Current risks and caveats
+
+- Dedupe is not implemented yet; duplicate provider deliveries can still create repeated message rows/replies.
+
+- Local/prod split testing currently requires standard deployment/tunnel switching; no in-band dev forwarding command yet.
+
+- Keep Chat SDK thread iterators out of LLM truth path; Postgres remains canonical for context.
 
 ## Next execution order
 
-1. Add small **repository / insert helpers** (conversation upsert, message insert, external resource upsert) using `getDatabase()`.
+1. Design and implement production webhook forwarding to local dev via explicit command/syntax (single webhook path, no double delivery).
 
-2. Wire **iMessage handlers** to persist inbound/outbound rows and link **Sendblue** / **Chat SDK** ids via `external_resources`.
+2. Add provider message-id dedupe guards in persistence path.
 
-3. Build a minimal **AI SDK v6 / LMS V3** message bridge from stored rows.
-
-4. Wire first **memory-backed** reply loop.
-
-## Risks and caveats to remember
-
-- Upstream Chat SDK routing behavior can make DM mention/subscription semantics odd in edge flows.
-
-- Do not use Chat SDK thread iterators as **source of truth** for LLM context; use owned rows.
-
-- Keep read receipt behavior explicit at the app layer.
-
-## Working assumptions
-
-- Drizzle remains inside `@altered/server-experimental` for this phase.
-
-- Redis remains Chat SDK state backend for this phase.
-
-- Owned Postgres tables are the canonical memory/history source for AI context.
-
-- Implementation stays in small, reviewable chunks with separate commits.
+3. Final POC polish pass (edge cases/refactor), then evaluate Effect migration effort for retries and error handling.
