@@ -4,15 +4,17 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 # \[TEMPORARY\] Codebase Migration
 
-- We are currently working to re-build the ALTERED app from scratch in this repo. For any given implementation, first inspect the project for any relevant patterns (including relevant git branches and stashes) at `/Users/inducingchaos/Workspace/containers/altered/`, and copy the code directly in a way that fits the current objective.
+- We are currently working to re-build the ALTERED app from scratch in this repo (often referenced as the "old" codebase). For any given implementation, first inspect the project for any relevant patterns (including relevant git branches and stashes) at `/Users/inducingchaos/Workspace/containers/altered/`, and copy the code directly in a way that fits the current objective. There are other `altered-*/` projects also in `containers/` (as well as a sub-path inside the `rileybarabash/` project), each an older version that I rebuilt from scratch in search of a better architecture - these older projects will rarely be useful, but can be referenced for tougher problems or deeper inspiration. Weigh their significance using the average date of the last 2-3 developmental commits.
 
 - If you have suggestions for better naming, structuring, or any other sort of improvements over the old codebase, always suggest them before copying the existing patterns.
 
 # Context
 
+- Before planning or implementation, always read `.context/_generated/STATE.md` and update it after each substantial turn to keep the plan execution synchronized.
+
 - Read `.context/PRODUCT.md` before starting any product or domain-specific work.
 
-- For up-to-date status on the current implementation, reference `.context/CURRENT.md`. This file helps us persist development direction and state across chats.
+- For a user-defined, macro-level definition of the direction and goal for the project, read `.context/CURRENT.md`. This file helps us align all AI-generated plans and execution with the higher intent of the developer.
 
 # Chat
 
@@ -30,9 +32,11 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - Prefer more fine-grained files over less all-in-one files.
 
-- Generate code in small, manageable chunks of 2-3 main functions, files, or topics at a time - then end your turn so that the code can be manually reviewed and committed.
+- Generate code in small, manageable chunks of 2-3 main functions, files, or topics at a time - then end your turn so that the code can be manually reviewed and committed. Never generate more than 80 lines or so unless the intent is explicit.
 
-- The following glob patterns represent the blacklist for modifying files - never touch them without explicit instruction: `.context/**`, `!.context/generated/**`, `AGENTS.md`.
+- Never add extra placeholder code or demonstrative cruft unless told to do so. I would prefer an incomplete or even non-functioning half-chunk of useful code, over a pile of useless showy code.
+
+- The following glob patterns represent the blacklist for modifying files - never touch them without explicit instruction: `.context/**`, `AGENTS.md`. Exceptions: `.context/generated/**`.
 
 - When saving a plan to the workspace, do so in `.context/_generated/plans`.
 
@@ -60,9 +64,17 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - Inline comments should have 2 spaces before the content to aesthetically match indentation, rather than 1 space: `//  <content>`.
 
-- TODOs should follow the format `@todo P<0-3> <description>` for TSDoc, and `TODO P<0-3> <description>` for inline comments.
+- TSDoc definitions should always be in their expanded, multiline form.
+
+- TODOs should follow the format `@todo P<0-3>: <description>` for TSDoc, and `TODO P<0-3>: <description>` for inline comments.
+
+- All (non-data) commentary text (TODOs, remarks, etc.) should use proper sentence grammar, including proper capitalization punctuation (including periods).
 
 - Comments should use the `@remarks` flag in TSDoc.
+
+- For human-readable IDs (any textual key that is not random), I prefer a kebab-case as our primary format. If the ID style has a very strong associative tie to its implementation (such as snake_case for database tables), use that format instead.
+
+- Don't litter our code with comments unless absolutely necessary. If I don't understand something, or it's a special implementation that requires explanation, or a TODO is needed, then a comment is appropriate. Keep it extremely minimal with only the details needed.
 
 - When generating code segments that allow block-statements such as "if" conditions or "for" loops, prefer to inline the logic if possible, condensing it into a single line.
 
@@ -104,6 +116,8 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - I prefer using ArkType over Zod.
 
+- For almost all unique ID requirements, let's use the `nanoid` library with the default alphabet and 21-character length.
+
 - For any substantial programmatic video generation, prefer Remotion.
 
 - For message-based agent integration, we will use iMessage via the Vercel Chat SDK and the Sendblue adapter. In the future, we may migrate from Sendblue to the Linq Blue API for features and reliability (costs much more, but it may be worth it).
@@ -112,9 +126,17 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - When using Effect, until v4 is stable, always fetch the migration docs: `https://raw.githubusercontent.com/Effect-TS/effect-smol/refs/heads/main/MIGRATION.md`. Then, if you want info about any non-obvious APIs, fetch `https://effect.website/llms-full.txt`. Lastly, some functions cannot be found in the documentation, so consider searching the source code directly.
 
+# Configuration
+
+- Never modify the package.json `exports` entries of any package that uses a `"./*": "./src/*.ts"` pattern. This allows us to use dynamic import paths without having to specify them individually, or revert to using a performance-heavy barrel file pattern.
+
+- Regarding `turbo.json` and environment variables for caching, only add newly-used variables in the co-located `turbo.json` of the consuming application - not in packages. Only add them for tasks that have caching enabled (e.g. `build`). `globalPassThroughEnv` should only be used for system environment variables.
+
+- Do not add redundant configurations to files like `vercel.json` if the consuming tool can auto-detect or use a reasonable default.
+
 # Repository Structure
 
-- Deployable apps (under `apps/`) should be a thin configuration shell for each build that simply re-exports imported modules from the respective composition package. Each composition package (under `packages/<app>-components-*/`) should combine all necessary layers for a build using the remaining scoped workspace packages. Each scoped package denotes to a specific axis and variant of the structure we outline in this section.
+- Deployable apps (under `apps/`) should be a thin configuration shell for each build that simply re-exports imported modules from the respective composition package. Each composition package (under `packages/<app_name>*/`) should combine all necessary layers for a build using the remaining scoped workspace packages. Each scoped package denotes to a specific axis and variant of the structure we outline in this section.
 
 ## Axes of Intention
 

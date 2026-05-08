@@ -1,0 +1,35 @@
+{
+    "name": "@altered/server-experimental",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        "./*": "./src/*.ts"
+    },
+    "scripts": {
+        "check:types": "tsc",
+        "clean": "git clean -xdf .cache .turbo dist node_modules",
+
+        "push:db": "drizzle-kit push",
+        "view:db": "drizzle-kit studio"
+    },
+    "dependencies": {
+        "@altered/core-experimental": "workspace:*",
+        "@chat-adapter/state-redis": "catalog:",
+        "@openrouter/ai-sdk-provider": "catalog:",
+        "ai": "catalog:",
+        "chat": "catalog:",
+        "chat-adapter-sendblue": "catalog:",
+        "drizzle-orm": "catalog:",
+        "nanoid": "catalog:",
+        "pg": "catalog:",
+        "redis": "catalog:"
+    },
+    "devDependencies": {
+        "@types/node": "catalog:",
+        "@types/pg": "catalog:",
+        "dotenv": "catalog:",
+        "drizzle-kit": "catalog:",
+        "typescript": "catalog:"
+    }
+}

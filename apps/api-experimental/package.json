@@ -1,0 +1,25 @@
+{
+    "name": "altered-api-experimental",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "tsx watch --env-file=../../.env --include ../../.env src/index.ts",
+
+        "check:types": "tsc",
+
+        "clean": "git clean -xdf .cache .turbo dist node_modules",
+
+        "build": "tsc --noEmit false",
+
+        "start": "node dist/index.js"
+    },
+    "dependencies": {
+        "@altered/api-experimental": "workspace:*"
+    },
+    "devDependencies": {
+        "@types/node": "catalog:",
+        "tsx": "catalog:",
+        "typescript": "catalog:"
+    }
+}

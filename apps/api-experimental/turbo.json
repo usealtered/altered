@@ -1,0 +1,20 @@
+{
+    "$schema": "https://turborepo.com/schema.json",
+    "extends": ["//"],
+
+    "tasks": {
+        "build": {
+            "env": [
+                "SHARED_STORAGE_KV_URL",
+
+                "SHARED_PROVIDER_SENDBLUE_PUBLIC",
+                "SHARED_PROVIDER_SENDBLUE_SECRET",
+                "SHARED_PROVIDER_SENDBLUE_SIGNING",
+                "SHARED_PROVIDER_SENDBLUE_NUMBER",
+                "SHARED_PROVIDER_NGROK_URL",
+
+                "API_CONFIG_PORT"
+            ]
+        }
+    }
+}

@@ -25,7 +25,9 @@
                     "options": {
                         "style": "type"
                     }
-                }
+                },
+
+                "useExportsLast": "error"
             },
 
             "performance": {

@@ -1,0 +1,16 @@
+import type { MentionHandler, Message, Thread } from "chat"
+import type { ALTEREDChat } from "../../../instance"
+import { typeAndRespond } from "../behaviors/type-and-respond"
+
+function handleMessageWithMention(chat: ALTEREDChat): MentionHandler {
+    return async (thread: Thread, message: Message): Promise<void> => {
+        console.log("Message with mention received:", message)
+
+        await typeAndRespond(
+            { chat, thread, message },
+            context => `[mention] Received: "${context.message.text}"`
+        )
+    }
+}
+
+export { handleMessageWithMention }

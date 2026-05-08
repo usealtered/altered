@@ -2,9 +2,9 @@
     "$schema": "https://json.schemastore.org/tsconfig",
 
     "compilerOptions": {
-        "target": "ES2023",
-        "module": "Preserve",
-        "moduleResolution": "Bundler",
+        "target": "esnext",
+        "module": "preserve",
+        "moduleResolution": "bundler",
         "moduleDetection": "force",
         "esModuleInterop": true,
         "resolveJsonModule": true,
@@ -16,8 +16,11 @@
         "forceConsistentCasingInFileNames": true,
         "incremental": true,
         "tsBuildInfoFile": "${configDir}/.cache/tsbuildinfo.json",
-        "noEmit": true
+        "noEmit": true,
+        "types": ["node"],
+        "rootDir": "${configDir}/src",
+        "outDir": "${configDir}/dist"
     },
 
-    "exclude": ["node_modules", "build", "dist", ".next", ".expo"]
+    "include": ["${configDir}/src/**/*.ts"]
 }
