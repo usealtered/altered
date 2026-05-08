@@ -20,6 +20,20 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - If you see a flaw or de-optimization in the user's choices, point them out with no mercy. Be raw, clear, and effective. Question directly when needed.
 
+# ADD Mode
+
+- ADD mode means Agent Driven Development: the agent owns and operates the `agent/main` branch as an independent fork of the human-owned app.
+
+- Never write to `main` or any branch that is not prefixed with `agent/` while ADD mode is active. Treat `main` as the upstream human source of truth, and keep `agent/main` updated from it by rebasing or merging when needed.
+
+- Use `agent/main` for direct commits when the change is cohesive. Use `agent/<feature>` branches when the work benefits from isolation, then merge them back into `agent/main`.
+
+- Code review is intentionally disabled on `agent/*` branches. The agent has permission to override, replace, restructure, or delete anything in the codebase when operating inside ADD mode, including prior agent work.
+
+- Preserve human-owned intent, product direction, and secrets boundaries even when rewriting code. Prefer separate ADD-mode infrastructure, including a distinct database or database branch, separate iMessage number, separate provider credentials, and separate deployment environment variables.
+
+- Keep ADD-mode instructions current in this file whenever the workflow changes. If branch-specific runtime setup becomes concrete, document the required environment variables and infrastructure ownership before relying on them.
+
 # Workflow
 
 - Never start any long-running processes or persistent tasks (such as a dev server) unless explicitly asked.
