@@ -17,6 +17,9 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
 - Architecture constraints:
   - `.context/_generated/plans/monorepo-architecture.md`
 
+- Human pacing / multi-bubble roadmap (not MVP timing engine):
+  - `.context/_generated/plans/imessage-human-timing-emulation.md`
+
 ## Confirmed status
 
 - Adapter fork baseline and DM routing for direct messages: **completed**.
@@ -44,7 +47,7 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
 
 ## Repository layout (this slice)
 
-- **Environment/config:** `packages/core-experimental/src/config/environment.ts`.
+- **Environment/config:** `packages/core-experimental/src/config/environment.ts` (includes **`shared.identity.adminPhoneNumber`** from **`SHARED_ADMIN_PHONE_NUMBER`**, defaults to **`""`** when unset to disable gated behavior).
 
 - **AI generation:** `packages/server-experimental/src/ai/generate/response-from-model-messages.ts`.
 
@@ -87,8 +90,10 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
 
 ## Next execution order
 
-1. Design and implement production webhook forwarding to local dev via explicit command/syntax (single webhook path, no double delivery).
+1. Implement production webhook forwarding to local tunnel for **admin-only** **`/dev`** messages; strip routing prefix before persistence; on forward success return **`200` `OK`** from prod **without running** Chat SDK ingestion (same shape as `SendblueAdapter.handleWebhook` success responses). **Failure policy:** tunnel unreachable ⇒ return **`200` `OK`**, **no prod ingestion**, **no forward** (fixed response body; no thread side effects).
 
 2. Add provider message-id dedupe guards in persistence path.
 
-3. Final POC polish pass (edge cases/refactor), then evaluate Effect migration effort for retries and error handling.
+3. POC solidification: multi-bubble send pipeline (defer full timing emulation; see `.context/_generated/plans/imessage-human-timing-emulation.md`).
+
+4. Final refactor/polish, then evaluate Effect migration effort for retries and error handling.

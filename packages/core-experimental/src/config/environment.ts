@@ -7,6 +7,14 @@ import { type } from "arktype"
  */
 const environmentConfigSchema = type({
     shared: {
+        config: {
+            env: "string"
+        },
+
+        admin: {
+            phoneNumber: "string"
+        },
+
         storage: {
             database: {
                 url: "string"
@@ -37,6 +45,14 @@ let environmentConfig: EnvironmentConfig | undefined
 function getEnvironmentConfig(): EnvironmentConfig {
     environmentConfig ??= environmentConfigSchema.assert({
         shared: {
+            config: {
+                env: process.env.SHARED_CONFIG_ENV
+            },
+
+            admin: {
+                phoneNumber: process.env.SHARED_ADMIN_PHONE_NUMBER
+            },
+
             storage: {
                 database: {
                     url: process.env.SHARED_STORAGE_DATABASE_URL
