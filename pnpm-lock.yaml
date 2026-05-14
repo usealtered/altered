@@ -45,6 +45,9 @@ catalogs:
     drizzle-orm:
       specifier: 1.0.0-beta.22
       version: 1.0.0-beta.22
+    esbuild:
+      specifier: ^0.25.12
+      version: 0.25.12
     hono:
       specifier: 4.12.16
       version: 4.12.16
@@ -90,6 +93,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 25.6.0
+      esbuild:
+        specifier: 'catalog:'
+        version: 0.25.12
       tsx:
         specifier: 'catalog:'
         version: 4.21.0

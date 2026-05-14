@@ -6,6 +6,7 @@
     "exports": {
         "./*": {
             "types": "./src/*.ts",
+            "bundler": "./src/*.ts",
             "default": "./dist/*.js"
         }
     },
