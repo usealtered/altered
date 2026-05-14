@@ -4,14 +4,22 @@
     "private": true,
     "type": "module",
     "exports": {
-        "./*": "./src/*.ts"
+        "./*": {
+            "types": "./src/*.ts",
+            "default": "./dist/*.js"
+        }
     },
     "scripts": {
+        "dev": "tsc --noEmit false --watch",
+
         "check:types": "tsc",
+
         "clean": "git clean -xdf .cache .turbo dist node_modules",
 
         "push:db": "drizzle-kit push",
-        "view:db": "drizzle-kit studio"
+        "view:db": "drizzle-kit studio",
+
+        "build": "tsc --noEmit false"
     },
     "dependencies": {
         "@altered/core-experimental": "workspace:*",

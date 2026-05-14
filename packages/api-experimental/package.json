@@ -4,13 +4,23 @@
     "private": true,
     "type": "module",
     "exports": {
-        ".": "./src/index.ts",
-        "./*": "./src/*.ts"
+        ".": {
+            "types": "./src/index.ts",
+            "default": "./dist/index.js"
+        },
+        "./*": {
+            "types": "./src/*.ts",
+            "default": "./dist/*.js"
+        }
     },
     "scripts": {
+        "dev": "tsc --noEmit false --watch",
+
         "check:types": "tsc",
 
-        "clean": "git clean -xdf .cache .turbo dist node_modules"
+        "clean": "git clean -xdf .cache .turbo dist node_modules",
+
+        "build": "tsc --noEmit false"
     },
     "dependencies": {
         "@altered/core-experimental": "workspace:*",

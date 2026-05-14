@@ -4,12 +4,19 @@
     "private": true,
     "type": "module",
     "exports": {
-        "./*": "./src/*.ts"
+        "./*": {
+            "types": "./src/*.ts",
+            "default": "./dist/*.js"
+        }
     },
     "scripts": {
+        "dev": "tsc --noEmit false --watch",
+
         "check:types": "tsc",
 
-        "clean": "git clean -xdf .cache .turbo dist node_modules"
+        "clean": "git clean -xdf .cache .turbo dist node_modules",
+
+        "build": "tsc --noEmit false"
     },
     "devDependencies": {
         "@types/node": "catalog:",
