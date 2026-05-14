@@ -15,7 +15,8 @@
         "start": "node dist/index.js"
     },
     "dependencies": {
-        "@altered/api-experimental": "workspace:*"
+        "@altered/api-experimental": "workspace:*",
+        "hono": "catalog:"
     },
     "devDependencies": {
         "@types/node": "catalog:",
