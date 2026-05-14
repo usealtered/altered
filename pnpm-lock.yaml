@@ -83,6 +83,9 @@ importers:
       '@altered/api-experimental':
         specifier: workspace:*
         version: link:../../packages/api-experimental
+      hono:
+        specifier: 'catalog:'
+        version: 4.12.16
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
