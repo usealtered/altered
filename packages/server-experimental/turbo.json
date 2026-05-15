@@ -9,6 +9,10 @@
 
         "view:db": {
             "env": ["SHARED_STORAGE_DATABASE_URL"]
+        },
+
+        "build": {
+            "env": ["$TURBO_EXTENDS$", "API_*"]
         }
     }
 }
