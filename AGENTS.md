@@ -72,6 +72,8 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - Comments should use the `@remarks` flag in TSDoc.
 
+- Module exports should never be exported inline, instead prefer exporting explicitly at the bottom of the defining file.
+
 - For human-readable IDs (any textual key that is not random), I prefer a kebab-case as our primary format. If the ID style has a very strong associative tie to its implementation (such as snake_case for database tables), use that format instead.
 
 - Don't litter our code with comments unless absolutely necessary. If I don't understand something, or it's a special implementation that requires explanation, or a TODO is needed, then a comment is appropriate. Keep it extremely minimal with only the details needed.

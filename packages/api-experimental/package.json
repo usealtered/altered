@@ -4,13 +4,25 @@
     "private": true,
     "type": "module",
     "exports": {
-        ".": "./src/index.ts",
-        "./*": "./src/*.ts"
+        ".": {
+            "types": "./src/index.ts",
+            "bundler": "./src/index.ts",
+            "default": "./dist/index.js"
+        },
+        "./*": {
+            "types": "./src/*.ts",
+            "bundler": "./src/*.ts",
+            "default": "./dist/*.js"
+        }
     },
     "scripts": {
+        "dev": "tsc -p tsconfig.build.json --watch",
+
         "check:types": "tsc",
 
-        "clean": "git clean -xdf .cache .turbo dist node_modules"
+        "clean": "altered-clean-package",
+
+        "build": "tsc -p tsconfig.build.json"
     },
     "dependencies": {
         "@altered/core-experimental": "workspace:*",
@@ -20,6 +32,7 @@
         "hono": "catalog:"
     },
     "devDependencies": {
+        "@altered/tooling": "workspace:*",
         "@types/node": "catalog:",
         "typescript": "catalog:"
     }

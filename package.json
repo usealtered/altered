@@ -19,12 +19,13 @@
         "push:db": "turbo push:db",
         "view:db": "turbo view:db",
 
-        "clean": "turbo clean && git clean -xdf .cache .turbo dist node_modules",
+        "clean": "altered-clean-package -w",
 
         "build": "turbo build"
     },
 
     "devDependencies": {
+        "@altered/tooling": "workspace:*",
         "@biomejs/biome": "^2.4.13",
         "turbo": "^2.9.6",
         "ultracite": "^7.6.1"

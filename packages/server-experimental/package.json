@@ -4,14 +4,23 @@
     "private": true,
     "type": "module",
     "exports": {
-        "./*": "./src/*.ts"
+        "./*": {
+            "types": "./src/*.ts",
+            "bundler": "./src/*.ts",
+            "default": "./dist/*.js"
+        }
     },
     "scripts": {
+        "dev": "tsc -p tsconfig.build.json --watch",
+
         "check:types": "tsc",
-        "clean": "git clean -xdf .cache .turbo dist node_modules",
+
+        "clean": "altered-clean-package",
 
         "push:db": "drizzle-kit push",
-        "view:db": "drizzle-kit studio"
+        "view:db": "drizzle-kit studio",
+
+        "build": "tsc -p tsconfig.build.json"
     },
     "dependencies": {
         "@altered/core-experimental": "workspace:*",
@@ -26,6 +35,7 @@
         "redis": "catalog:"
     },
     "devDependencies": {
+        "@altered/tooling": "workspace:*",
         "@types/node": "catalog:",
         "@types/pg": "catalog:",
         "dotenv": "catalog:",

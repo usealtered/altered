@@ -45,6 +45,9 @@ catalogs:
     drizzle-orm:
       specifier: 1.0.0-beta.22
       version: 1.0.0-beta.22
+    esbuild:
+      specifier: ^0.25.12
+      version: 0.25.12
     hono:
       specifier: 4.12.16
       version: 4.12.16
@@ -68,6 +71,9 @@ importers:
 
   .:
     devDependencies:
+      '@altered/tooling':
+        specifier: workspace:*
+        version: link:packages/tooling
       '@biomejs/biome':
         specifier: ^2.4.13
         version: 2.4.13
@@ -87,6 +93,9 @@ importers:
         specifier: 'catalog:'
         version: 4.12.16
     devDependencies:
+      '@altered/tooling':
+        specifier: workspace:*
+        version: link:../../packages/tooling
       '@types/node':
         specifier: 'catalog:'
         version: 25.6.0
@@ -115,6 +124,9 @@ importers:
         specifier: 'catalog:'
         version: 4.12.16
     devDependencies:
+      '@altered/tooling':
+        specifier: workspace:*
+        version: link:../tooling
       '@types/node':
         specifier: 'catalog:'
         version: 25.6.0
@@ -128,6 +140,9 @@ importers:
         specifier: 'catalog:'
         version: 2.2.0
     devDependencies:
+      '@altered/tooling':
+        specifier: workspace:*
+        version: link:../tooling
       '@types/node':
         specifier: 'catalog:'
         version: 25.6.0
@@ -168,6 +183,9 @@ importers:
         specifier: 'catalog:'
         version: 5.12.1(@opentelemetry/api@1.9.0)
     devDependencies:
+      '@altered/tooling':
+        specifier: workspace:*
+        version: link:../tooling
       '@types/node':
         specifier: 'catalog:'
         version: 25.6.0
@@ -184,7 +202,21 @@ importers:
         specifier: 'catalog:'
         version: 6.0.3
 
-  tooling/typescript: {}
+  packages/tooling:
+    dependencies:
+      esbuild:
+        specifier: 'catalog:'
+        version: 0.25.12
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 25.6.0
+      tsx:
+        specifier: 'catalog:'
+        version: 4.21.0
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
 
 packages:
 

@@ -3,7 +3,7 @@
 
     "compilerOptions": {
         "target": "esnext",
-        "module": "preserve",
+        "module": "esnext",
         "moduleResolution": "bundler",
         "moduleDetection": "force",
         "esModuleInterop": true,
@@ -15,12 +15,21 @@
         "noUncheckedIndexedAccess": true,
         "forceConsistentCasingInFileNames": true,
         "incremental": true,
-        "tsBuildInfoFile": "${configDir}/.cache/tsbuildinfo.json",
+        "tsBuildInfoFile": "${configDir}/.cache/ts-build-info.json",
         "noEmit": true,
+        "declaration": false,
+        "declarationMap": false,
         "types": ["node"],
-        "rootDir": "${configDir}/src",
-        "outDir": "${configDir}/dist"
+        "rootDir": "${configDir}",
+        "outDir": "${configDir}/dist",
+        "paths": { "~/*": ["${configDir}/src/*"] }
     },
 
-    "include": ["${configDir}/src/**/*.ts"]
+    "include": ["${configDir}/**/*.ts"],
+    "exclude": [
+        "${configDir}/dist/**",
+        "${configDir}/node_modules/**",
+        "${configDir}/.cache/**",
+        "${configDir}/.turbo/**"
+    ]
 }

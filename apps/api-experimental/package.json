@@ -8,9 +8,9 @@
 
         "check:types": "tsc",
 
-        "clean": "git clean -xdf .cache .turbo dist node_modules",
+        "clean": "altered-clean-package",
 
-        "build": "tsc --noEmit false",
+        "build": "altered-bundle-application",
 
         "start": "node dist/index.js"
     },
@@ -19,6 +19,7 @@
         "hono": "catalog:"
     },
     "devDependencies": {
+        "@altered/tooling": "workspace:*",
         "@types/node": "catalog:",
         "tsx": "catalog:",
         "typescript": "catalog:"
