@@ -16,13 +16,13 @@
         }
     },
     "scripts": {
-        "dev": "tsc --noEmit false --watch",
+        "dev": "tsc -p tsconfig.build.json --watch",
 
         "check:types": "tsc",
 
-        "clean": "git clean -xdf .cache .turbo dist node_modules",
+        "clean": "altered-clean-package",
 
-        "build": "tsc --noEmit false"
+        "build": "tsc -p tsconfig.build.json"
     },
     "dependencies": {
         "@altered/core-experimental": "workspace:*",
@@ -32,6 +32,7 @@
         "hono": "catalog:"
     },
     "devDependencies": {
+        "@altered/tooling": "workspace:*",
         "@types/node": "catalog:",
         "typescript": "catalog:"
     }

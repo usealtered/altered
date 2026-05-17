@@ -1,7 +1,6 @@
 packages:
   - apps/*
   - packages/*
-  - tooling/*
 
 catalog:
   '@chat-adapter/state-redis': ^4.27.0

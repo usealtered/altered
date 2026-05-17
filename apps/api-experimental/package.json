@@ -8,20 +8,19 @@
 
         "check:types": "tsc",
 
-        "clean": "git clean -xdf .cache .turbo dist node_modules",
+        "clean": "altered-clean-package",
 
-        "build": "esbuild src/index.ts --bundle --platform=node --format=esm --target=esnext --conditions=bundler --outfile=dist/index.js --external:hono --external:@hono/node-server --external:pg --external:redis --external:@redis/client",
+        "build": "altered-bundle-application",
 
         "start": "node dist/index.js"
     },
     "dependencies": {
         "@altered/api-experimental": "workspace:*",
-        "hono": "catalog:",
-        "redis": "catalog:"
+        "hono": "catalog:"
     },
     "devDependencies": {
+        "@altered/tooling": "workspace:*",
         "@types/node": "catalog:",
-        "esbuild": "catalog:",
         "tsx": "catalog:",
         "typescript": "catalog:"
     }
