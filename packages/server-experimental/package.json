@@ -27,6 +27,7 @@
         "@chat-adapter/state-redis": "catalog:",
         "@openrouter/ai-sdk-provider": "catalog:",
         "ai": "catalog:",
+        "arktype": "catalog:",
         "chat": "catalog:",
         "chat-adapter-sendblue": "catalog:",
         "drizzle-orm": "catalog:",

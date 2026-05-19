@@ -1,13 +1,14 @@
+import { NEW_CONVERSATION_TRIGGER_PHRASES } from "@altered/server-experimental/chat/messages/commands/definitions"
 import { generateResponseFromModelMessages } from "../../../../../ai/generate/response-from-model-messages"
 import { IDENTITY_SYSTEM_PROMPT } from "../../../../../ai/prompts/identity"
 import { getOrCreateActiveConversationForThread } from "../../../../conversations/get-or-create-active-for-thread"
 import { startNewConversationForThread } from "../../../../conversations/start-new-for-thread"
+import { containsCommandTriggerPhrases } from "../../../../messages/commands/contains-trigger-phrases"
 import { listChatMessagesForConversation } from "../../../../messages/list-for-conversation"
 import { saveChatMessage } from "../../../../messages/save"
 import { toModelMessages } from "../../../../messages/to-model-messages"
 import { IMESSAGE_SYSTEM_PROMPT } from "../../behaviors/generation/prompt"
 import type { ChatResponseContext } from "../../behaviors/type-and-respond"
-import { containsCommandTriggerPhrase } from "./contains-command-trigger"
 
 async function buildDirectMessageResponse({
     thread,
@@ -16,9 +17,9 @@ async function buildDirectMessageResponse({
     const { text: inboundMessageText } = message
 
     if (
-        containsCommandTriggerPhrase({
+        containsCommandTriggerPhrases({
             message: inboundMessageText,
-            phrases: ["/reset", "/new", "/clear"]
+            phrases: [...NEW_CONVERSATION_TRIGGER_PHRASES]
         })
     ) {
         await startNewConversationForThread({
