@@ -1,9 +1,11 @@
 import { isDevelopment } from "@altered/core-experimental/config/environment/is-development"
 import { FORWARD_WEBHOOK_TRIGGER_PHRASES } from "@altered/server-experimental/chat/messages/commands/definitions"
+import type { WebhookOptions } from "chat"
 import type { SendblueMessagePayload } from "chat-adapter-sendblue"
 import { getAlteredChat } from "../../../instance"
 import { stripCommandTriggerPhrases } from "../../../messages/commands/strip-trigger-phrases"
 import { respondFromRaw } from "../behaviors/respond-from-raw"
+import { afterResponse } from "./after-response"
 import {
     containsForwardWebhookTriggerPhrase,
     forwardSendblueWebhook,
@@ -14,7 +16,7 @@ import { parseSendblueWebhook } from "./parse"
 
 async function processSendblueWebhook(
     request: Request,
-    options?: { waitUntil?: (task: Promise<unknown>) => void }
+    options?: Pick<WebhookOptions, "waitUntil">
 ): Promise<Response> {
     const handleWebhook = getAlteredChat().webhooks.sendblue
 
@@ -33,42 +35,42 @@ async function processSendblueWebhook(
             messagePayload: parsedRequest.data
         })
     ) {
-        const strippedData: SendblueMessagePayload = {
-            ...parsedRequest.data,
+        afterResponse(async () => {
+            const strippedData: SendblueMessagePayload = {
+                ...parsedRequest.data,
 
-            content: stripCommandTriggerPhrases({
-                message: parsedRequest.data.content,
-                phrases: [...FORWARD_WEBHOOK_TRIGGER_PHRASES]
-            })
-        }
+                content: stripCommandTriggerPhrases({
+                    message: parsedRequest.data.content,
+                    phrases: [...FORWARD_WEBHOOK_TRIGGER_PHRASES]
+                })
+            }
 
-        if (
-            hasPermissionToForwardWebhook({
-                messagePayload: parsedRequest.data
-            })
-        ) {
-            //  TODO P2: Figure out how to use `waitUntil` here, with a fallback caller for when it is not defined.
-
-            const { success } = await forwardSendblueWebhook({
-                request,
-                messagePayload: strippedData
-            })
-
-            if (!success)
-                await respondFromRaw({
-                    messagePayload: parsedRequest.data,
-                    createResponse: _context =>
-                        "Unable to reach the development server. Please try again later."
+            if (
+                hasPermissionToForwardWebhook({
+                    messagePayload: parsedRequest.data
+                })
+            ) {
+                const { success } = await forwardSendblueWebhook({
+                    request,
+                    messagePayload: strippedData
                 })
 
-            return new Response("OK", { status: 200 })
-        }
+                if (!success)
+                    await respondFromRaw({
+                        messagePayload: parsedRequest.data,
+                        createResponse: _context =>
+                            "Unable to reach the development server. Please try again later."
+                    })
 
-        await respondFromRaw({
-            messagePayload: parsedRequest.data,
-            createResponse: _context =>
-                "You do not have permission to use this feature."
-        })
+                return
+            }
+
+            await respondFromRaw({
+                messagePayload: parsedRequest.data,
+                createResponse: _context =>
+                    "You do not have permission to use this feature."
+            })
+        }, options?.waitUntil)
 
         return new Response("OK", { status: 200 })
     }
