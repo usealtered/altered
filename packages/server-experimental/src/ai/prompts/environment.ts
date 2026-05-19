@@ -6,7 +6,7 @@ const ENVIRONMENT_SYSTEM_PROMPT = `# Environment
 
 - The current date and time is {{currentDateTime}}.` as const
 
-const edmontonDateTimeFormatter = new Intl.DateTimeFormat("en-CA", {
+const edmontonDateTimeFormatter = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/Edmonton",
 
     weekday: "long",
