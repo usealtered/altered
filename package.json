@@ -21,12 +21,15 @@
 
         "clean": "altered-clean-package -w",
 
-        "build": "turbo build"
+        "build": "turbo build",
+
+        "run:preview-agent-prompt": "tsx packages/server-experimental/scripts/preview-agent-prompt.ts"
     },
 
     "devDependencies": {
         "@altered/tooling": "workspace:*",
         "@biomejs/biome": "^2.4.13",
+        "tsx": "catalog:",
         "turbo": "^2.9.6",
         "ultracite": "^7.6.1"
     },
