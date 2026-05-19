@@ -7,12 +7,12 @@
         ".": {
             "types": "./src/index.ts",
             "bundler": "./src/index.ts",
-            "default": "./dist/index.js"
+            "import": "./dist/index.js"
         },
         "./*": {
             "types": "./src/*.ts",
             "bundler": "./src/*.ts",
-            "default": "./dist/*.js"
+            "import": "./dist/*.js"
         }
     },
     "scripts": {

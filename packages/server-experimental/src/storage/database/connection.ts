@@ -1,4 +1,4 @@
-import { getEnvironmentConfig } from "@altered/core-experimental/config/environment"
+import { getEnvironmentConfig } from "@altered/core-experimental/config/environment/definitions"
 import { drizzle } from "drizzle-orm/node-postgres"
 import { relations } from "./relations"
 import { schema } from "./schema"

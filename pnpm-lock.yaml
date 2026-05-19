@@ -164,6 +164,9 @@ importers:
       ai:
         specifier: 'catalog:'
         version: 6.0.174(zod@4.3.6)
+      arktype:
+        specifier: 'catalog:'
+        version: 2.2.0
       chat:
         specifier: 'catalog:'
         version: 4.27.0

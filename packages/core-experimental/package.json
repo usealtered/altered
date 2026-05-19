@@ -7,7 +7,7 @@
         "./*": {
             "types": "./src/*.ts",
             "bundler": "./src/*.ts",
-            "default": "./dist/*.js"
+            "import": "./dist/*.js"
         }
     },
     "scripts": {

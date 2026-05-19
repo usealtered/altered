@@ -1,4 +1,4 @@
-import { getEnvironmentConfig } from "@altered/core-experimental/config/environment"
+import { getEnvironmentConfig } from "@altered/core-experimental/config/environment/definitions"
 import { createOpenRouter } from "@openrouter/ai-sdk-provider"
 
 let openrouter: ReturnType<typeof createOpenRouter> | undefined

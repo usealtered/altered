@@ -33,6 +33,10 @@ const environmentConfigSchema = type({
             },
             openrouter: {
                 secret: "string"
+            },
+            ngrok: {
+                url: "string",
+                secret: "string"
             }
         }
     }
@@ -71,6 +75,10 @@ function getEnvironmentConfig(): EnvironmentConfig {
                 },
                 openrouter: {
                     secret: process.env.SHARED_PROVIDER_OPENROUTER_SECRET
+                },
+                ngrok: {
+                    url: process.env.SHARED_PROVIDER_NGROK_URL,
+                    secret: process.env.SHARED_PROVIDER_NGROK_SECRET
                 }
             }
         }

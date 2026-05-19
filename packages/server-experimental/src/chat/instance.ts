@@ -1,5 +1,5 @@
 import { botUsername } from "@altered/core-experimental/config/app"
-import { getEnvironmentConfig } from "@altered/core-experimental/config/environment"
+import { getEnvironmentConfig } from "@altered/core-experimental/config/environment/definitions"
 import { createRedisState } from "@chat-adapter/state-redis"
 import { Chat } from "chat"
 import {

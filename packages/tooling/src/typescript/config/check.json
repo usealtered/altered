@@ -17,12 +17,9 @@
         "incremental": true,
         "tsBuildInfoFile": "${configDir}/.cache/ts-build-info.json",
         "noEmit": true,
-        "declaration": false,
-        "declarationMap": false,
         "types": ["node"],
         "rootDir": "${configDir}",
-        "outDir": "${configDir}/dist",
-        "paths": { "~/*": ["${configDir}/src/*"] }
+        "outDir": "${configDir}/dist"
     },
 
     "include": ["${configDir}/**/*.ts"],
