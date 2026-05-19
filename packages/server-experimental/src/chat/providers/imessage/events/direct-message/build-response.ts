@@ -1,5 +1,6 @@
 import { NEW_CONVERSATION_TRIGGER_PHRASES } from "@altered/server-experimental/chat/messages/commands/definitions"
 import { generateResponseFromModelMessages } from "../../../../../ai/generate/response-from-model-messages"
+import { createEnvironmentSystemPrompt } from "../../../../../ai/prompts/environment"
 import { IDENTITY_SYSTEM_PROMPT } from "../../../../../ai/prompts/identity"
 import { getOrCreateActiveConversationForThread } from "../../../../conversations/get-or-create-active-for-thread"
 import { startNewConversationForThread } from "../../../../conversations/start-new-for-thread"
@@ -49,7 +50,11 @@ async function buildDirectMessageResponse({
     const generatedMessageText = await generateResponseFromModelMessages(
         modelMessages,
         {
-            prompts: [IDENTITY_SYSTEM_PROMPT, IMESSAGE_SYSTEM_PROMPT]
+            prompts: [
+                IDENTITY_SYSTEM_PROMPT,
+                createEnvironmentSystemPrompt(),
+                IMESSAGE_SYSTEM_PROMPT
+            ]
         }
     )
 
