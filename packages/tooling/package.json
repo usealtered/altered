@@ -11,7 +11,7 @@
     "exports": {
         "./*": {
             "types": "./src/*.ts",
-            "default": "./src/*.ts"
+            "import": "./src/*.ts"
         },
 
         "./typescript/config/*.json": "./src/typescript/config/*.json"
