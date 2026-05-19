@@ -1,6 +1,6 @@
 import { dirname, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
-import { getEnvironmentConfig } from "@altered/core-experimental/config/environment"
+import { getEnvironmentConfig } from "@altered/core-experimental/config/environment/definitions"
 import { config } from "dotenv"
 import { defineConfig } from "drizzle-kit"
 
