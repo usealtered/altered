@@ -3,18 +3,26 @@ import { FORWARD_WEBHOOK_TRIGGER_PHRASES } from "@altered/server-experimental/ch
 import type { SendblueMessagePayload } from "chat-adapter-sendblue"
 import { containsCommandTriggerPhrases } from "../../../messages/commands/contains-trigger-phrases"
 
+const SENDBLUE_SIGNING_HEADER_NAME = "sb-signing-secret"
+
 const FORWARDED_REQUEST_HEADER_NAME = "x-altered-forwarded-request"
 const FORWARDED_REQUEST_HEADER_VALUE = "1"
 
-function createHeadersWithForwardFlag(headers: Headers): Headers {
-    const newHeaders = new Headers(headers)
+function createSendblueWebhookForwardingHeaders(headers: Headers): Headers {
+    const forwardingHeaders = new Headers()
 
-    newHeaders.set(
+    forwardingHeaders.set("content-type", "application/json")
+
+    const signingSecret = headers.get(SENDBLUE_SIGNING_HEADER_NAME)
+    if (signingSecret)
+        forwardingHeaders.set(SENDBLUE_SIGNING_HEADER_NAME, signingSecret)
+
+    forwardingHeaders.set(
         FORWARDED_REQUEST_HEADER_NAME,
         FORWARDED_REQUEST_HEADER_VALUE
     )
 
-    return newHeaders
+    return forwardingHeaders
 }
 
 const isForwardedWebhook = (request: Request): boolean =>
@@ -66,12 +74,14 @@ async function forwardSendblueWebhook({
 }): Promise<{ success: boolean }> {
     const webhookUrl = getSendblueWebhookUrl({ environment: "development" })
 
-    const headersWithForwardFlag = createHeadersWithForwardFlag(request.headers)
+    const forwardingHeaders = createSendblueWebhookForwardingHeaders(
+        request.headers
+    )
 
     try {
         const response = await fetch(webhookUrl, {
             body: JSON.stringify(messagePayload),
-            headers: headersWithForwardFlag,
+            headers: forwardingHeaders,
             method: request.method
         })
 
