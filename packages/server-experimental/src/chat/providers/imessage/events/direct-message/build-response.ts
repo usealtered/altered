@@ -1,5 +1,7 @@
+import { botDefaultModelId } from "@altered/core-experimental/config/app"
 import { NEW_CONVERSATION_TRIGGER_PHRASES } from "@altered/server-experimental/chat/messages/commands/definitions"
 import { generateResponseFromModelMessages } from "../../../../../ai/generate/response-from-model-messages"
+import { formatOpenRouterCost } from "../../../../../ai/provider/metadata"
 import { getOrCreateActiveConversationForThread } from "../../../../conversations/get-or-create-active-for-thread"
 import { startNewConversationForThread } from "../../../../conversations/start-new-for-thread"
 import { containsCommandTriggerPhrases } from "../../../../messages/commands/contains-trigger-phrases"
@@ -8,6 +10,11 @@ import { saveChatMessage } from "../../../../messages/save"
 import { toModelMessages } from "../../../../messages/to-model-messages"
 import { composeSystemPrompt } from "../../behaviors/generation/compose-system-prompt"
 import type { ChatResponseContext } from "../../behaviors/type-and-respond"
+import {
+    formatElapsedSeconds,
+    logImessageEvent,
+    previewText
+} from "../../logging"
 
 async function buildDirectMessageResponse({
     thread,
@@ -45,20 +52,50 @@ async function buildDirectMessageResponse({
     const chatMessages = await listChatMessagesForConversation(conversation.id)
     const modelMessages = toModelMessages(chatMessages)
 
-    const generatedMessageText = await generateResponseFromModelMessages(
-        modelMessages,
-        { prompts: [composeSystemPrompt()] }
-    )
+    const {
+        text: generatedText,
 
-    await saveChatMessage({
+        finishReason,
+        elapsedMs,
+
+        providerMetadata
+    } = await generateResponseFromModelMessages(modelMessages, {
+        prompts: [composeSystemPrompt()]
+    })
+
+    const savedAssistantMessage = await saveChatMessage({
         brainId: null,
-        content: generatedMessageText,
+        content: generatedText,
         conversationId: conversation.id,
         role: "assistant",
         userId: null
     })
 
-    return generatedMessageText
+    const {
+        cost = null,
+        promptTokens = null,
+        promptTokensDetails: { cachedTokens = null } = {},
+        completionTokens = null,
+        totalTokens = null
+    } = providerMetadata?.openrouter.usage ?? {}
+
+    logImessageEvent("Generation Completed", {
+        conversationId: conversation.id,
+        messageId: savedAssistantMessage.id,
+        elapsedTime: formatElapsedSeconds(elapsedMs),
+        totalMessageCount: modelMessages.length,
+        messageCharacters: generatedText.length,
+        messagePreview: previewText(generatedText),
+        modelId: botDefaultModelId,
+        promptTokens,
+        completionTokens,
+        cachedTokens,
+        totalTokens,
+        cost: cost ? formatOpenRouterCost(cost) : cost,
+        finishReason
+    })
+
+    return generatedText
 }
 
 export { buildDirectMessageResponse }
