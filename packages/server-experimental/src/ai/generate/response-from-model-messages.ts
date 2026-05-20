@@ -1,4 +1,3 @@
-import { botDefaultModelId } from "@altered/core-experimental/config/app"
 import {
     type FinishReason,
     generateText,
@@ -7,7 +6,7 @@ import {
 } from "ai"
 import { constructPrompts } from "../prompts/constructor"
 import { IDENTITY_SYSTEM_PROMPT } from "../prompts/identity"
-import { getOpenRouter } from "../provider/instance"
+import { createOpenRouterChatModel } from "../provider/create-chat-model"
 import {
     type OpenRouterProviderMetadata,
     parseOpenRouterProviderMetadata
@@ -32,14 +31,10 @@ async function generateResponseFromModelMessages(
 ): Promise<GenerateResponseFromModelMessagesResult> {
     const { prompts = [IDENTITY_SYSTEM_PROMPT] } = config ?? {}
 
-    const openRouter = getOpenRouter()
-
     const startedAt = performance.now()
 
     const { text, finishReason, usage, providerMetadata } = await generateText({
-        model: openRouter.chat(botDefaultModelId, {
-            usage: { include: true }
-        }),
+        model: createOpenRouterChatModel(),
 
         system: constructPrompts(prompts),
 
