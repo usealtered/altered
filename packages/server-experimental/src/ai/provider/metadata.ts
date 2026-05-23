@@ -3,10 +3,14 @@ import { type } from "arktype"
 
 const openRouterProviderMetadataSchema = type({
     openrouter: {
+        "provider?": "string",
         "usage?": {
             "cost?": "number",
             "promptTokens?": "number",
-            "promptTokensDetails?": { "cachedTokens?": "number" },
+            "promptTokensDetails?": {
+                "cachedTokens?": "number",
+                "cacheWriteTokens?": "number"
+            },
             "completionTokens?": "number",
             "totalTokens?": "number"
         }

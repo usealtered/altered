@@ -15,6 +15,7 @@ import {
 type GenerateResponseFromModelMessagesResult = {
     text: string
 
+    modelId: string
     finishReason: FinishReason
     usage: LanguageModelUsage
     elapsedMs: number
@@ -33,7 +34,13 @@ async function generateResponseFromModelMessages(
 
     const startedAt = performance.now()
 
-    const { text, finishReason, usage, providerMetadata } = await generateText({
+    const {
+        text,
+        finishReason,
+        usage,
+        providerMetadata,
+        response: { modelId }
+    } = await generateText({
         model: createOpenRouterChatModel(),
 
         system: constructPrompts(prompts),
@@ -44,6 +51,7 @@ async function generateResponseFromModelMessages(
     return {
         text,
 
+        modelId,
         finishReason,
         usage,
         elapsedMs: Math.round(performance.now() - startedAt),

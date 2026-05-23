@@ -1,32 +1,19 @@
 import { botDefaultModelId } from "@altered/core-experimental/config/app"
 import type { createOpenRouter } from "@openrouter/ai-sdk-provider"
+import { createOpenRouterChatModelOptions } from "./create-chat-model-options"
 import { getOpenRouter } from "./instance"
 
-function isAnthropicModelId(modelId: string): boolean {
-    return modelId.startsWith("anthropic/")
-}
+function createOpenRouterChatModel(options?: {
+    modelId?: string
+}): ReturnType<ReturnType<typeof createOpenRouter>["chat"]> {
+    const { modelId = botDefaultModelId } = options ?? {}
 
-function createOpenRouterChatModel(
-    modelId: string = botDefaultModelId
-): ReturnType<ReturnType<typeof createOpenRouter>["chat"]> {
     const openRouter = getOpenRouter()
 
-    return openRouter.chat(modelId, {
-        usage: { include: true },
-
-        ...(isAnthropicModelId(modelId)
-            ? {
-                  cache_control: {
-                      type: "ephemeral",
-
-                      /**
-                       * @remarks Initial writes cost more, but could actually be significantly cheaper if we continuously refresh within the hour.
-                       */
-                      ttl: "1h"
-                  }
-              }
-            : {})
-    })
+    return openRouter.chat(
+        modelId,
+        createOpenRouterChatModelOptions({ modelId })
+    )
 }
 
-export { createOpenRouterChatModel, type isAnthropicModelId }
+export { createOpenRouterChatModel }
