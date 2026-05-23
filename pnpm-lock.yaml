@@ -77,6 +77,9 @@ importers:
       '@biomejs/biome':
         specifier: ^2.4.13
         version: 2.4.13
+      tsx:
+        specifier: 'catalog:'
+        version: 4.21.0
       turbo:
         specifier: ^2.9.6
         version: 2.9.6
