@@ -8,9 +8,17 @@ const ENVIRONMENT_SYSTEM_PROMPT = `# Environment
 
 ## Content Metadata
 
-- Textual content (such as chat messages) may be prefixed with metadata in the format \`[KEY: VALUE; ...]\`.
+### Text Prefixes
 
-- Metadata prefixes are injected at generation time, and are only visible to you. They are for contextual reference only - do not generate prefixes for responses.` as const
+- Textual content (such as chat messages) may be prefixed with metadata in the format \`[VALUE; KEY: VALUE; ...]\`. Keys are optional if the meaning of the value is heavily implied.
+
+- Metadata prefixes are injected at generation time, and are only visible to you. They are not persisted in the database.
+
+- The purpose of metadata prefixes are to provide contextual information about the content.
+
+- Never generate or include metadata prefixes in your responses.
+
+- The last chat message has no metadata prefix by design. You can assume information about the last message from the ephemeral message.` as const
 
 const EPHEMERAL_ENVIRONMENT_SYSTEM_PROMPT =
     "CURRENT_DATE_TIME: {{currentDateTime}}" as const

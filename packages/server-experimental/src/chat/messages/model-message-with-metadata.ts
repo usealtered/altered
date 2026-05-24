@@ -1,31 +1,13 @@
 import type { ModelMessage } from "ai"
 
-function recordToString(
-    record: Record<string, string>,
-    options?: { separator?: string }
-): string {
-    const { separator = "; " } = options ?? {}
-
-    return Object.entries(record)
-        .map(([key, value]) => `${key}: ${value}`)
-        .join(separator)
-}
-
-function formatChatMessageMetadataPrefix(
-    values: Record<string, string>
-): string {
-    return `[${recordToString(values)}] `
-}
-
-function modelMessageWithMetadata(
+function modelMessageWithMetadataPrefix(
     message: ModelMessage,
-    values: Record<string, string>
+    prefix: string
 ): ModelMessage {
-    const prefix = formatChatMessageMetadataPrefix(values)
-
     if (typeof message.content === "string")
         return {
             ...message,
+
             content: `${prefix}${message.content}`
         } as ModelMessage
 
@@ -40,4 +22,4 @@ function modelMessageWithMetadata(
     return { ...message, content } as ModelMessage
 }
 
-export { modelMessageWithMetadata }
+export { modelMessageWithMetadataPrefix }
