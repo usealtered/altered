@@ -23,7 +23,7 @@
 
         "build": "turbo build",
 
-        "run:preview-agent-prompt": "tsx packages/server-experimental/scripts/preview-agent-prompt.ts"
+        "run:preview-generation-components": "tsx packages/server-experimental/scripts/preview-generation-components.ts"
     },
 
     "devDependencies": {

@@ -1,6 +1,6 @@
 import type { ModelMessage } from "ai"
 import type { ChatMessage } from "../../chat/messages/schema"
-import { toModelMessages } from "../../chat/messages/to-model-messages"
+import { toModelMessagesForGeneration } from "../../chat/messages/to-model-messages"
 import { isLargeLanguageModelId } from "../models/is-model-id"
 import { messageWithOpenRouterExplicitCacheControl } from "../provider/with-cache-control"
 
@@ -34,7 +34,7 @@ function prepareMessagesForGeneration(
         }
     }
 ): ModelMessage[] {
-    const modelMessages = toModelMessages(messages)
+    const modelMessages = toModelMessagesForGeneration(messages)
 
     const { anthropic: isAnthropicCachingEnabled = false } =
         enableExplicitCacheControl ?? {}
