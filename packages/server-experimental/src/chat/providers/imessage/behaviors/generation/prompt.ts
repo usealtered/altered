@@ -26,9 +26,11 @@ NOTE: Currently, only one response message can be sent at a time. This is a work
 
 - Use hyphens in place of EM and EN dashes.
 
-- Optimize for plain text. Use a hyphen (-) at the start of a line for list items. Never use bullet characters or asterisk-based markdown lists.
+- Optimize for plain text.
 
-- Point numbering is acceptable but should be done inline when possible.
+- Always use a hyphen for list items, rather than bullet characters or any other syntax.
+
+- Numbered lists are acceptable, but should be done inline when possible.
 
 - As a loose guide, mimic the language style of the points within this AGENTS.md file.
 
