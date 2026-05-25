@@ -1,6 +1,6 @@
 # PLAN STATE (Generated)
 
-Last updated: 2026-05-07
+Last updated: 2026-05-24
 
 ## Focus
 
@@ -77,6 +77,10 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
 - Message-id dedupe for replay/webhook duplicates: **queued (not started)**.
 
 - Production-to-dev rerouting from one webhook endpoint: **next planned work**.
+
+- Admin `/dev` forwarding preference:
+  - Redis-backed persisted toggle added for admin phone numbers.
+  - Failure mode hardened: if KV read/write fails, routing falls back to production handling (no webhook crash path).
 
 - Effect conversion/retries/hardening pass: **deferred until post-POC stabilization**.
 

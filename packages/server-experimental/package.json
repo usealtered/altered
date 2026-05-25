@@ -25,6 +25,7 @@
     "dependencies": {
         "@altered/core-experimental": "workspace:*",
         "@chat-adapter/state-redis": "catalog:",
+        "@upstash/redis": "catalog:",
         "@openrouter/ai-sdk-provider": "catalog:",
         "ai": "catalog:",
         "arktype": "catalog:",

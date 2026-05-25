@@ -33,6 +33,10 @@ function getAlteredChat(): ALTEREDChat {
                     webhookSecret: sendblue.signing
                 })
             },
+
+            /**
+             * @todo P3: Consider passing the Upstash Redis client directly and removing the TCP connection URL environment variable. Upstash claims that their HTTP client is more reliable for serverless.
+             */
             state: createRedisState({ url: kv.url }),
             userName: botUsername
         })
