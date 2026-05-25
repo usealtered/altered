@@ -11,6 +11,9 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
 - Primary vertical scaffold:
   - `.context/_generated/plans/imessage-server-poc.md`
 
+- Preview promotion and stable domain strategy (api-experimental MVP):
+  - `.context/_generated/plans/vercel-preview-promotion-api-experimental.md`
+
 - Detailed adapter/history resolution:
   - `.context/_generated/plans/chat-sdk-history-sendblue-adapter-resolution.md`
 
@@ -78,9 +81,18 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
 
 - Production-to-dev rerouting from one webhook endpoint: **next planned work**.
 
+- Preview deployment promotion pipeline (api-experimental):
+  - Plan captured and queued; implementation pending.
+
 - Admin `/dev` forwarding preference:
   - Redis-backed persisted toggle added for admin phone numbers.
   - Failure mode hardened: if KV read/write fails, routing falls back to production handling (no webhook crash path).
+
+- Preview deployment management direction (2026-05-24):
+  - Build minimal MVP for `api-experimental` first, while shaping code for multi-app extension.
+  - Use a stable preview domain target per app with auto-promote on non-main pushes and manual commit re-promote support.
+  - Keep Vercel branch auto previews disabled; deploy manually through GitHub Actions + TypeScript scripts.
+  - Keep webhook ingress behavior as `200 OK` to provider while handling forwarding failures internally.
 
 - Effect conversion/retries/hardening pass: **deferred until post-POC stabilization**.
 
