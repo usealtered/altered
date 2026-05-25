@@ -1,7 +1,7 @@
 import { isDevelopment } from "@altered/core-experimental/config/environment/is-development"
 import type { WebhookOptions } from "chat"
 import { getKvBoolean, toggleKvBoolean } from "../../../../storage/kv/basic"
-import { getAlteredChat } from "../../../instance"
+import { initializeAlteredChat } from "../../../instance"
 import { respondFromRaw } from "../behaviors/respond-from-raw"
 import { afterResponse } from "./after-response"
 import {
@@ -20,7 +20,9 @@ async function processSendblueWebhook(
     request: Request,
     options?: Pick<WebhookOptions, "waitUntil">
 ): Promise<Response> {
-    const handleWebhook = getAlteredChat().webhooks.sendblue
+    const chat = await initializeAlteredChat()
+
+    const handleWebhook = chat.webhooks.sendblue
 
     if (isDevelopment() || isForwardedWebhook(request))
         return handleWebhook(request, options)
