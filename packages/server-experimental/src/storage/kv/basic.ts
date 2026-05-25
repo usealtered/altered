@@ -31,7 +31,7 @@ async function getKv({
     key
 }: {
     key: string
-}): Promise<{ success: boolean; value: string | null }> {
+}): Promise<{ success: boolean; value: unknown }> {
     const client = getUpstashRedisClient()
     if (!client) {
         console.error(
@@ -60,6 +60,22 @@ function setKvBoolean({
     return setKv({ key, value: value ? "1" : "0" })
 }
 
+function parseKvBooleanValue(value: unknown): boolean | null {
+    if (value === null || value === undefined) return null
+
+    if (value === true || value === 1) return true
+    if (value === false || value === 0) return false
+
+    if (typeof value !== "string") return null
+
+    const normalized = value.trim().toLowerCase()
+
+    if (normalized === "1" || normalized === "true") return true
+    if (normalized === "0" || normalized === "false") return false
+
+    return null
+}
+
 async function getKvBoolean({
     key
 }: {
@@ -70,17 +86,20 @@ async function getKvBoolean({
     const { success, value } = await getKv({ key })
     if (!success) return { success: false, value: null }
 
-    if (!value) return { success: true, value: null }
+    const parsedValue = parseKvBooleanValue(value)
 
-    if (value !== "1" && value !== "0") {
+    const invalidValue =
+        parsedValue === null && value !== null && value !== undefined
+
+    if (invalidValue) {
         console.error(
-            `Failed to get KV boolean: Invalid value for key "${key}". Expected "1" or "0".`
+            `Failed to get KV boolean: Invalid value for key "${key}". Expected boolean-compatible value.`
         )
 
         return { success: false, value: null }
     }
 
-    return { success: true, value: value === "1" }
+    return { success: true, value: parsedValue }
 }
 
 async function toggleKvBoolean({
