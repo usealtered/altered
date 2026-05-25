@@ -37,6 +37,12 @@ const environmentConfigSchema = type({
             ngrok: {
                 url: "string",
                 secret: "string"
+            },
+            upstash: {
+                redis: {
+                    url: "string",
+                    secret: "string"
+                }
             }
         }
     }
@@ -79,6 +85,12 @@ function getEnvironmentConfig(): EnvironmentConfig {
                 ngrok: {
                     url: process.env.SHARED_PROVIDER_NGROK_URL,
                     secret: process.env.SHARED_PROVIDER_NGROK_SECRET
+                },
+                upstash: {
+                    redis: {
+                        url: process.env.SHARED_PROVIDER_UPSTASH_REDIS_URL,
+                        secret: process.env.SHARED_PROVIDER_UPSTASH_REDIS_SECRET
+                    }
                 }
             }
         }

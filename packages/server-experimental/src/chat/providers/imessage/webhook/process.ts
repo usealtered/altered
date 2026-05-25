@@ -1,19 +1,21 @@
 import { isDevelopment } from "@altered/core-experimental/config/environment/is-development"
-import { FORWARD_WEBHOOK_TRIGGER_PHRASES } from "@altered/server-experimental/chat/messages/commands/definitions"
 import type { WebhookOptions } from "chat"
-import type { SendblueMessagePayload } from "chat-adapter-sendblue"
+import { getKvBoolean, toggleKvBoolean } from "../../../../storage/kv/basic"
 import { getAlteredChat } from "../../../instance"
-import { stripCommandTriggerPhrases } from "../../../messages/commands/strip-trigger-phrases"
 import { respondFromRaw } from "../behaviors/respond-from-raw"
 import { afterResponse } from "./after-response"
 import {
+    checkPermissionToForwardWebhook,
     containsForwardWebhookTriggerPhrase,
     forwardSendblueWebhook,
-    hasPermissionToForwardWebhook,
     isForwardedWebhook
 } from "./forwarding"
+import { getForwardWebhookToDevelopmentPreferenceKey } from "./forwarding/preference"
 import { parseSendblueWebhook } from "./parse"
 
+/**
+ * @todo P3: Clean up the distinction between slash commands that immediately send a message and return regardless of additional message content, and those who detect a command but also handle the remaining message content.
+ */
 async function processSendblueWebhook(
     request: Request,
     options?: Pick<WebhookOptions, "waitUntil">
@@ -30,49 +32,87 @@ async function processSendblueWebhook(
             { cause: request }
         )
 
-    if (
-        containsForwardWebhookTriggerPhrase({
-            messagePayload: parsedRequest.data
-        })
-    ) {
-        afterResponse(async () => {
-            const strippedData: SendblueMessagePayload = {
-                ...parsedRequest.data,
+    const messagePayload = parsedRequest.data
 
-                content: stripCommandTriggerPhrases({
-                    message: parsedRequest.data.content,
-                    phrases: [...FORWARD_WEBHOOK_TRIGGER_PHRASES]
+    const hasPermissionToForwardWebhook = checkPermissionToForwardWebhook({
+        messagePayload
+    })
+
+    if (containsForwardWebhookTriggerPhrase({ messagePayload })) {
+        afterResponse(async () => {
+            if (!hasPermissionToForwardWebhook) {
+                await respondFromRaw({
+                    messagePayload,
+                    createResponse: _context =>
+                        "You do not have permission to use this feature."
                 })
+
+                return
             }
 
-            if (
-                hasPermissionToForwardWebhook({
-                    messagePayload: parsedRequest.data
-                })
-            ) {
-                const { success } = await forwardSendblueWebhook({
-                    request,
-                    messagePayload: strippedData
+            const wasForwardingEnabled =
+                (await getKvBoolean({
+                    key: getForwardWebhookToDevelopmentPreferenceKey({
+                        phoneNumber: messagePayload.from_number
+                    })
+                })) ?? false
+
+            const { success, value: isForwardingEnabled } =
+                await toggleKvBoolean({
+                    previous: wasForwardingEnabled,
+
+                    key: getForwardWebhookToDevelopmentPreferenceKey({
+                        phoneNumber: messagePayload.from_number
+                    })
                 })
 
-                if (!success)
-                    await respondFromRaw({
-                        messagePayload: parsedRequest.data,
-                        createResponse: _context =>
-                            "Unable to reach the development server. Please try again later."
-                    })
+            if (!success) {
+                await respondFromRaw({
+                    messagePayload,
+                    createResponse: _context =>
+                        "Unable to update forwarding preferences. Please try again later."
+                })
 
                 return
             }
 
             await respondFromRaw({
-                messagePayload: parsedRequest.data,
+                messagePayload,
                 createResponse: _context =>
-                    "You do not have permission to use this feature."
+                    isForwardingEnabled
+                        ? "Webhook forwarding is now enabled. Messages will be directed to the development server."
+                        : "Webhook forwarding is now disabled. Messages will be handled in production."
             })
         }, options?.waitUntil)
 
         return new Response("OK", { status: 200 })
+    }
+
+    if (hasPermissionToForwardWebhook) {
+        const isForwardingEnabled =
+            (await getKvBoolean({
+                key: getForwardWebhookToDevelopmentPreferenceKey({
+                    phoneNumber: messagePayload.from_number
+                })
+            })) ?? false
+
+        if (isForwardingEnabled) {
+            afterResponse(async () => {
+                const { success } = await forwardSendblueWebhook({
+                    request,
+                    messagePayload
+                })
+
+                if (!success)
+                    await respondFromRaw({
+                        messagePayload,
+                        createResponse: _context =>
+                            "Unable to reach the development server. Please try again later."
+                    })
+            }, options?.waitUntil)
+
+            return new Response("OK", { status: 200 })
+        }
     }
 
     return handleWebhook(

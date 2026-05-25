@@ -1,7 +1,7 @@
 import { getEnvironmentConfig } from "@altered/core-experimental/config/environment/definitions"
 import { FORWARD_WEBHOOK_TRIGGER_PHRASES } from "@altered/server-experimental/chat/messages/commands/definitions"
 import type { SendblueMessagePayload } from "chat-adapter-sendblue"
-import { containsCommandTriggerPhrases } from "../../../messages/commands/contains-trigger-phrases"
+import { containsCommandTriggerPhrases } from "../../../../messages/commands/contains-trigger-phrases"
 
 const SENDBLUE_SIGNING_HEADER_NAME = "sb-signing-secret"
 
@@ -39,7 +39,7 @@ const containsForwardWebhookTriggerPhrase = ({
         phrases: [...FORWARD_WEBHOOK_TRIGGER_PHRASES]
     })
 
-const hasPermissionToForwardWebhook = ({
+const checkPermissionToForwardWebhook = ({
     messagePayload
 }: {
     messagePayload: SendblueMessagePayload
@@ -92,10 +92,10 @@ async function forwardSendblueWebhook({
 }
 
 export {
+    checkPermissionToForwardWebhook,
     containsForwardWebhookTriggerPhrase,
     FORWARDED_REQUEST_HEADER_NAME,
     FORWARDED_REQUEST_HEADER_VALUE,
     forwardSendblueWebhook,
-    hasPermissionToForwardWebhook,
     isForwardedWebhook
 }
