@@ -1,5 +1,5 @@
 import type { SendblueMessagePayload } from "chat-adapter-sendblue"
-import { getAlteredChat } from "../../../instance"
+import { getAlteredChat, initializeAlteredChat } from "../../../instance"
 import type { ChatResponseContext } from "./type-and-respond"
 
 /**
@@ -40,6 +40,8 @@ async function respondFromRaw({
     messagePayload: SendblueMessagePayload
     createResponse: (context: ChatResponseContext) => string | Promise<string>
 }): Promise<void> {
+    await initializeAlteredChat()
+
     const context = getContextFromSendbluePayload(messagePayload)
 
     const outboundMessage = await createResponse(context)

@@ -47,4 +47,20 @@ function getAlteredChat(): ALTEREDChat {
     return alteredChat
 }
 
-export { type ALTEREDChat, getAlteredChat }
+/**
+ * For stateful usage outside of webhooks. Ensures that the chat is initialized and that Redis is connected.
+ *
+ * @remarks Necessary for absolute durability. The adapter does not reconnect if the connection drops.
+ */
+async function initializeAlteredChat(): Promise<ALTEREDChat> {
+    const chat = getAlteredChat()
+
+    await chat.initialize()
+
+    const state = chat.getState()
+    await state.connect()
+
+    return chat
+}
+
+export { type ALTEREDChat, getAlteredChat, initializeAlteredChat }

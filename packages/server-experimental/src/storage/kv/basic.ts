@@ -27,22 +27,26 @@ async function setKv({
     }
 }
 
-async function getKv({ key }: { key: string }): Promise<string | null> {
+async function getKv({
+    key
+}: {
+    key: string
+}): Promise<{ success: boolean; value: string | null }> {
     const client = getUpstashRedisClient()
     if (!client) {
         console.error(
             "Failed to get KV: Upstash Redis client not found. This should never happen."
         )
 
-        return null
+        return { success: false, value: null }
     }
 
     try {
-        return await client.get(key)
+        return { success: true, value: await client.get(key) }
     } catch {
         console.error(`Failed to get KV: ${key}`)
 
-        return null
+        return { success: false, value: null }
     }
 }
 
@@ -56,20 +60,27 @@ function setKvBoolean({
     return setKv({ key, value: value ? "1" : "0" })
 }
 
-async function getKvBoolean({ key }: { key: string }): Promise<boolean | null> {
-    const value = await getKv({ key })
+async function getKvBoolean({
+    key
+}: {
+    key: string
+}): Promise<
+    { success: true; value: boolean | null } | { success: false; value: null }
+> {
+    const { success, value } = await getKv({ key })
+    if (!success) return { success: false, value: null }
 
-    if (!value) return null
+    if (!value) return { success: true, value: null }
 
     if (value !== "1" && value !== "0") {
         console.error(
             `Failed to get KV boolean: Invalid value for key "${key}". Expected "1" or "0".`
         )
 
-        return null
+        return { success: false, value: null }
     }
 
-    return value === "1" ? true : false
+    return { success: true, value: value === "1" }
 }
 
 async function toggleKvBoolean({
@@ -80,13 +91,26 @@ async function toggleKvBoolean({
     previous?: boolean
 
     key: string
-}): Promise<{ success: boolean; value: boolean }> {
-    const value = previous ?? (await getKvBoolean({ key }))
+}): Promise<
+    { success: true; value: boolean } | { success: false; value: null }
+> {
+    const resolvedPrevious =
+        previous === undefined
+            ? await getKvBoolean({ key })
+            : { success: true, value: previous }
 
-    const nextValue = value ? !value : true
+    if (!resolvedPrevious.success) {
+        console.error(
+            `Failed to toggle KV boolean: failed to get previous value for key "${key}".`
+        )
+
+        return { success: false, value: null }
+    }
+
+    const nextValue = resolvedPrevious.value ? !resolvedPrevious.value : true
 
     const { success } = await setKvBoolean({ key, value: nextValue })
-    if (!success) return { success: false, value: value ?? false }
+    if (!success) return { success: false, value: null }
 
     return { success: true, value: nextValue }
 }
