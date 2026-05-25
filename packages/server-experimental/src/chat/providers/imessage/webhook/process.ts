@@ -50,16 +50,32 @@ async function processSendblueWebhook(
                 return
             }
 
-            const wasForwardingEnabled =
-                (await getKvBoolean({
-                    key: getForwardWebhookToDevelopmentPreferenceKey({
-                        phoneNumber: messagePayload.from_number
-                    })
-                })) ?? false
+            const {
+                success: checkWasForwardingEnabledSuccess,
+                value: wasForwardingEnabled
+            } = await getKvBoolean({
+                key: getForwardWebhookToDevelopmentPreferenceKey({
+                    phoneNumber: messagePayload.from_number
+                })
+            })
+
+            if (!checkWasForwardingEnabledSuccess) {
+                console.error(
+                    "Failed to check if forwarding is enabled. No preference changes will be made."
+                )
+
+                await respondFromRaw({
+                    messagePayload,
+                    createResponse: _context =>
+                        "Unable to update forwarding preferences. Please try again later."
+                })
+
+                return
+            }
 
             const { success, value: isForwardingEnabled } =
                 await toggleKvBoolean({
-                    previous: wasForwardingEnabled,
+                    previous: wasForwardingEnabled ?? false,
 
                     key: getForwardWebhookToDevelopmentPreferenceKey({
                         phoneNumber: messagePayload.from_number
@@ -89,14 +105,32 @@ async function processSendblueWebhook(
     }
 
     if (hasPermissionToForwardWebhook) {
-        const isForwardingEnabled =
-            (await getKvBoolean({
-                key: getForwardWebhookToDevelopmentPreferenceKey({
-                    phoneNumber: messagePayload.from_number
-                })
-            })) ?? false
+        const {
+            success: checkIsForwardingEnabledSuccess,
+            value: isForwardingEnabled
+        } = await getKvBoolean({
+            key: getForwardWebhookToDevelopmentPreferenceKey({
+                phoneNumber: messagePayload.from_number
+            })
+        })
 
-        if (isForwardingEnabled) {
+        if (!checkIsForwardingEnabledSuccess) {
+            console.error(
+                "Failed to check if forwarding is enabled. Falling back to production mode."
+            )
+
+            return handleWebhook(
+                new Request(request.url, {
+                    body: parsedRequest.body.text,
+                    headers: request.headers,
+                    method: request.method
+                }),
+
+                options
+            )
+        }
+
+        if (isForwardingEnabled ?? false) {
             afterResponse(async () => {
                 const { success } = await forwardSendblueWebhook({
                     request,
