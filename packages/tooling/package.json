@@ -4,9 +4,11 @@
     "private": true,
     "type": "module",
     "bin": {
+        "altered-clean-package": "./bin/clean-package.ts",
+
         "altered-bundle-application": "./bin/bundle-application.ts",
 
-        "altered-clean-package": "./bin/clean-package.ts"
+        "altered-preview-promote": "./bin/preview-promote.ts"
     },
     "exports": {
         "./*": {
@@ -22,6 +24,7 @@
         "clean": "altered-clean-package"
     },
     "dependencies": {
+        "@vercel/sdk": "^1.21.7",
         "esbuild": "catalog:"
     },
     "devDependencies": {

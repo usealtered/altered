@@ -82,7 +82,12 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
 - Production-to-dev rerouting from one webhook endpoint: **next planned work**.
 
 - Preview deployment promotion pipeline (api-experimental):
-  - Plan captured and queued; implementation pending.
+  - Plan captured.
+  - Initial implementation landed in `@altered/tooling`:
+    - `altered-preview-promote` CLI (manual SHA promotion path).
+    - Vercel SDK-based deployment create + ready-state polling + domain alias assignment for `api-experimental`.
+    - Root command: `pnpm preview:promote:api-experimental <commit-sha>`.
+  - Workflow automation and feasibility spike verification still pending.
 
 - Admin `/dev` forwarding preference:
   - Redis-backed persisted toggle added for admin phone numbers.
