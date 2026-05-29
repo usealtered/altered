@@ -33,7 +33,7 @@ if (
 
 const appName = values.app as PreviewDeploymentApplicationName
 
-const githubRepositoryId = process.env.SHARED_PROVIDERS_GITHUB_REPOSITORY_ID
+const githubRepositoryId = process.env.SHARED_PROVIDER_GITHUB_REPOSITORY_ID
 if (!githubRepositoryId)
     throw new Error(
         "Missing SHARED_PROVIDER_GITHUB_REPOSITORY_ID environment variable."
