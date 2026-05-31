@@ -89,7 +89,12 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
     - Root command: `pnpm preview:promote:api-experimental --commit <commit-sha>` or `--branch <branch-name>`, with no args defaulting to the current non-`main` branch.
     - CLI verifies commit/branch sync with origin before calling Vercel.
     - CLI hardening: branch-name validation, local branch existence checks, detached-HEAD guard, and authenticated GitHub commit existence checks via `SHARED_PROVIDER_GITHUB_SECRET`.
-  - Workflow automation still pending.
+  - Workflow automation split into dedicated workflows:
+    - `.github/workflows/manage-deployments-deploy-and-promote-preview.yml`
+    - `.github/workflows/code-quality-check-types.yml`
+    - `.github/workflows/code-quality-lint-and-format.yml`
+  - Deploy/promote preview now routes through `pnpm preview:promote` (`--all-apps`) and supports manual `workflow_dispatch` with optional `branch` or `commit_sha`.
+  - Workflow still needs first live run verification.
 
 - Admin `/dev` forwarding preference:
   - Redis-backed persisted toggle added for admin phone numbers.

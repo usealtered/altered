@@ -22,7 +22,7 @@ const PREVIEW_DEPLOYMENT_CONFIGURATIONS: Record<
 }
 
 type PromotePreviewDeploymentOptions = {
-    appName: PreviewDeploymentApplicationName
+    applicationTarget: PreviewDeploymentApplicationName
 
     gitBranch?: string
     gitCommit: string
@@ -153,7 +153,7 @@ async function assignPreviewDomainAlias({
 async function promotePreviewDeployment(
     options: PromotePreviewDeploymentOptions
 ): Promise<PromotePreviewDeploymentResult> {
-    const config = PREVIEW_DEPLOYMENT_CONFIGURATIONS[options.appName]
+    const config = PREVIEW_DEPLOYMENT_CONFIGURATIONS[options.applicationTarget]
 
     const vercel = new Vercel({ bearerToken: options.vercelToken })
 
@@ -191,5 +191,6 @@ export {
     APPLICATION_NAMES,
     type PreviewDeploymentApplicationName,
     type PromotePreviewDeploymentOptions,
+    type PromotePreviewDeploymentResult,
     promotePreviewDeployment
 }

@@ -4,38 +4,63 @@ import {
     type PreviewDeploymentApplicationName
 } from "../promote"
 
-function parseCliArguments() {
-    const { values } = parseArgs({
+function parseCliArguments(): {
+    applicationTargets: PreviewDeploymentApplicationName[]
+
+    gitBranch?: string
+    gitCommit?: string
+} {
+    const {
+        values: {
+            target: applicationTargets,
+
+            branch: gitBranch,
+            commit: gitCommit
+        }
+    } = parseArgs({
         strict: true,
         allowPositionals: false,
 
         options: {
-            app: { type: "string", short: "a" },
+            target: {
+                type: "string",
+                short: "t",
+                multiple: true
+            },
+
             branch: { type: "string", short: "b" },
             commit: { type: "string", short: "c" }
         }
     })
 
-    if (
-        !values.app ||
-        !APPLICATION_NAMES.includes(
-            values.app as PreviewDeploymentApplicationName
-        )
-    )
-        throw new Error(
-            `Missing or invalid application name. ${cliUsageInstructions}`
-        )
+    if (!applicationTargets?.length)
+        throw new Error(`Missing application targets. ${cliUsageInstructions}`)
 
-    const app = values.app as PreviewDeploymentApplicationName
+    if (
+        applicationTargets.every(
+            target =>
+                APPLICATION_NAMES.includes(
+                    target as PreviewDeploymentApplicationName
+                ) || target === "*"
+        ) === false
+    )
+        throw new Error(`Invalid application targets. ${cliUsageInstructions}`)
+
+    const resolvedApplicationTargets = applicationTargets.includes("*")
+        ? [...APPLICATION_NAMES]
+        : ([
+              ...new Set(applicationTargets)
+          ] as PreviewDeploymentApplicationName[])
 
     return {
-        ...values,
+        applicationTargets: resolvedApplicationTargets,
 
-        app
+        gitBranch,
+        gitCommit
     }
 }
 
 const cliUsageInstructions =
-    "Usage: altered-preview-promote [--app 'api-experimental'] [--branch <branch-name> | --commit <commit-sha>]."
+    "Usage: altered-preview-promote --target <target> [--target <target> ...] [--branch <branch-name> | --commit <commit-sha>]."
 
 export { cliUsageInstructions, parseCliArguments }

@@ -3,23 +3,24 @@
 import { parseCliArguments } from "../src/preview/prepare/cli"
 import { getEnvironmentVariables } from "../src/preview/prepare/environment"
 import { resolveGitTargetFromCurrentBranchOrCommit } from "../src/preview/prepare/git/resolve-git-target-from-current-branch-or-commit"
-import { promotePreviewDeployment } from "../src/preview/promote"
+import { printDeploymentResults } from "../src/preview/print"
+import { promotePreviewDeployments } from "../src/preview/promote-many"
 
 const { githubRepositoryId, githubToken, vercelTeamId, vercelToken } =
     getEnvironmentVariables()
 
-const { app, branch, commit } = parseCliArguments()
+const { applicationTargets, gitBranch, gitCommit } = parseCliArguments()
 
-const { branch: gitBranch, commit: gitCommit } =
-    await resolveGitTargetFromCurrentBranchOrCommit(branch, commit, {
+const { branch: resolvedGitBranch, commit: resolvedGitCommit } =
+    await resolveGitTargetFromCurrentBranchOrCommit(gitBranch, gitCommit, {
         githubToken
     })
 
-const { inspectorUrl } = await promotePreviewDeployment({
-    appName: app,
+const deploymentResults = await promotePreviewDeployments({
+    applicationTargets,
 
-    gitBranch,
-    gitCommit,
+    gitBranch: resolvedGitBranch,
+    gitCommit: resolvedGitCommit,
 
     githubRepositoryId,
 
@@ -27,4 +28,4 @@ const { inspectorUrl } = await promotePreviewDeployment({
     vercelToken
 })
 
-console.log(`Preview deployment created: ${inspectorUrl}`)
+printDeploymentResults(deploymentResults)
