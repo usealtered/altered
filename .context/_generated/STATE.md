@@ -89,11 +89,12 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
     - Root command: `pnpm preview:promote:api-experimental --commit <commit-sha>` or `--branch <branch-name>`, with no args defaulting to the current non-`main` branch.
     - CLI verifies commit/branch sync with origin before calling Vercel.
     - CLI hardening: branch-name validation, local branch existence checks, detached-HEAD guard, and authenticated GitHub commit existence checks via `SHARED_PROVIDER_GITHUB_SECRET`.
-  - Workflow automation consolidated into:
-    - `.github/workflows/manage-deployments.yml`
-    - `.github/workflows/code-quality.yml`
-  - Deploy/promote preview now routes through `pnpm preview:promote` (`--all-apps`) with simplified two-step workflow handling: dispatch forwards both optional inputs (`branch`, `commit`) directly to TypeScript validation, push runs default promotion resolution.
-  - CLI now fails fast for empty workflow-dispatch targeting and uses `GITHUB_REF_NAME` as CI-safe default branch when running without explicit git args.
+  - Workflow automation consolidated into one pipeline:
+    - `.github/workflows/ci.yml`
+  - `Manage Deployments / Deploy & Promote Preview` now waits on `Code Quality / Check Types` and `Code Quality / Lint & Format`.
+  - Shared GitHub Actions setup logic extracted into:
+    - `.github/actions/setup-ci/action.yml`
+  - Deploy/promote preview routes through `pnpm preview:promote` (`--all-apps`) with workflow-dispatch support (`branch`, `commit`) and push branch promotion via explicit `github.ref_name`.
   - Workflow still needs first live run verification.
 
 - Admin `/dev` forwarding preference:

@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches-ignore:
+      - "main"
+
+jobs:
+  check-types:
+    name: Check Types
+
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Set Up Environment
+        uses: ./.github/actions/set-up-ci-environment
+
+      - name: Run Command
+        run: pnpm check:types
+
+  lint-and-format:
+    name: Lint & Format
+
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Set Up Environment
+        uses: ./.github/actions/set-up-ci-environment
+
+      - name: Run Command
+        run: pnpm check:style
+
+  deploy-and-promote-preview:
+    name: Deploy & Promote Preview
+
+    needs:
+      - check-types
+      - lint-and-format
+
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+
+    env:
+      SHARED_PROVIDER_GITHUB_REPOSITORY_ID: ${{ vars.SHARED_PROVIDER_GITHUB_REPOSITORY_ID }}
+      SHARED_PROVIDER_GITHUB_SECRET: ${{ secrets.SHARED_PROVIDER_GITHUB_SECRET }}
+
+      SHARED_PROVIDER_VERCEL_TEAM_ID: ${{ vars.SHARED_PROVIDER_VERCEL_TEAM_ID }}
+      SHARED_PROVIDER_VERCEL_SECRET: ${{ secrets.SHARED_PROVIDER_VERCEL_SECRET }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Set Up Environment
+        uses: ./.github/actions/set-up-ci-environment
+
+      - name: Run Command
+        run: pnpm preview:promote --branch "${{ github.ref_name }}"
