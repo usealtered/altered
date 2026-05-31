@@ -23,6 +23,9 @@
 
         "build": "turbo build",
 
+        "preview:promote": "altered-preview-promote --target '*'",
+        "preview:promote:api-experimental": "altered-preview-promote --target api-experimental",
+
         "run:preview-generation-components": "tsx packages/server-experimental/scripts/preview-generation-components.ts"
     },
 

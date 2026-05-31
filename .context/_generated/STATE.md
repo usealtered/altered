@@ -11,6 +11,9 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
 - Primary vertical scaffold:
   - `.context/_generated/plans/imessage-server-poc.md`
 
+- Preview promotion and stable domain strategy (api-experimental MVP):
+  - `.context/_generated/plans/vercel-preview-promotion-api-experimental.md`
+
 - Detailed adapter/history resolution:
   - `.context/_generated/plans/chat-sdk-history-sendblue-adapter-resolution.md`
 
@@ -78,9 +81,30 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
 
 - Production-to-dev rerouting from one webhook endpoint: **next planned work**.
 
+- Preview deployment promotion pipeline (api-experimental):
+  - Plan captured; Phase 0 passed.
+  - Initial implementation landed in `@altered/tooling`:
+    - `altered-preview-promote` CLI (manual commit/branch/current-branch promotion path).
+    - Vercel SDK-based deployment create + ready-state polling + domain alias assignment for `api-experimental`.
+    - Root command: `pnpm preview:promote:api-experimental --commit <commit-sha>` or `--branch <branch-name>`, with no args defaulting to the current non-`main` branch.
+    - CLI verifies commit/branch sync with origin before calling Vercel.
+    - CLI hardening: branch-name validation, local branch existence checks, detached-HEAD guard, and authenticated GitHub commit existence checks via `SHARED_PROVIDER_GITHUB_SECRET`.
+  - Workflow automation consolidated into:
+    - `.github/workflows/manage-deployments.yml`
+    - `.github/workflows/code-quality.yml`
+  - Deploy/promote preview now routes through `pnpm preview:promote` (`--all-apps`) with simplified two-step workflow handling: dispatch forwards both optional inputs (`branch`, `commit`) directly to TypeScript validation, push runs default promotion resolution.
+  - CLI now fails fast for empty workflow-dispatch targeting and uses `GITHUB_REF_NAME` as CI-safe default branch when running without explicit git args.
+  - Workflow still needs first live run verification.
+
 - Admin `/dev` forwarding preference:
   - Redis-backed persisted toggle added for admin phone numbers.
   - Failure mode hardened: if KV read/write fails, routing falls back to production handling (no webhook crash path).
+
+- Preview deployment management direction (2026-05-24):
+  - Build minimal MVP for `api-experimental` first, while shaping code for multi-app extension.
+  - Use a stable preview domain target per app with auto-promote on non-main pushes and manual commit re-promote support.
+  - Keep Vercel branch auto previews disabled; deploy manually through GitHub Actions + TypeScript scripts.
+  - Keep webhook ingress behavior as `200 OK` to provider while handling forwarding failures internally.
 
 - Effect conversion/retries/hardening pass: **deferred until post-POC stabilization**.
 

@@ -43,6 +43,17 @@ const environmentConfigSchema = type({
                     url: "string",
                     secret: "string"
                 }
+            },
+            vercel: {
+                team: {
+                    id: "string"
+                },
+                secret: "string"
+            },
+            github: {
+                repository: {
+                    id: "string"
+                }
             }
         }
     }
@@ -90,6 +101,17 @@ function getEnvironmentConfig(): EnvironmentConfig {
                     redis: {
                         url: process.env.SHARED_PROVIDER_UPSTASH_REDIS_URL,
                         secret: process.env.SHARED_PROVIDER_UPSTASH_REDIS_SECRET
+                    }
+                },
+                vercel: {
+                    team: {
+                        id: process.env.SHARED_PROVIDER_VERCEL_TEAM_ID
+                    },
+                    secret: process.env.SHARED_PROVIDER_VERCEL_SECRET
+                },
+                github: {
+                    repository: {
+                        id: process.env.SHARED_PROVIDER_GITHUB_REPOSITORY_ID
                     }
                 }
             }
