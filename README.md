@@ -7,5 +7,3 @@ Coming soon.
 ## Contact
 
 Email: <support@usealtered.com>
-
---- TEST ---
