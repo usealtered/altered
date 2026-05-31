@@ -1,0 +1,27 @@
+name: Set Up CI Environment
+description: Sets up runtime prerequisites and general resources for CI.
+
+inputs:
+  node-version:
+    description: The Node.js version to install.
+    required: false
+    default: "24"
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v6
+
+    - name: Set Up pnpm
+      uses: pnpm/action-setup@v6
+
+    - name: Set Up Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: pnpm
+
+    - name: Install Packages
+      shell: bash
+      run: pnpm install --frozen-lockfile
