@@ -1,68 +1,30 @@
 #!/usr/bin/env tsx
 
-import { parseArgs } from "node:util"
-import {
-    APPLICATION_NAMES,
-    type PreviewDeploymentApplicationName,
-    promotePreviewDeployment
-} from "../src/preview/promote"
+import { parseCliArguments } from "../src/preview/prepare/cli"
+import { getEnvironmentVariables } from "../src/preview/prepare/environment"
+import { resolveGitTargetFromCurrentBranchOrCommit } from "../src/preview/prepare/git/resolve-git-target-from-current-branch-or-commit"
+import { promotePreviewDeployment } from "../src/preview/promote"
 
-const { values, positionals } = parseArgs({
-    strict: true,
-    allowPositionals: true,
+const { githubRepositoryId, githubToken, vercelTeamId, vercelToken } =
+    getEnvironmentVariables()
 
-    options: {
-        app: { type: "string" }
-    }
-})
+const { app, branch, commit } = parseCliArguments()
 
-const usageInstructions =
-    "Usage: altered-preview-promote <commit-sha> [--app api-experimental]."
+const { branch: gitBranch, commit: gitCommit } =
+    await resolveGitTargetFromCurrentBranchOrCommit(branch, commit, {
+        githubToken
+    })
 
-/**
- * @todo P3: Consider using the most recent commit as the default.
- */
-const commitSha = positionals[0]
-if (!commitSha) throw new Error(`Missing commit SHA. ${usageInstructions}`)
+const { inspectorUrl } = await promotePreviewDeployment({
+    appName: app,
 
-if (
-    !values.app ||
-    !APPLICATION_NAMES.includes(values.app as PreviewDeploymentApplicationName)
-)
-    throw new Error(`Missing or invalid application name. ${usageInstructions}`)
+    gitBranch,
+    gitCommit,
 
-const appName = values.app as PreviewDeploymentApplicationName
-
-const githubRepositoryId = process.env.SHARED_PROVIDER_GITHUB_REPOSITORY_ID
-if (!githubRepositoryId)
-    throw new Error(
-        "Missing SHARED_PROVIDER_GITHUB_REPOSITORY_ID environment variable."
-    )
-
-const vercelTeamId = process.env.SHARED_PROVIDER_VERCEL_TEAM_ID
-if (!vercelTeamId)
-    throw new Error(
-        "Missing SHARED_PROVIDER_VERCEL_TEAM_ID environment variable."
-    )
-
-const vercelToken = process.env.SHARED_PROVIDER_VERCEL_SECRET
-if (!vercelToken)
-    throw new Error(
-        "Missing SHARED_PROVIDER_VERCEL_SECRET environment variable."
-    )
-
-const { deploymentId, deploymentUrl } = await promotePreviewDeployment({
-    commitSha,
-    appName,
     githubRepositoryId,
+
     vercelTeamId,
     vercelToken
 })
 
-console.log("Deployed Preview Successfully", {
-    appName,
-    commitSha,
-
-    deploymentId,
-    deploymentUrl
-})
+console.log(`Preview deployment created: ${inspectorUrl}`)

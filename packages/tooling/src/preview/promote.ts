@@ -1,12 +1,12 @@
 import { Vercel } from "@vercel/sdk"
 
 const APPLICATION_NAMES = ["api-experimental"] as const
-
 type PreviewDeploymentApplicationName = (typeof APPLICATION_NAMES)[number]
 
 type PreviewDeploymentConfig = {
-    branch: string
-    vercelProjectName: string
+    vercelScopeSlug: string
+    vercelProjectName: PreviewDeploymentApplicationName
+
     domain: string
 }
 
@@ -15,7 +15,7 @@ const PREVIEW_DEPLOYMENT_CONFIGURATIONS: Record<
     PreviewDeploymentConfig
 > = {
     "api-experimental": {
-        branch: "preview/api-experimental",
+        vercelScopeSlug: "altered",
         vercelProjectName: "api-experimental",
         domain: "preview.experimental.api.usealtered.com"
     }
@@ -24,41 +24,61 @@ const PREVIEW_DEPLOYMENT_CONFIGURATIONS: Record<
 type PromotePreviewDeploymentOptions = {
     appName: PreviewDeploymentApplicationName
 
+    gitBranch?: string
+    gitCommit: string
+
     githubRepositoryId: string
-    branchRef?: string
-    commitSha: string
 
     vercelToken: string
     vercelTeamId: string
 }
 
-type PromotePreviewDeploymentRequirements =
-    Required<PromotePreviewDeploymentOptions>
-
 type PromotePreviewDeploymentResult = {
     deploymentId: string
-    deploymentUrl: string
+
+    inspectorUrl: string
+}
+
+function createDeploymentInspectorUrl({
+    scopeSlug,
+    projectName,
+    deploymentId
+}: {
+    scopeSlug: string
+    projectName: string
+    deploymentId: string
+}): string {
+    return `https://vercel.com/${scopeSlug}/${projectName}/${deploymentId}`
 }
 
 async function createDeployment({
-    reqs,
+    config,
+    options,
     vercel
 }: {
-    reqs: PromotePreviewDeploymentRequirements
+    config: PreviewDeploymentConfig
+    options: PromotePreviewDeploymentOptions
     vercel: Vercel
 }): Promise<{ id: string; url: string }> {
-    const { appName, githubRepositoryId, branchRef, commitSha, vercelTeamId } =
-        reqs
+    const { vercelProjectName } = config
+    const { githubRepositoryId, gitBranch, gitCommit, vercelTeamId } = options
 
     const response = await vercel.deployments.createDeployment({
         teamId: vercelTeamId,
         requestBody: {
-            name: appName,
+            name: vercelProjectName,
             gitSource: {
                 type: "github",
                 repoId: githubRepositoryId,
-                ref: branchRef,
-                sha: commitSha
+
+                ...(gitBranch
+                    ? {
+                          ref: gitBranch,
+                          sha: gitCommit
+                      }
+                    : {
+                          ref: gitCommit
+                      })
             }
         },
 
@@ -70,14 +90,14 @@ async function createDeployment({
 
 async function waitForDeploymentReady({
     deploymentId,
-    reqs,
+    options,
     vercel
 }: {
     deploymentId: string
-    reqs: PromotePreviewDeploymentRequirements
+    options: PromotePreviewDeploymentOptions
     vercel: Vercel
 }): Promise<void> {
-    const { vercelTeamId } = reqs
+    const { vercelTeamId } = options
 
     const POLLING_INTERVAL_MS = 5000
     const POLLING_ATTEMPTS_COUNT = 60
@@ -109,16 +129,16 @@ async function waitForDeploymentReady({
 async function assignPreviewDomainAlias({
     deploymentId,
     config,
-    reqs,
+    options,
     vercel
 }: {
     deploymentId: string
     config: PreviewDeploymentConfig
-    reqs: PromotePreviewDeploymentRequirements
+    options: PromotePreviewDeploymentOptions
     vercel: Vercel
 }): Promise<void> {
-    const { vercelTeamId } = reqs
     const { domain } = config
+    const { vercelTeamId } = options
 
     await vercel.aliases.assignAlias({
         id: deploymentId,
@@ -135,40 +155,41 @@ async function promotePreviewDeployment(
 ): Promise<PromotePreviewDeploymentResult> {
     const config = PREVIEW_DEPLOYMENT_CONFIGURATIONS[options.appName]
 
-    const reqs: PromotePreviewDeploymentRequirements = {
-        ...options,
+    const vercel = new Vercel({ bearerToken: options.vercelToken })
 
-        branchRef: options.branchRef ?? config.branch
-    }
-
-    const vercel = new Vercel({ bearerToken: reqs.vercelToken })
-
-    const { id: deploymentId, url: deploymentUrl } = await createDeployment({
-        reqs,
+    const { id: deploymentId } = await createDeployment({
+        config,
+        options,
         vercel
     })
 
     await waitForDeploymentReady({
         deploymentId,
-        reqs,
+        options,
         vercel
     })
 
     await assignPreviewDomainAlias({
         deploymentId,
         config,
-        reqs,
+        options,
         vercel
     })
 
     return {
         deploymentId,
-        deploymentUrl
+
+        inspectorUrl: createDeploymentInspectorUrl({
+            scopeSlug: config.vercelScopeSlug,
+            projectName: config.vercelProjectName,
+            deploymentId
+        })
     }
 }
 
 export {
     APPLICATION_NAMES,
     type PreviewDeploymentApplicationName,
+    type PromotePreviewDeploymentOptions,
     promotePreviewDeployment
 }

@@ -4,13 +4,13 @@ overview: "Minimal, fast path to stable preview promotion for `api-experimental`
 todos:
   - id: spike-vercel-domain-assignment
     content: "Prove whether custom preview domain can be reassigned via API alias without branch-bound Preview environment configuration."
-    status: pending
+    status: completed
   - id: tooling-preview-modules
     content: "Implement reusable preview deployment/promotion modules in `@altered/tooling`."
-    status: pending
+    status: completed
   - id: scripts-root-wiring
     content: "Wire root scripts for auto-promote and manual commit promotion for api-experimental."
-    status: pending
+    status: completed
   - id: gh-workflow-manage-deployments
     content: "Create Blacksmith-backed workflow with CI checks plus preview auto/manual jobs."
     status: pending
@@ -52,10 +52,10 @@ Ship a stable preview URL for `api-experimental` at `preview.experimental.api.us
 
 Use **SHA-driven deployment + domain alias reassignment** as the primary mechanism, not branch mirror promotion.
 
-- Preferred flow: create deployment from commit SHA -> wait ready -> assign `preview.experimental.api.usealtered.com` alias to that deployment.
-- Branch mirrors like `preview/<app>` are fallback-only if Vercel enforces branch eligibility in a way API aliasing cannot bypass.
+- Preferred flow: create deployment from an explicit commit, an explicit branch, or the current non-`main` branch -> wait ready -> assign `preview.experimental.api.usealtered.com` alias to that deployment.
+- Branch mirrors like `preview/<app>` are not needed after Phase 0; Vercel accepts a pushed GitHub commit/branch plus direct alias reassignment.
 
-## Phase 0: fast feasibility spike (required first)
+## Phase 0: fast feasibility spike (completed)
 
 Goal: remove ambiguity around Vercel branch eligibility for preview domains.
 
@@ -66,9 +66,7 @@ Goal: remove ambiguity around Vercel branch eligibility for preview domains.
 Acceptance:
 
 - **Pass:** Domain resolves to targeted deployment and remains mutable via re-alias.
-- **Fail:** Domain assignment blocked by branch eligibility; activate fallback strategy:
-  - Maintain one mirror branch `preview/api-experimental` only for domain eligibility.
-  - Continue SHA-level observability in metadata.
+- **Confirmed:** Commits must exist on GitHub first; local-only commits fail before deployment creation.
 
 ## Phase 1: reusable TypeScript orchestration
 
@@ -80,11 +78,12 @@ Implement in `@altered/tooling` (new preview modules + bin entrypoints):
 - `preview/vercel-client`:
   - Minimal typed wrappers for deploy create, deploy status polling, and alias assign.
 - `preview/promote`:
-  - `promotePreviewBySha({ app, sha, mode })` where `mode` is `auto` or `manual`.
+  - Promote by explicit commit, explicit branch, or current non-`main` branch.
   - Structured logs and deterministic exit codes.
 - `preview/resolve`:
-  - Resolve source SHA from push context (for auto mode).
-  - Accept explicit SHA arg (manual mode).
+  - Resolve current branch for no-argument manual promotion.
+  - Verify explicit commits exist on origin before deploying.
+  - Verify branch HEAD is synced with origin before deploying.
 
 Bin commands:
 
@@ -100,11 +99,13 @@ Root `package.json` scripts:
 
 Manual command target:
 
-- `pnpm preview:promote:api-experimental <commit-sha>`
+- `pnpm preview:promote:api-experimental --commit <commit-sha>`
+- `pnpm preview:promote:api-experimental --branch <branch-name>`
+- `pnpm preview:promote:api-experimental` from a non-`main` branch.
 
 Behavior:
 
-- Always prints deploy URL + inspector URL + stable preview domain.
+- Prints the Vercel inspect URL.
 - Fails loudly in CI logs; no silent partial success.
 
 ## Phase 3: workflow design (`manage-deployments.yml`)
@@ -171,7 +172,7 @@ Run and confirm:
 ## Risks and mitigations
 
 - **Risk:** Vercel domain assignment requires branch-bound eligibility.
-  - **Mitigation:** Phase 0 spike + single-branch fallback (`preview/api-experimental`) only if required.
+  - **Mitigation:** Phase 0 passed; no preview mirror branch is required.
 - **Risk:** over-deployment cost/noise as variants grow.
   - **Mitigation:** keep MVP single-app; add changed-app gating before multi-app enablement.
 - **Risk:** token scope misuse.
@@ -179,8 +180,5 @@ Run and confirm:
 
 ## Execution order
 
-1. Phase 0 feasibility spike.
-2. Tooling module implementation in `@altered/tooling`.
-3. Root script wiring.
-4. `manage-deployments.yml` with Blacksmith + checks + auto/manual promotion.
-5. End-to-end verification and rollback test.
+1. `manage-deployments.yml` with Blacksmith + checks + auto/manual promotion.
+2. End-to-end verification and rollback test.
