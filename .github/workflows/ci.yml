@@ -2,8 +2,8 @@ name: CI
 
 on:
   push:
-    branches-ignore:
-      - "main"
+    branches:
+      - "**"
 
 jobs:
   check-types:
@@ -38,6 +38,8 @@ jobs:
 
   deploy-and-promote-preview:
     name: Deploy & Promote Preview
+
+    if: github.ref_name != 'main'
 
     needs:
       - check-types
