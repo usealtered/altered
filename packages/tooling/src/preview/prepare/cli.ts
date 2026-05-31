@@ -4,6 +4,23 @@ import {
     type PreviewDeploymentApplicationName
 } from "../promote"
 
+function resolveCiBranch(branch?: string, commit?: string) {
+    const isCi = process.env.CI === "true"
+
+    const isWorkflowDispatch =
+        process.env.GITHUB_EVENT_NAME === "workflow_dispatch"
+
+    if (isCi && isWorkflowDispatch && !branch && !commit)
+        throw new Error(
+            `Either --branch or --commit must be provided for 'workflow_dispatch' events. ${cliUsageInstructions}`
+        )
+
+    const resolvedGitBranch =
+        branch || (isCi && !commit ? process.env.GITHUB_REF_NAME : undefined)
+
+    return resolvedGitBranch
+}
+
 function parseCliArguments(): {
     applicationTargets: PreviewDeploymentApplicationName[]
 
@@ -52,10 +69,12 @@ function parseCliArguments(): {
               ...new Set(applicationTargets)
           ] as PreviewDeploymentApplicationName[])
 
+    const resolvedGitBranch = resolveCiBranch(gitBranch)
+
     return {
         applicationTargets: resolvedApplicationTargets,
 
-        gitBranch,
+        gitBranch: resolvedGitBranch,
         gitCommit
     }
 }
