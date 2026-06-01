@@ -10,7 +10,7 @@
 
         "clean": "altered-clean-package",
 
-        "build": "altered-bundle-application",
+        "build": "altered-validate-environment && altered-bundle-application",
 
         "start": "node dist/index.js"
     },
@@ -19,6 +19,7 @@
         "hono": "catalog:"
     },
     "devDependencies": {
+        "@altered/core-experimental": "workspace:*",
         "@altered/tooling": "workspace:*",
         "@types/node": "catalog:",
         "tsx": "catalog:",
