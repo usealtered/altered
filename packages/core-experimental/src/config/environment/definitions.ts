@@ -63,8 +63,8 @@ type EnvironmentConfig = typeof environmentConfigSchema.infer
 
 let environmentConfig: EnvironmentConfig | undefined
 
-function getEnvironmentConfig(): EnvironmentConfig {
-    environmentConfig ??= environmentConfigSchema.assert({
+function assertEnvironmentConfig(): EnvironmentConfig {
+    return environmentConfigSchema.assert({
         shared: {
             config: {
                 env: process.env.SHARED_CONFIG_ENV
@@ -117,8 +117,12 @@ function getEnvironmentConfig(): EnvironmentConfig {
             }
         }
     })
+}
+
+function getEnvironmentConfig(): EnvironmentConfig {
+    environmentConfig ??= assertEnvironmentConfig()
 
     return environmentConfig
 }
 
-export { type EnvironmentConfig, getEnvironmentConfig }
+export { assertEnvironmentConfig, type EnvironmentConfig, getEnvironmentConfig }

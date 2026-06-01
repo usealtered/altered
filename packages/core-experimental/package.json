@@ -3,6 +3,9 @@
     "version": "0.1.0",
     "private": true,
     "type": "module",
+    "bin": {
+        "altered-validate-environment": "./bin/validate-environment.ts"
+    },
     "exports": {
         "./*": {
             "types": "./src/*.ts",
@@ -22,6 +25,7 @@
     "devDependencies": {
         "@altered/tooling": "workspace:*",
         "@types/node": "catalog:",
+        "tsx": "catalog:",
         "typescript": "catalog:"
     },
     "dependencies": {
