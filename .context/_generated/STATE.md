@@ -97,9 +97,13 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
   - Deploy/promote preview routes through `pnpm preview:promote` (`--all-apps`) with workflow-dispatch support (`branch`, `commit`) and push branch promotion via explicit `github.ref_name`.
   - Workflow still needs first live run verification.
 
-- Admin `/dev` forwarding preference:
-  - Redis-backed persisted toggle added for admin phone numbers.
-  - Failure mode hardened: if KV read/write fails, routing falls back to production handling (no webhook crash path).
+- Admin webhook forwarding preference and control path:
+  - Redis-backed persisted forwarding target added for admin phone numbers: `preview-development` or implicit `none` (missing key).
+  - Admin command detection moved to an ephemeral natural-language flow powered by lightweight model classification (`openai/gpt-5.4-nano` via OpenRouter) with high-confidence gating.
+  - Added a mock AI SDK tool-calling path (`orderCoffee`) for admin-only immediate-task testing, with optional `type` input and ephemeral confirmation response.
+  - Preference updates respond directly over iMessage and skip DB history persistence for both command messages and confirmations.
+  - Forwarded webhook metadata now includes explicit target header (`x-altered-forwarded-target`) in addition to forwarded marker.
+  - Failure mode hardened: if KV read/write or forwarding fails, ingress still returns provider-facing `200 OK`; production ingestion remains bypassed during active forwarding attempts.
 
 - Preview deployment management direction (2026-05-24):
   - Build minimal MVP for `api-experimental` first, while shaping code for multi-app extension.
@@ -113,13 +117,13 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
 
 - Dedupe is not implemented yet; duplicate provider deliveries can still create repeated message rows/replies.
 
-- Local/prod split testing currently requires standard deployment/tunnel switching; no in-band dev forwarding command yet.
+- Natural-language admin command routing currently only handles webhook forwarding target changes; `/new` conversation resets still use slash triggers.
 
 - Keep Chat SDK thread iterators out of LLM truth path; Postgres remains canonical for context.
 
 ## Next execution order
 
-1. Implement production webhook forwarding to local tunnel for **admin-only** **`/dev`** messages; strip routing prefix before persistence; on forward success return **`200` `OK`** from prod **without running** Chat SDK ingestion (same shape as `SendblueAdapter.handleWebhook` success responses). **Failure policy:** tunnel unreachable ⇒ return **`200` `OK`**, **no prod ingestion**, **no forward** (fixed response body; no thread side effects).
+1. Expand the admin lightweight-model command surface beyond forwarding target updates (replace remaining slash commands where needed, including `/new` if product confirms).
 
 2. Add provider message-id dedupe guards in persistence path.
 
