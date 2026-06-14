@@ -1,4 +1,3 @@
-import { botDefaultModelId } from "@altered/core-experimental/config/app"
 import { NEW_CONVERSATION_TRIGGER_PHRASES } from "@altered/server-experimental/chat/messages/commands/definitions"
 import { prepareMessagesForGeneration } from "../../../../../ai/generate/prepare-messages"
 import { generateResponseFromModelMessages } from "../../../../../ai/generate/response-from-model-messages"
@@ -55,7 +54,7 @@ async function buildDirectMessageResponse({
         composeSystemPrompt()
 
     const modelMessages = prepareMessagesForGeneration(chatMessages, {
-        modelId: botDefaultModelId,
+        modelId: "anthropic/claude-sonnet-4.6",
 
         ephemeralPrompt: ephemeralSystemPrompt,
         enableExplicitCacheControl: {

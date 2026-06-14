@@ -1,4 +1,3 @@
-import { botDefaultModelId } from "@altered/core-experimental/config/app"
 import type { ModelMessage } from "ai"
 import { prepareMessagesForGeneration } from "../src/ai/generate/prepare-messages"
 import type { ChatMessage } from "../src/chat/messages/schema"
@@ -103,7 +102,7 @@ createLogSectionHeader({ title: "EPHEMERAL SYSTEM PROMPT" })
 console.log(ephemeralSystemPrompt)
 
 const preparedMessages = prepareMessagesForGeneration(demoMessages, {
-    modelId: botDefaultModelId,
+    modelId: "anthropic/claude-sonnet-4.6",
     ephemeralPrompt: ephemeralSystemPrompt,
     enableExplicitCacheControl: { anthropic: true }
 })

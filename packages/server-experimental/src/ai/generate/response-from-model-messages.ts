@@ -6,7 +6,7 @@ import {
 } from "ai"
 import { constructPrompts } from "../prompts/constructor"
 import { IDENTITY_SYSTEM_PROMPT } from "../prompts/identity"
-import { createOpenRouterChatModel } from "../provider/create-chat-model"
+import { createOpenrouterChatModel } from "../provider/create-chat-model"
 import {
     type OpenRouterProviderMetadata,
     parseOpenRouterProviderMetadata
@@ -41,7 +41,9 @@ async function generateResponseFromModelMessages(
         providerMetadata,
         response: { modelId }
     } = await generateText({
-        model: createOpenRouterChatModel(),
+        model: createOpenrouterChatModel({
+            modelId: "anthropic/claude-sonnet-4.6"
+        }),
 
         system: constructPrompts(prompts),
 

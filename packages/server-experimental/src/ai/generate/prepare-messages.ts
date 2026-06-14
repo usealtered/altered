@@ -1,3 +1,4 @@
+import type { LanguageModelID } from "@altered/core-experimental/config/ai"
 import type { ModelMessage } from "ai"
 import type { ChatMessage } from "../../chat/messages/schema"
 import { toModelMessagesForGeneration } from "../../chat/messages/to-model-messages"
@@ -26,7 +27,7 @@ function prepareMessagesForGeneration(
         ephemeralPrompt,
         enableExplicitCacheControl
     }: {
-        modelId: string
+        modelId: LanguageModelID
 
         ephemeralPrompt?: string
         enableExplicitCacheControl?: {
