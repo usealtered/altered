@@ -19,7 +19,7 @@ const openRouterProviderMetadataSchema = type({
 
 type OpenRouterProviderMetadata = typeof openRouterProviderMetadataSchema.infer
 
-function parseOpenRouterProviderMetadata(
+function parseOpenrouterProviderMetadata(
     metadata: ProviderMetadata | undefined
 ): OpenRouterProviderMetadata | null {
     const parsedMetadata = openRouterProviderMetadataSchema(metadata)
@@ -42,5 +42,5 @@ function formatOpenRouterCost(cost: number | undefined): string | undefined {
 export {
     formatOpenRouterCost,
     type OpenRouterProviderMetadata,
-    parseOpenRouterProviderMetadata
+    parseOpenrouterProviderMetadata
 }

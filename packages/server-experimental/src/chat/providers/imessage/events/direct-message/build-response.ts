@@ -88,9 +88,19 @@ async function buildDirectMessageResponse({
         providerMetadata
     } = await coffeeOrderingDemoAgent.generate({
         options: {
-            systemPrompt: initialSystemPrompt,
+            config: {
+                systemPrompt: initialSystemPrompt,
 
-            user: { phoneNumber }
+                explicitlySkipOrderingCoffee: false
+            },
+
+            context: {
+                user: {
+                    phoneNumber,
+
+                    planId: "paid"
+                }
+            }
         },
 
         messages: modelMessages
