@@ -1,6 +1,6 @@
 import type { Tool, TypedToolCall, TypedToolResult } from "ai"
+import { createMockQueryMemoryTool } from "./mock-query-memory"
 import { createOrderCoffeeTool } from "./order-coffee"
-import { createQueryMemoryMockTool } from "./query-memory-mock"
 import { createResearchCoffeeOptionsTool } from "./research-coffee-options"
 import { skipOrderingCoffeeTool } from "./skip-ordering-coffee"
 
@@ -28,8 +28,13 @@ function filterCoffeeOrderingDemoToolNames(
 }
 
 const coffeeOrderingDemoToolSet = {
-    "query-memory": createQueryMemoryMockTool({
-        include: { brains: ["user"] }
+    "query-memory": createMockQueryMemoryTool({
+        include: {
+            brains: {
+                user: true,
+                system: true
+            }
+        }
     }),
 
     "research-coffee-options": createResearchCoffeeOptionsTool(),
