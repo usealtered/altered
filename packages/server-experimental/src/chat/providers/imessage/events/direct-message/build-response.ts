@@ -1,5 +1,5 @@
 import { NEW_CONVERSATION_TRIGGER_PHRASES } from "@altered/server-experimental/chat/messages/commands/definitions"
-import { coffeeOrderingDemoAgent } from "../../../../../ai/agents/coffee-ordering-demo/definition"
+import { chatAgent } from "../../../../../ai/agents/coffee-ordering-demo/definition"
 import { prepareMessagesForGeneration } from "../../../../../ai/generate/prepare-messages"
 import {
     formatOpenRouterCost,
@@ -74,10 +74,9 @@ async function buildDirectMessageResponse({
             "iMessage phone number not found. This should never happen."
         )
 
-    //  We should replace the "order coffee" demo agent with a main, designated "chat" agent once completely solidified and tested.
-
-    //  Some result info, such as the model ID, is only the associated to the last step. To get info across all steps, map the `steps` property.
-
+    /**
+     * @todo P3: Some result info, such as `response.modelId`, is only derived from the last step. We should aggregate the details that matter by mapping across the `steps` property.
+     */
     const {
         text: generatedText,
 
@@ -86,12 +85,15 @@ async function buildDirectMessageResponse({
         response: { modelId },
 
         providerMetadata
-    } = await coffeeOrderingDemoAgent.generate({
+    } = await chatAgent.generate({
         options: {
             config: {
                 systemPrompt: initialSystemPrompt,
 
-                explicitlySkipOrderingCoffee: false
+                channel: {
+                    provider: "imessage",
+                    type: "direct"
+                }
             },
 
             context: {
