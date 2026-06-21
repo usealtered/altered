@@ -1,4 +1,5 @@
-import { createTemplatedText } from "./create-templated-text"
+import { type } from "arktype"
+import { createTextTemplate } from "./create-text-template"
 
 const ENVIRONMENT_SYSTEM_PROMPT = `# Environment
 
@@ -23,6 +24,16 @@ const ENVIRONMENT_SYSTEM_PROMPT = `# Environment
 const EPHEMERAL_ENVIRONMENT_SYSTEM_PROMPT =
     "CURRENT_DATE_TIME: {{currentDateTime}}" as const
 
+const ephemeralEnvironmentSystemPromptTemplate = createTextTemplate({
+    template: EPHEMERAL_ENVIRONMENT_SYSTEM_PROMPT,
+
+    variables: {
+        schemas: {
+            currentDateTime: type("string")
+        }
+    }
+})
+
 const edmontonDateTimeFormatter = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/Edmonton",
 
@@ -43,7 +54,7 @@ function formatDateTime(date: Date): string {
 }
 
 function createEphemeralEnvironmentSystemPrompt(): string {
-    return createTemplatedText(EPHEMERAL_ENVIRONMENT_SYSTEM_PROMPT, {
+    return ephemeralEnvironmentSystemPromptTemplate.fill({
         currentDateTime: formatDateTime(new Date())
     })
 }
@@ -51,5 +62,6 @@ function createEphemeralEnvironmentSystemPrompt(): string {
 export {
     createEphemeralEnvironmentSystemPrompt,
     ENVIRONMENT_SYSTEM_PROMPT,
+    ephemeralEnvironmentSystemPromptTemplate,
     formatDateTime
 }
