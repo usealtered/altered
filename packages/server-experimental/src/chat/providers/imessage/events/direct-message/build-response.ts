@@ -1,5 +1,6 @@
+import { getEnvironmentConfig } from "@altered/core-experimental/config/environment/definitions"
 import { NEW_CONVERSATION_TRIGGER_PHRASES } from "@altered/server-experimental/chat/messages/commands/definitions"
-import { chatAgent } from "../../../../../ai/agents/coffee-ordering-demo/definition"
+import { chatAgent } from "../../../../../ai/agents/chat/definition"
 import { prepareMessagesForGeneration } from "../../../../../ai/generate/prepare-messages"
 import {
     formatOpenRouterCost,
@@ -68,6 +69,10 @@ async function buildDirectMessageResponse({
 
     const generationStartedAt = performance.now()
 
+    const {
+        shared: { admin }
+    } = getEnvironmentConfig()
+
     const phoneNumber = getImessagePhoneNumberByThread(thread.id)
     if (!phoneNumber)
         throw new Error(
@@ -93,7 +98,9 @@ async function buildDirectMessageResponse({
                 channel: {
                     provider: "imessage",
                     type: "direct"
-                }
+                },
+
+                allowAdminTools: admin.phoneNumber === phoneNumber
             },
 
             context: {
