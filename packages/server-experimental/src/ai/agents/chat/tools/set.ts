@@ -1,7 +1,7 @@
 import type { Tool, TypedToolCall, TypedToolResult } from "ai"
 import { createChangeApplicationTargetTool } from "./admin/change-application-target"
 import { createChangeModelTool } from "./admin/change-model"
-import { createDistillMessageTool } from "./mock-distill-thoughts"
+import { createDistillMessageTool } from "./distill-message"
 import { createQueryMemoryTool } from "./query-memory"
 
 const chatToolNames = ["query-memory", "distill-message"] as const
