@@ -1,8 +1,8 @@
 import { tool } from "ai"
 import { type } from "arktype"
-import { validateCoffeeOrderingDemoAgentContext } from "../definition"
+import { chatAgentContextSchema } from "../definition"
 
-function createMockQueryMemoryTool(options?: {
+function createQueryMemoryTool(options?: {
     include?: {
         brains?: {
             user?: boolean
@@ -11,19 +11,20 @@ function createMockQueryMemoryTool(options?: {
     }
 }) {
     const { include } = {
+        ...(options ?? {}),
+
         include: {
             brains: {
-                user: true,
-                system: true,
-
-                ...options?.include?.brains
+                user: options?.include?.brains?.user ?? true,
+                system: options?.include?.brains?.system ?? true
             }
         }
     }
 
     return tool({
         title: "Query Memory",
-        description: "Query the database for saved information about the user.",
+        description:
+            "Get more context about the conversation and the user. Uses an algorithm to fetch all relevant thoughts from the database.",
 
         type: "function",
         strict: true,
@@ -40,46 +41,42 @@ function createMockQueryMemoryTool(options?: {
 
         outputSchema: type({
             thoughts: type({
-                id: type("string").describe("The thought's unique identifier."),
+                id: type("string").describe("The unique ID of the thought."),
 
                 content: type("string").describe(
-                    "The textual description of the thought."
+                    "The description of the thought."
                 ),
-                alias: type("string").describe(
-                    "The short title of the thought."
-                ),
+                alias: type("string").describe("The title of the thought."),
 
                 createdAt: type("string").describe(
-                    "The timestamp of the thought's creation."
+                    "The timestamp of the creation of the thought."
                 ),
                 updatedAt: type("string").describe(
-                    "The timestamp of the thought's last update."
+                    "The timestamp of the last update of the thought."
                 ),
 
                 datasets: type({
                     id: type("string").describe(
-                        "The dataset's unique identifier."
+                        "The unique ID of the dataset."
                     ),
 
                     content: type("string").describe(
-                        "The textual description of the dataset."
+                        "The description of the dataset."
                     ),
-                    alias: type("string").describe(
-                        "The short title of the dataset."
-                    ),
+                    alias: type("string").describe("The title of the dataset."),
 
                     createdAt: type("string").describe(
-                        "The timestamp of the dataset's creation."
+                        "The timestamp of the creation of the dataset."
                     ),
                     updatedAt: type("string").describe(
-                        "The timestamp of the dataset's last update."
+                        "The timestamp of the last update of the dataset."
                     )
                 })
                     .array()
-                    .describe("The datasets the thought is associated with.")
+                    .describe("The datasets the thought is tagged with.")
             })
                 .array()
-                .describe("The thoughts retrieved from the database.")
+                .describe("The thoughts found in the database.")
         }),
 
         inputExamples: [
@@ -102,20 +99,17 @@ function createMockQueryMemoryTool(options?: {
 
             { toolCallId, messages: _messages, experimental_context }
         ) => {
-            const { user } =
-                validateCoffeeOrderingDemoAgentContext.assert(
-                    experimental_context
-                )
+            const { user } = chatAgentContextSchema.assert(experimental_context)
 
-            console.warn("What is `toolCallId`?", toolCallId)
+            console.log(`[WIP] Tool call ID: ${toolCallId}`)
 
-            console.log("[DEMO] Fetching memory:", {
+            console.log("[WIP] Requested to query memory:", {
                 options,
                 user,
                 query
             })
 
-            //  Demo async call, simulates a network call or subagent generation.
+            //  Placeholder async call to simulate a network request or subagent generation.
 
             await new Promise(resolve => setTimeout(resolve, 1500))
 
@@ -126,7 +120,7 @@ function createMockQueryMemoryTool(options?: {
                               id: "1",
 
                               content:
-                                  "This is a user-level demo thought from Riley's ALTERED brain (manually inserted). Act as if you found memories about a previous trip to Miami to attend Ultra Music Festival in 2024 (imagine the details).",
+                                  "This is a user-level thought from Riley's ALTERED brain (manually inserted). Act as if you found memories about a previous trip to Miami to attend Ultra Music Festival in 2024 (imagine the details).",
                               alias: "UMF Trip 2024",
 
                               createdAt: new Date().toISOString(),
@@ -160,7 +154,7 @@ function createMockQueryMemoryTool(options?: {
                               id: "2",
 
                               content:
-                                  "This is a system-level demo thought from Riley's ALTERED brain mirror (automatically derived from user conversations). Act as if you found memories about a previous trip to Miami to attend Ultra Music Festival in 2024 (imagine the details). Include an additional detail that was derived from the chat: He went with his friend, Tino, who is from Bethlehem, Pennsylvania.",
+                                  "This is a system-level thought from Riley's ALTERED brain mirror (automatically derived from user conversations). Act as if you found memories about a previous trip to Miami to attend Ultra Music Festival in 2024 (imagine the details). Include an additional detail that was derived from the chat: He went with his friend, Tino, who is from Bethlehem, Pennsylvania.",
                               alias: "UMF Trip 2024",
 
                               createdAt: new Date().toISOString(),
@@ -203,4 +197,4 @@ function createMockQueryMemoryTool(options?: {
     })
 }
 
-export { createMockQueryMemoryTool }
+export { createQueryMemoryTool }
