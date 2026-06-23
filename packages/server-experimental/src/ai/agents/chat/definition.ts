@@ -120,6 +120,8 @@ const ADMIN_TOOLS_INSTRUCTIONS_PART = `
  * @todo P2: Consider whether this is the best format. XML-style or an agent skill may be better suited.
  *
  * @todo P2: Look into whether we should provide the agent tools for messaging, such as sending read receipts, typing indicators, intermediary messages, etc. or if this should all be done programmatically based on the generated text response.
+ *
+ * @remarks If we end up sending the messages using tool calls, we could exit the agent loop using a no-op tool (without an execute function) and then perform any necessary actions after exit. See: https://ai-sdk.dev/docs/agents/loop-control#forced-tool-calling
  */
 const CHAT_AGENT_INSTRUCTIONS_TEMPLATE = `
 
