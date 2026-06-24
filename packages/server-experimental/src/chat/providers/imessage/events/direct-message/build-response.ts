@@ -1,6 +1,7 @@
 import { getEnvironmentConfig } from "@altered/core-experimental/config/environment/definitions"
 import { NEW_CONVERSATION_TRIGGER_PHRASES } from "@altered/server-experimental/chat/messages/commands/definitions"
 import { chatAgent } from "../../../../../ai/agents/chat/definition"
+import { resolveAgentInstructions } from "../../../../../ai/agents/utils/resolve-agent-instructions"
 import { prepareMessagesForGeneration } from "../../../../../ai/generate/prepare-messages"
 import {
     formatOpenRouterCost,
@@ -93,7 +94,7 @@ async function buildDirectMessageResponse({
     } = await chatAgent.generate({
         options: {
             config: {
-                systemPrompt: initialSystemPrompt,
+                systemMessages: resolveAgentInstructions(initialSystemPrompt),
 
                 channel: {
                     provider: "imessage",

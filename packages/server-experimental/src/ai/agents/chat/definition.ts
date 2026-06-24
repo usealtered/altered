@@ -1,10 +1,8 @@
-import type { AssertExactMatch } from "@altered/core-experimental/typescript/exact-match"
 import {
     type ModelMessage,
     type SystemModelMessage,
     systemModelMessageSchema,
-    ToolLoopAgent,
-    type ToolLoopAgentSettings
+    ToolLoopAgent
 } from "ai"
 import { type } from "arktype"
 import { createTextTemplate } from "../../prompts/create-text-template"
@@ -34,19 +32,13 @@ const chatAgentContextSchema = type({
     }
 })
 
-const agentInstructionsSchema = type("string")
-    .or(type(systemModelMessageSchema).as<SystemModelMessage>())
-    .or(type(systemModelMessageSchema.array()).as<SystemModelMessage[]>())
-    .or("undefined")
-
-const _agentInstructionsSchemaIntegrityCheck: AssertExactMatch<
-    typeof agentInstructionsSchema.infer,
-    ToolLoopAgentSettings["instructions"]
-> = true
+const systemMessagesSchema = type(systemModelMessageSchema)
+    .array()
+    .as<SystemModelMessage[]>()
 
 const chatAgentCallOptionsSchema = type({
     "config?": {
-        "systemPrompt?": agentInstructionsSchema,
+        "systemMessages?": systemMessagesSchema,
 
         /**
          * @todo P3: See note on 2026-06-20 titled "Chat Agent Channel Discrimination" and evaluate.
@@ -199,7 +191,7 @@ const chatAgent = new ToolLoopAgent({
         )
 
         const combinedInstructions = [
-            ...resolveAgentInstructions(config?.systemPrompt),
+            ...(config?.systemMessages ?? []),
 
             ...resolveAgentInstructions(resolvedInstructions)
         ]
@@ -287,8 +279,8 @@ const chatAgent = new ToolLoopAgent({
 })
 
 export {
-    agentInstructionsSchema,
     chatAgent,
     chatAgentCallOptionsSchema,
-    chatAgentContextSchema
+    chatAgentContextSchema,
+    systemMessagesSchema
 }
