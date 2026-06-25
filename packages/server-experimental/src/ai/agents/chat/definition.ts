@@ -218,6 +218,8 @@ const chatAgent = new ToolLoopAgent({
             : undefined
 
         return {
+            ...params,
+
             model: createOpenrouterChatModel({
                 modelId:
                     context.user.planId === "paid"
