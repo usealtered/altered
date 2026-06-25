@@ -12,6 +12,9 @@ function InterfaceRenderer({ interfaces }: { interfaces: ALTEREDInterface[] }) {
     const { type, content } = rootInterface
 
     switch (type) {
+        case "collection-groups":
+            return <CollectionInterface content={content} isGroup />
+
         case "collection":
             return <CollectionInterface content={content} />
 

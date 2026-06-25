@@ -17,6 +17,9 @@ type ALTEREDInterfaceItem = {
     alias: string
     content: string
 
+    title?: string
+    subtitle?: string
+
     icon?: ALTEREDInterfaceIcon
 
     /**
@@ -37,6 +40,13 @@ type ALTEREDInterface =
            * Represents a grid or a list.
            */
           type: "collection"
+          content: ALTEREDInterfaceItem[]
+      }
+    | {
+          /**
+           * @remarks Must only contain `collection` interfaces.
+           */
+          type: "collection-groups"
           content: ALTEREDInterfaceItem[]
       }
 
