@@ -1,7 +1,7 @@
 {
     "$schema": "https://www.raycast.com/schemas/extension.json",
     "name": "altered-raycast-internal-experimental",
-    "title": "ALTERED Internal - Experimental",
+    "title": "ALTERED Internal",
     "description": "Knowledge orchestration infrastructure.",
     "icon": "raycast-internal-experimental-icon-tmp.png",
     "author": "inducingchaos",
@@ -18,45 +18,9 @@
     "commands": [
         {
             "mode": "view",
-            "name": "command-palette",
-            "title": "Command Palette",
-            "description": "View your ALTERED Systems.",
-            "subtitle": "Placeholder subtitle."
-        },
-        {
-            "mode": "view",
-            "name": "ai-test",
-            "title": "AI Test",
-            "description": "Placeholder description.",
-            "subtitle": "Placeholder subtitle."
-        },
-        {
-            "mode": "view",
-            "name": "form-test",
-            "title": "Form Test",
-            "description": "Placeholder description.",
-            "subtitle": "Placeholder subtitle."
-        },
-        {
-            "mode": "view",
-            "name": "grid-test",
-            "title": "Grid Test",
-            "description": "Placeholder description.",
-            "subtitle": "Placeholder subtitle."
-        },
-        {
-            "mode": "no-view",
-            "name": "script-test",
-            "title": "Script Test",
-            "description": "Placeholder description.",
-            "subtitle": "Placeholder subtitle."
-        },
-        {
-            "mode": "view",
-            "name": "typeahead-test",
-            "title": "Typeahead Test",
-            "description": "Placeholder description.",
-            "subtitle": "Placeholder subtitle."
+            "name": "action-palette",
+            "title": "Action Palette",
+            "description": "View your ALTERED Systems."
         }
     ],
     "tools": [],
