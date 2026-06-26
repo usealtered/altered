@@ -1,7 +1,6 @@
 import { getEnvironmentConfig } from "@altered/core-experimental/config/environment/definitions"
 import { NEW_CONVERSATION_TRIGGER_PHRASES } from "@altered/server-experimental/chat/messages/commands/definitions"
 import { chatAgent } from "../../../../../ai/agents/chat/definition"
-import { resolveAgentInstructions } from "../../../../../ai/agents/utils/resolve-agent-instructions"
 import { prepareMessagesForGeneration } from "../../../../../ai/generate/prepare-messages"
 import {
     formatOpenRouterCost,
@@ -12,7 +11,6 @@ import { startNewConversationForThread } from "../../../../conversations/start-n
 import { containsCommandTriggerPhrases } from "../../../../messages/commands/contains-trigger-phrases"
 import { listChatMessagesForConversation } from "../../../../messages/list-for-conversation"
 import { saveChatMessage } from "../../../../messages/save"
-import { composeSystemPrompt } from "../../behaviors/generation/compose-system-prompt"
 import type { ChatResponseContext } from "../../behaviors/type-and-respond"
 import { getImessagePhoneNumberByThread } from "../../get-phone-number-by-thread"
 import {
@@ -56,13 +54,9 @@ async function buildDirectMessageResponse({
 
     const chatMessages = await listChatMessagesForConversation(conversation.id)
 
-    const { initial: initialSystemPrompt, ephemeral: ephemeralSystemPrompt } =
-        composeSystemPrompt()
-
     const modelMessages = prepareMessagesForGeneration(chatMessages, {
         modelId: "anthropic/claude-sonnet-4.6",
 
-        ephemeralPrompt: ephemeralSystemPrompt,
         enableExplicitCacheControl: {
             anthropic: true
         }
@@ -94,14 +88,12 @@ async function buildDirectMessageResponse({
     } = await chatAgent.generate({
         options: {
             config: {
-                systemMessages: resolveAgentInstructions(initialSystemPrompt),
-
                 channel: {
                     provider: "imessage",
                     type: "direct"
                 },
 
-                allowAdminTools: admin.phoneNumber === phoneNumber
+                enableAdminTools: admin.phoneNumber === phoneNumber
             },
 
             context: {
