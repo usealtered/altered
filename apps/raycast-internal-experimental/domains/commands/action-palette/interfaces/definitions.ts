@@ -44,7 +44,7 @@ type ALTEREDInterface =
       }
     | {
           /**
-           * @remarks Must only contain `collection` interfaces.
+           * @todo P1: This could possibly be a data structure rather than a UI element type. See note on 2026-06-28 about "ALTERED Raycast Interface Renderer Iteration Mechanics and Data Design".
            */
           type: "collection-groups"
           content: ALTEREDInterfaceItem[]
