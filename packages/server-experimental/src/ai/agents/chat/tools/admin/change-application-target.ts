@@ -124,7 +124,8 @@ ${Object.values(applicationTargetEnvironmentDefinitions)
 `.trim()
 
 const applicationTargetIdSchema = type("===", ...applicationTargetIds).describe(
-    applicationTargetIdSchemaDescription
+    applicationTargetIdSchemaDescription,
+    "union"
 )
 
 function createChangeApplicationTargetTool() {

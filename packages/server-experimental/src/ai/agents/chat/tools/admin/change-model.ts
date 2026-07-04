@@ -3,7 +3,8 @@ import { tool } from "ai"
 import { type } from "arktype"
 
 const modelIdSchema = type("===", ...languageModelIds).describe(
-    "The language model ID to change to."
+    "The language model ID to change to.",
+    "union"
 )
 
 function createChangeModelTool() {
