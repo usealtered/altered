@@ -185,7 +185,7 @@ const chatAgent = new ToolLoopAgent({
 
     onStepFinish: step => {
         console.log(
-            `Step cost: ${formatOpenRouterCost(parseOpenrouterProviderMetadata(step.providerMetadata)?.openrouter?.usage?.cost)}`
+            `[ai:agents:chat] Step cost: ${formatOpenRouterCost(parseOpenrouterProviderMetadata(step.providerMetadata)?.openrouter?.usage?.cost)}`
         )
 
         //  We may want to consider performing message history storage here for storing results, if appropriate, as well as logging metrics.

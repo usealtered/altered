@@ -97,17 +97,22 @@ function createQueryMemoryTool(options?: {
         execute: async (
             query,
 
-            { toolCallId, messages: _messages, experimental_context }
+            { messages: _messages, experimental_context }
         ) => {
             const { user } = chatAgentContextSchema.assert(experimental_context)
 
-            console.log(`[WIP] Tool call ID: ${toolCallId}`)
-
-            console.log("[WIP] Requested to query memory:", {
-                options,
-                user,
-                query
-            })
+            console.log(
+                "[ai:agents:chat:tools:query-memory] Tool called:",
+                JSON.stringify(
+                    {
+                        options,
+                        user,
+                        query
+                    },
+                    null,
+                    2
+                )
+            )
 
             //  Placeholder async call to simulate a network request or subagent generation.
 

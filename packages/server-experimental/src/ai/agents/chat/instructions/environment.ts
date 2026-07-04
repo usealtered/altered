@@ -30,7 +30,7 @@ function createChatAgentEnvironmentInstructions(): string {
 
 function createChatAgentEnvironmentEphemeralInstructions(): string {
     return composeInstructions(
-        [`Environment - CURRENT_DATE_TIME: ${formatDateTime()}`],
+        [`[Environment] CURRENT_DATE_TIME: ${formatDateTime()}`],
 
         { delimiter: "; " }
     )

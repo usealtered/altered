@@ -144,7 +144,8 @@ function createChangeApplicationTargetTool() {
 
         execute: ({ id }) => {
             console.log(
-                `[WIP] Requested application target change to ID: ${id}`
+                "[ai:agents:chat:tools:change-application-target] Tool called:",
+                JSON.stringify({ id }, null, 2)
             )
 
             return {

@@ -23,7 +23,10 @@ function createChangeModelTool() {
         }),
 
         execute: ({ id }) => {
-            console.log(`[WIP] Requested model change to ID: ${id}`)
+            console.log(
+                "[ai:agents:chat:tools:change-model] Tool called:",
+                JSON.stringify({ id }, null, 2)
+            )
 
             return {
                 success: true
