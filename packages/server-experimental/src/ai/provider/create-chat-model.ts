@@ -1,12 +1,12 @@
-import { botDefaultModelId } from "@altered/core-experimental/config/app"
+import type { LanguageModelID } from "@altered/core-experimental/config/ai"
 import type { createOpenRouter } from "@openrouter/ai-sdk-provider"
 import { createOpenRouterChatModelOptions } from "./create-chat-model-options"
 import { getOpenRouter } from "./instance"
 
-function createOpenRouterChatModel(options?: {
-    modelId?: string
+function createOpenrouterChatModel(options: {
+    modelId: LanguageModelID
 }): ReturnType<ReturnType<typeof createOpenRouter>["chat"]> {
-    const { modelId = botDefaultModelId } = options ?? {}
+    const { modelId } = options
 
     const openRouter = getOpenRouter()
 
@@ -16,4 +16,4 @@ function createOpenRouterChatModel(options?: {
     )
 }
 
-export { createOpenRouterChatModel }
+export { createOpenrouterChatModel }

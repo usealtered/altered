@@ -1,0 +1,20 @@
+const edmontonDateTimeFormatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Edmonton",
+
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZoneName: "short"
+})
+
+/**
+ * @todo P1: Resolve to the user's local time rather than being fixed to Edmonton.
+ */
+function formatDateTime(date?: Date): string {
+    return edmontonDateTimeFormatter.format(date ?? new Date())
+}
+
+export { formatDateTime }

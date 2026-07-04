@@ -1,3 +1,4 @@
+import type { LanguageModelID } from "@altered/core-experimental/config/ai"
 import type { ModelMessage } from "ai"
 import type { ChatMessage } from "../../chat/messages/schema"
 import { toModelMessagesForGeneration } from "../../chat/messages/to-model-messages"
@@ -15,6 +16,8 @@ const removeUndefinedMessages = (
  *
  * @todo P3: Try to simplify the control flow a bit.
  *
+ * @todo P1: Consider if we should remove the ephemeral prompt option in favour of agent-based injection.
+ *
  * @remarks Anthropic (through OpenRouter) only permits cache control breakpoints on user messages. See: https://github.com/OpenRouterTeam/ai-sdk-provider/issues/498
  */
 function prepareMessagesForGeneration(
@@ -26,7 +29,7 @@ function prepareMessagesForGeneration(
         ephemeralPrompt,
         enableExplicitCacheControl
     }: {
-        modelId: string
+        modelId: LanguageModelID
 
         ephemeralPrompt?: string
         enableExplicitCacheControl?: {

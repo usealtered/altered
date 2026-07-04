@@ -26,7 +26,9 @@
         "preview:promote": "altered-preview-promote --target '*'",
         "preview:promote:api-experimental": "altered-preview-promote --target api-experimental",
 
-        "run:preview-generation-components": "tsx packages/server-experimental/scripts/preview-generation-components.ts"
+        "run:preview-generation-components": "tsx packages/server-experimental/scripts/preview-generation-components.ts",
+
+        "run:run-agent": "tsx packages/server-experimental/scripts/run-agent.ts"
     },
 
     "devDependencies": {
@@ -37,5 +39,5 @@
         "ultracite": "^7.6.1"
     },
 
-    "packageManager": "pnpm@10.20.0"
+    "packageManager": "pnpm@11.8.0"
 }

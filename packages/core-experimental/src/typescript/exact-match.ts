@@ -11,7 +11,7 @@ import type { Materialize } from "./materialize"
  * const _integrityCheck: IsExactMatch<Foo, Bar> = true
  * ```
  */
-export type IsExactMatch<First, Second> =
+type IsExactMatch<First, Second> =
     (<Phantom>() => Phantom extends First ? 1 : 2) extends <
         Phantom
     >() => Phantom extends Second ? 1 : 2
@@ -25,7 +25,7 @@ export type IsExactMatch<First, Second> =
  * const _integrityCheck: AssertExactMatch<Foo, Bar> = true
  * ```
  */
-export type AssertExactMatch<Expected, Actual> =
+type AssertExactMatch<Expected, Actual> =
     IsExactMatch<Expected, Actual> extends true
         ? true
         : "`AssertExactMatch<Expected, Actual>`, where `Expected` and `Actual` are not an exact match" &
@@ -33,3 +33,5 @@ export type AssertExactMatch<Expected, Actual> =
                   expected: Expected
                   actual: Actual
               }>
+
+export type { AssertExactMatch, IsExactMatch }

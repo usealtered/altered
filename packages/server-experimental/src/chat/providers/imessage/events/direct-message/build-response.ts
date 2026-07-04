@@ -1,15 +1,18 @@
-import { botDefaultModelId } from "@altered/core-experimental/config/app"
+import { getEnvironmentConfig } from "@altered/core-experimental/config/environment/definitions"
 import { NEW_CONVERSATION_TRIGGER_PHRASES } from "@altered/server-experimental/chat/messages/commands/definitions"
+import { chatAgent } from "../../../../../ai/agents/chat/definition"
 import { prepareMessagesForGeneration } from "../../../../../ai/generate/prepare-messages"
-import { generateResponseFromModelMessages } from "../../../../../ai/generate/response-from-model-messages"
-import { formatOpenRouterCost } from "../../../../../ai/provider/metadata"
+import {
+    formatOpenRouterCost,
+    parseOpenrouterProviderMetadata
+} from "../../../../../ai/provider/metadata"
 import { getOrCreateActiveConversationForThread } from "../../../../conversations/get-or-create-active-for-thread"
 import { startNewConversationForThread } from "../../../../conversations/start-new-for-thread"
 import { containsCommandTriggerPhrases } from "../../../../messages/commands/contains-trigger-phrases"
 import { listChatMessagesForConversation } from "../../../../messages/list-for-conversation"
 import { saveChatMessage } from "../../../../messages/save"
-import { composeSystemPrompt } from "../../behaviors/generation/compose-system-prompt"
 import type { ChatResponseContext } from "../../behaviors/type-and-respond"
+import { getImessagePhoneNumberByThread } from "../../get-phone-number-by-thread"
 import {
     formatElapsedSeconds,
     logImessageEvent,
@@ -51,30 +54,61 @@ async function buildDirectMessageResponse({
 
     const chatMessages = await listChatMessagesForConversation(conversation.id)
 
-    const { initial: initialSystemPrompt, ephemeral: ephemeralSystemPrompt } =
-        composeSystemPrompt()
-
     const modelMessages = prepareMessagesForGeneration(chatMessages, {
-        modelId: botDefaultModelId,
+        modelId: "anthropic/claude-sonnet-4.6",
 
-        ephemeralPrompt: ephemeralSystemPrompt,
         enableExplicitCacheControl: {
             anthropic: true
         }
     })
 
+    const generationStartedAt = performance.now()
+
+    const {
+        shared: { admin }
+    } = getEnvironmentConfig()
+
+    const phoneNumber = getImessagePhoneNumberByThread(thread.id)
+    if (!phoneNumber)
+        throw new Error(
+            "iMessage phone number not found. This should never happen."
+        )
+
+    /**
+     * @todo P3: Some result info, such as `response.modelId`, is only derived from the last step. We should aggregate the details that matter by mapping across the `steps` property.
+     */
     const {
         text: generatedText,
 
-        modelId,
         finishReason,
-        elapsedMs,
-        usage,
+        totalUsage: usage,
+        response: { modelId },
 
         providerMetadata
-    } = await generateResponseFromModelMessages(modelMessages, {
-        prompts: [initialSystemPrompt]
+    } = await chatAgent.generate({
+        options: {
+            config: {
+                channel: {
+                    provider: "imessage",
+                    type: "direct"
+                },
+
+                enableAdminTools: admin.phoneNumber === phoneNumber
+            },
+
+            context: {
+                user: {
+                    phoneNumber,
+
+                    planId: "paid"
+                }
+            }
+        },
+
+        messages: modelMessages
     })
+
+    const generationElapsedMs = performance.now() - generationStartedAt
 
     const savedAssistantMessage = await saveChatMessage({
         brainId: null,
@@ -102,8 +136,11 @@ async function buildDirectMessageResponse({
         totalTokens = null
     } = usage ?? {}
 
+    const openrouterProviderMetadata =
+        parseOpenrouterProviderMetadata(providerMetadata)?.openrouter ?? {}
+
     const { usage: { cost = null } = {}, provider: inferenceProvider = null } =
-        providerMetadata?.openrouter ?? {}
+        openrouterProviderMetadata
 
     logImessageEvent("Generation Completed", {
         messageCount: modelMessages.length,
@@ -112,7 +149,7 @@ async function buildDirectMessageResponse({
         inferenceProvider,
 
         finishReason,
-        completionDuration: formatElapsedSeconds(elapsedMs),
+        completionDuration: formatElapsedSeconds(generationElapsedMs),
 
         completionCharacters: generatedText.length,
         completionPreview: previewText(generatedText),

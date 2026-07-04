@@ -4,6 +4,11 @@ import { Hono } from "hono"
 
 const app = new Hono()
 
-app.post("/", context => processSendblueWebhook(context.req.raw, { waitUntil }))
+app.post("/", context =>
+    processSendblueWebhook({
+        request: context.req.raw,
+        options: { waitUntil }
+    })
+)
 
 export { app as sendblueWebhookRouter }

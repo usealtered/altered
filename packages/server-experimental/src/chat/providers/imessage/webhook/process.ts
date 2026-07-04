@@ -1,5 +1,6 @@
 import { isDevelopment } from "@altered/core-experimental/config/environment/is-development"
 import type { WebhookOptions } from "chat"
+import type { SendblueMessagePayload } from "chat-adapter-sendblue"
 import { getKvBoolean, toggleKvBoolean } from "../../../../storage/kv/basic"
 import { initializeAlteredChat } from "../../../instance"
 import { respondFromRaw } from "../behaviors/respond-from-raw"
@@ -13,13 +14,28 @@ import {
 import { getForwardWebhookToDevelopmentPreferenceKey } from "./forwarding/preference"
 import { parseSendblueWebhook } from "./parse"
 
+type SendblueWebhookContext = {
+    request: {
+        raw: Request
+        text: string
+        payload: SendblueMessagePayload
+        message: string
+    }
+
+    options?: Pick<WebhookOptions, "waitUntil">
+}
+
+type ProcessSendblueWebhookOptions = Omit<SendblueWebhookContext, "request"> & {
+    request: Request
+}
+
 /**
  * @todo P3: Clean up the distinction between slash commands that immediately send a message and return regardless of additional message content, and those who detect a command but also handle the remaining message content.
  */
-async function processSendblueWebhook(
-    request: Request,
-    options?: Pick<WebhookOptions, "waitUntil">
-): Promise<Response> {
+async function processSendblueWebhook({
+    request,
+    options
+}: ProcessSendblueWebhookOptions): Promise<Response> {
     const chat = await initializeAlteredChat()
 
     const handleWebhook = chat.webhooks.sendblue
@@ -162,4 +178,8 @@ async function processSendblueWebhook(
     )
 }
 
-export { processSendblueWebhook }
+export {
+    type ProcessSendblueWebhookOptions,
+    processSendblueWebhook,
+    type SendblueWebhookContext
+}
