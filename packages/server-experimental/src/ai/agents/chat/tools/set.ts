@@ -34,6 +34,11 @@ function filterToolNames<ToolName extends string>(
     return actual.filter(name => isToolName(name, expected))
 }
 
+/**
+ * @todo P2: Look into whether we should provide the agent tools for messaging, such as sending read receipts, typing indicators, intermediary messages, etc. or if this should all be done programmatically based on the generated text response.
+ *
+ * @remarks If we end up sending the messages using tool calls, we could exit the agent loop using a no-op tool (without an execute function) and then perform any necessary actions after exit. See: https://ai-sdk.dev/docs/agents/loop-control#forced-tool-calling
+ */
 const chatToolSet = {
     "query-memory": createQueryMemoryTool({
         include: {

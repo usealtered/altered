@@ -16,6 +16,8 @@ const removeUndefinedMessages = (
  *
  * @todo P3: Try to simplify the control flow a bit.
  *
+ * @todo P1: Consider if we should remove the ephemeral prompt option in favour of agent-based injection.
+ *
  * @remarks Anthropic (through OpenRouter) only permits cache control breakpoints on user messages. See: https://github.com/OpenRouterTeam/ai-sdk-provider/issues/498
  */
 function prepareMessagesForGeneration(

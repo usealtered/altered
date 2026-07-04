@@ -1,4 +1,5 @@
 import type { Type } from "arktype"
+import type { composeInstructions } from "../instructions/composition"
 
 const TEXT_TEMPLATE_VARIABLE_OPEN_SEQUENCE_DEFAULT = "{{"
 const TEXT_TEMPLATE_VARIABLE_CLOSE_SEQUENCE_DEFAULT = "}}"
@@ -178,6 +179,11 @@ function parseTextTemplateValues<SchemaMap extends TextTemplateValueSchemaMap>(
     ) as TextTemplateValueOutputs<SchemaMap>
 }
 
+/**
+ * @deprecated Not worth the organizational overhead to maintain. Use {@link composeInstructions} instead and create a custom instruction composition function.
+ *
+ * @remarks Keep for reference until we have POC of Raycast instruction templating.
+ */
 function createTextTemplate<SchemaMap extends TextTemplateValueSchemaMap>({
     template,
     config,
