@@ -1,7 +1,10 @@
 import type { ModelMessage } from "ai"
+import {
+    createChatAgentEphemeralInstructions,
+    createChatAgentInstructions
+} from "../src/ai/agents/chat/instructions/composition"
 import { prepareMessagesForGeneration } from "../src/ai/generate/prepare-messages"
 import type { ChatMessage } from "../src/chat/messages/schema"
-import { composeSystemPrompt } from "../src/chat/providers/imessage/behaviors/generation/compose-system-prompt"
 
 const createLogSectionHeader = ({ title }: { title: string }) => {
     console.log(`\n${"=".repeat(72)}\n${title}\n${"=".repeat(72)}\n`)
@@ -92,8 +95,12 @@ function formatPreparedMessageDemoComponents(
     return `[${index}] ${message.role}${cacheLabel}\n\n    ${getModelMessageTextContent(message.content)}\n`
 }
 
-const { initial: initialSystemPrompt, ephemeral: ephemeralSystemPrompt } =
-    composeSystemPrompt()
+const initialSystemPrompt = createChatAgentInstructions({
+    channel: { type: "direct", provider: "imessage" },
+    includeAdminTools: false
+})
+
+const ephemeralSystemPrompt = createChatAgentEphemeralInstructions()
 
 createLogSectionHeader({ title: "INITIAL SYSTEM PROMPT" })
 console.log(initialSystemPrompt)
