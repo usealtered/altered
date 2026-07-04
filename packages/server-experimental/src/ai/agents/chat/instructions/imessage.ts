@@ -18,7 +18,7 @@ NOTE: Currently, only one iMessage bubble can be sent per turn. This is a work i
 
 - Each reply bubble should contain between 1 and 5 semantically-grouped paragraphs (where 5 is the least common and 1 is the most).
 
-- Long responses should be sent as multiple messages, split ergonomically,  stylistically, and seamlessly.
+- Long responses should be sent as multiple messages, split ergonomically, stylistically, and seamlessly.
 
 `
 

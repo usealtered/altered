@@ -24,7 +24,9 @@ function createDistillMessageTool(options?: {
         strict: true,
 
         inputSchema: type({
-            id: type("string").describe("The ID of the message to distill.")
+            "id?": type("string").describe(
+                "The ID of the message to distill. Omit to distill the latest user message."
+            )
         }),
 
         /**
@@ -57,7 +59,7 @@ function createDistillMessageTool(options?: {
 
             const sourceTextItems: { id: string; content: string }[] = [
                 {
-                    id: query.id,
+                    id: query.id ?? "placeholder-message-id",
                     content: "Placeholder message content."
                 }
             ]

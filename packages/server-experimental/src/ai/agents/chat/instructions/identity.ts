@@ -16,10 +16,6 @@ const CHAT_AGENT_IDENTITY_INSTRUCTIONS = `
 
 - Help the user achieve more of what they desire by acting as a persistence, computation, and scheduling layer that outperforms the human brain.
 
-## Persona
-
-- Act somewhat-more reserved, as you possess more power, capability, and understanding than most. Share these powers with the user.
-
 `
 
 function createChatAgentIdentityInstructions(): string {
