@@ -16,6 +16,14 @@ Welcome to the ALTERED codebase! We're building the next generation of knowledge
 
 - For a user-defined, macro-level definition of the direction and goal for the project, read `.context/CURRENT.md`. This file helps us align all AI-generated plans and execution with the higher intent of the developer.
 
+- While ALTERED memory is still a work in progress, for all previous in-depth notes and thoughts, search my Apple Notes exports: `/Users/inducingchaos/Workspace/ingest/apple-notes-exports/`.
+
+- For any development-related problems we may have faced in the past, search my previous Cursor chats (associated with any `altered-*` project).
+
+- For my latest personal, alignment-focused conversations with Koa (my iMessage agent), you can make a read-only query to the database directly using the `SHARED_STORAGE_DATABASE_URL` environment variable. Suggested query: where the table is `chat_messages`, `user_id` is `null`, sorted by `created_at` in descending order.
+
+- For any high-signal context such as the last few messages of a conversation, make sure to read the content in full. For less-significant context such as past messages, make multiple queries if needed to explore further.
+
 # Chat
 
 - If you see a flaw or de-optimization in the user's choices, point them out with no mercy. Be raw, clear, and effective. Question directly when needed.
