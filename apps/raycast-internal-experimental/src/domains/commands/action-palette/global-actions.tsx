@@ -31,8 +31,9 @@ function GlobalActions({
                     icon={Icon.ArrowRightCircle}
                     onAction={() =>
                         showToast({
-                            title: "No Interfaces Found",
-                            message: "The item contains no interfaces.",
+                            title: "No Interface Found",
+                            message:
+                                "The item does not expose a view interface.",
                             style: Toast.Style.Failure
                         })
                     }
@@ -52,6 +53,54 @@ function GlobalActions({
                 title="Open In Browser"
                 url={`${WEB_ORIGIN}/t/${item.id}`}
             />
+
+            {item.interface && (
+                <Action
+                    icon={Icon.Download}
+                    onAction={() =>
+                        installShortcutScriptCommand({
+                            id: item.id,
+                            title: item.alias,
+
+                            description: item.content,
+
+                            target: {
+                                type: "command",
+
+                                name: ACTION_PALETTE_COMMAND_NAME,
+                                launchContext: { actionId: item.id }
+                            }
+                        })
+                    }
+                    title="Install Shortcut"
+                />
+            )}
+
+            {item.interface && (
+                <Action
+                    icon={Icon.Link}
+                    onAction={async () => {
+                        const url = createDeeplink({
+                            command: ACTION_PALETTE_COMMAND_NAME,
+
+                            type: DeeplinkType.Extension,
+                            launchType: LaunchType.UserInitiated,
+
+                            context: { actionId: item.id }
+                        })
+
+                        await Clipboard.copy(url)
+
+                        await showToast({
+                            title: "Deeplink Copied",
+                            message: `Successfully copied the deeplink for '${item.alias}' to clipboard.`,
+                            style: Toast.Style.Success
+                        })
+                    }}
+                    shortcut={{ modifiers: ["cmd", "shift"], key: "l" }}
+                    title="Copy Deeplink"
+                />
+            )}
 
             <ActionPanel.Section title="View">
                 <Action
