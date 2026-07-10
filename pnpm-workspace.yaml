@@ -25,6 +25,15 @@ catalog:
   tsx: ^4.21.0
   typescript: ^6.0.3
 
+catalogs:
+  raycast:
+    '@raycast/api': 1.104.20
+    '@raycast/utils': 2.2.6
+    '@types/node': 22.19.17
+  react:
+    '@types/react': 19.0.10
+    react: 19.0.0
+
 linkWorkspacePackages: true
 
 nodeLinker: hoisted
