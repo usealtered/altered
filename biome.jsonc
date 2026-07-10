@@ -7,6 +7,9 @@
     ],
 
     "files": {
+        /**
+         * @remarks `ultracite/biome/core` includes the patterns `["**", "!!**\/build"]`, so all files are included by default, but every folder named 'build' is excluded. `files.includes` extends Ultracite here to fix this, and does not override it.
+         */
         "includes": ["packages/tooling/src/build/**"]
     },
 

@@ -1,4 +1,4 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
-    "extends": "./src/typescript/config/check.json"
+    "extends": "./src/typescript/config/base/check.json"
 }

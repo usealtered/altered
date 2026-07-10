@@ -3,7 +3,7 @@
 
     "compilerOptions": {
         "target": "esnext",
-        "module": "esnext",
+        "module": "preserve",
         "moduleResolution": "bundler",
         "moduleDetection": "force",
         "esModuleInterop": true,
@@ -22,7 +22,7 @@
         "outDir": "${configDir}/dist"
     },
 
-    "include": ["${configDir}/**/*.ts"],
+    "include": ["${configDir}/**/*"],
     "exclude": [
         "${configDir}/dist/**",
         "${configDir}/node_modules/**",

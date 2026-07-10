@@ -2,7 +2,7 @@
     "$schema": "https://turborepo.com/schema.json",
     "ui": "tui",
 
-    "globalDependencies": ["packages/tooling/src/typescript/config/*.json"],
+    "globalDependencies": ["packages/tooling/src/typescript/config/**/*.json"],
 
     "tasks": {
         "//#tunnel": {
