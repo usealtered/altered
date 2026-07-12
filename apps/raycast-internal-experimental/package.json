@@ -36,6 +36,7 @@
         "publish": "pnpm dlx @raycast/api@latest publish"
     },
     "dependencies": {
+        "@altered/raycast-internal-experimental": "workspace:*",
         "@altered/core-experimental": "workspace:*",
         "@raycast/api": "catalog:raycast",
         "@raycast/utils": "catalog:raycast",

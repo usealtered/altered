@@ -134,6 +134,9 @@ importers:
       '@altered/core-experimental':
         specifier: workspace:*
         version: link:../../packages/core-experimental
+      '@altered/raycast-internal-experimental':
+        specifier: workspace:*
+        version: link:../../packages/raycast-internal-experimental
       '@raycast/api':
         specifier: catalog:raycast
         version: 1.104.20(@types/node@22.19.17)(@types/react@19.0.10)
@@ -200,6 +203,25 @@ importers:
       tsx:
         specifier: 'catalog:'
         version: 4.21.0
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
+  packages/raycast-internal-experimental:
+    dependencies:
+      '@altered/core-experimental':
+        specifier: workspace:*
+        version: link:../core-experimental
+      '@raycast/api':
+        specifier: catalog:raycast
+        version: 1.104.20(@types/node@22.19.17)(@types/react@19.0.10)
+    devDependencies:
+      '@altered/tooling':
+        specifier: workspace:*
+        version: link:../tooling
+      '@types/node':
+        specifier: catalog:raycast
+        version: 22.19.17
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
