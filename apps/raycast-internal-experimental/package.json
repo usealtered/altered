@@ -4,26 +4,54 @@
     "title": "ALTERED Internal",
     "description": "Knowledge orchestration infrastructure.",
     "icon": "raycast-internal-experimental-icon-tmp.png",
-    "author": "inducingchaos",
-    "owner": "altered",
+    "author": "altered",
+    "owner": "inducingchaos",
+    "access": "public",
+    "license": "MIT",
     "platforms": [
-        "Windows",
         "macOS"
     ],
     "categories": [
+        "Applications",
+        "Data",
+        "Documentation",
+        "Media",
         "Productivity",
-        "Data"
+        "System",
+        "Web",
+        "Other"
     ],
-    "license": "MIT",
+    "keywords": [
+        "altered",
+        "knowledge",
+        "orchestration",
+        "infrastructure",
+
+        "thoughts",
+        "systems",
+        "schemas",
+        "interfaces",
+        "datasets",
+        "attributes",
+
+        "workflows",
+        "agents"
+    ],
     "commands": [
         {
             "mode": "view",
             "name": "action-palette",
             "title": "Action Palette",
-            "description": "View your ALTERED Systems."
+            "description": "Use your ALTERED Systems.",
+            "keywords": [
+                "systems"
+            ]
         }
     ],
+    "preferences": [],
     "tools": [],
+    "ai": {},
+    "external": [],
     "scripts": {
         "dev": "ray develop",
 
