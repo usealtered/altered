@@ -1,4 +1,4 @@
 // biome-ignore lint/style/noExportedImports: Command entrypoint.
-import { ActionPaletteCommand } from "./domains/commands/action-palette/implementation"
+import { ActionPaletteCommand } from "@altered/raycast-internal-experimental/commands/action-palette/implementation.tsx"
 
 export default ActionPaletteCommand
