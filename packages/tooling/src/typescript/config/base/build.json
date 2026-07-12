@@ -7,5 +7,5 @@
         "rootDir": "${configDir}/src"
     },
 
-    "include": ["${configDir}/src/**/*.ts"]
+    "include": ["${configDir}/src/**/*.ts", "${configDir}/src/**/*.tsx"]
 }

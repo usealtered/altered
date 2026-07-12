@@ -4,14 +4,14 @@
     "private": true,
     "type": "module",
     "exports": {
-        ".": {
-            "types": "./src/index.ts",
-            "bundler": "./src/index.ts",
-            "import": "./dist/index.js"
-        },
-        "./*": {
+        "./*.ts": {
             "types": "./src/*.ts",
             "bundler": "./src/*.ts",
+            "import": "./dist/*.js"
+        },
+        "./*.tsx": {
+            "types": "./src/*.tsx",
+            "bundler": "./src/*.tsx",
             "import": "./dist/*.js"
         }
     },
