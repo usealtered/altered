@@ -65,10 +65,7 @@
     },
     "dependencies": {
         "@altered/raycast-internal-experimental": "workspace:*",
-        "@altered/core-experimental": "workspace:*",
-        "@raycast/api": "catalog:raycast",
-        "@raycast/utils": "catalog:raycast",
-        "arktype": "catalog:"
+        "@raycast/api": "catalog:raycast"
     },
     "devDependencies": {
         "@altered/tooling": "workspace:*",
