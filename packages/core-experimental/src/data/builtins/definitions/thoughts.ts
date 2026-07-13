@@ -1,14 +1,12 @@
 import type {
-    ALTEREDBaseThoughtID,
-    ALTEREDDatasetThoughtID,
-    ALTEREDSchemaThoughtID,
-    ALTEREDThoughtDefinition
+    ALTEREDThoughtDefinition,
+    ALTEREDThoughtID
 } from "../../../models/thoughts/definitions"
 
 const BUILTIN_THOUGHTS_MAP = {
     BUILTINS_DATASET_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "ssusxD0rG3BGzaPYeXetd" as ALTEREDDatasetThoughtID,
+        id: "ssusxD0rG3BGzaPYeXetd" as ALTEREDThoughtID,
 
         kind: "dataset",
 
@@ -18,7 +16,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     ACTIONS_DATASET_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "zp6TpOTEhDsCQgrwSEiS2" as ALTEREDDatasetThoughtID,
+        id: "zp6TpOTEhDsCQgrwSEiS2" as ALTEREDThoughtID,
 
         kind: "dataset",
 
@@ -28,7 +26,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     ALTERED_CORE_ACTIONS_DATASET_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "Im7fYp382UnMU3KIEqgft9" as ALTEREDDatasetThoughtID,
+        id: "Im7fYp382UnMU3KIEqgft9" as ALTEREDThoughtID,
 
         kind: "dataset",
 
@@ -39,7 +37,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     INTERFACES_DATASET_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "3yy8vreU5EX6v6_Yl9EJZ" as ALTEREDDatasetThoughtID,
+        id: "3yy8vreU5EX6v6_Yl9EJZ" as ALTEREDThoughtID,
 
         kind: "dataset",
 
@@ -49,7 +47,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     ACTION_INTERFACE_ID_SCHEMA_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "1PVbbhYZXyRgaXFvieaf2" as ALTEREDSchemaThoughtID,
+        id: "1PVbbhYZXyRgaXFvieaf2" as ALTEREDThoughtID,
 
         kind: "schema",
 
@@ -59,7 +57,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     INTERFACE_TYPE_SCHEMA_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "U6XSN6sc0AZMJ8NQQ-7Ps" as ALTEREDSchemaThoughtID,
+        id: "U6XSN6sc0AZMJ8NQQ-7Ps" as ALTEREDThoughtID,
 
         kind: "schema",
 
@@ -69,7 +67,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     COLLECTION_INTERFACES_DATASET_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "XUeeIEQ3vCRJJryxgmxRt" as ALTEREDDatasetThoughtID,
+        id: "XUeeIEQ3vCRJJryxgmxRt" as ALTEREDThoughtID,
 
         kind: "dataset",
 
@@ -79,7 +77,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     COLLECTION_INTERFACE_ITEM_GROUPS_DATASET_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "pUL-hyAGy3exrssXJ4LIY" as ALTEREDDatasetThoughtID,
+        id: "pUL-hyAGy3exrssXJ4LIY" as ALTEREDThoughtID,
 
         kind: "dataset",
 
@@ -89,7 +87,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     COLLECTION_INTERFACE_ITEMS_DATASET_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "72n2XOv4UkH3wovYbdAEW" as ALTEREDDatasetThoughtID,
+        id: "72n2XOv4UkH3wovYbdAEW" as ALTEREDThoughtID,
 
         kind: "dataset",
 
@@ -99,7 +97,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     COLLECTION_INTERFACE_ITEM_GROUPS_SCHEMA_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "YEiGohu-dWrTALBACxGcD" as ALTEREDSchemaThoughtID,
+        id: "YEiGohu-dWrTALBACxGcD" as ALTEREDThoughtID,
 
         kind: "schema",
 
@@ -109,7 +107,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     COLLECTION_INTERFACE_ITEM_GROUP_TITLE_SCHEMA_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "6NQ9EV6U2g4x9_MZTznzl" as ALTEREDSchemaThoughtID,
+        id: "6NQ9EV6U2g4x9_MZTznzl" as ALTEREDThoughtID,
 
         kind: "schema",
 
@@ -119,7 +117,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     COLLECTION_INTERFACE_ITEM_GROUP_SUBTITLE_SCHEMA_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "tJ0E0p0reKMAucuOjGTsr" as ALTEREDSchemaThoughtID,
+        id: "tJ0E0p0reKMAucuOjGTsr" as ALTEREDThoughtID,
 
         kind: "schema",
 
@@ -129,7 +127,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     COLLECTION_INTERFACE_ITEMS_SCHEMA_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "69r74zjndxWIzemrvbU4-" as ALTEREDSchemaThoughtID,
+        id: "69r74zjndxWIzemrvbU4-" as ALTEREDThoughtID,
 
         kind: "schema",
 
@@ -139,7 +137,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     COLLECTION_INTERFACE_ITEM_ICON_SCHEMA_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "t8EbknR9YaxoNDzODAR0S" as ALTEREDSchemaThoughtID,
+        id: "t8EbknR9YaxoNDzODAR0S" as ALTEREDThoughtID,
 
         kind: "schema",
 
@@ -149,7 +147,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     COLLECTION_INTERFACE_ITEM_TITLE_SCHEMA_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "5YQYNXWE1488R_bf257sd" as ALTEREDSchemaThoughtID,
+        id: "5YQYNXWE1488R_bf257sd" as ALTEREDThoughtID,
 
         kind: "schema",
 
@@ -159,7 +157,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     COLLECTION_INTERFACE_ITEM_SUBTITLE_SCHEMA_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "JifubTsRuCvOu-PRvm8rV" as ALTEREDSchemaThoughtID,
+        id: "JifubTsRuCvOu-PRvm8rV" as ALTEREDThoughtID,
 
         kind: "schema",
 
@@ -169,7 +167,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     COLLECTION_INTERFACE_ITEM_TRIGGER_PHRASE_SCHEMA_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "R8mlfIFfEK04gkfWrOaxK" as ALTEREDSchemaThoughtID,
+        id: "R8mlfIFfEK04gkfWrOaxK" as ALTEREDThoughtID,
 
         kind: "schema",
 
@@ -180,7 +178,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     ACTION_PALETTE_INTERFACE_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "uRmUysH0Nn0la3mgGm7DK" as ALTEREDBaseThoughtID,
+        id: "uRmUysH0Nn0la3mgGm7DK" as ALTEREDThoughtID,
 
         kind: null,
 
@@ -189,7 +187,7 @@ const BUILTIN_THOUGHTS_MAP = {
     },
 
     ACTION_PALETTE_CORE_INTERFACE_GROUP_THOUGHT: {
-        id: "OG_MW3XpLWl0qYbH2ar4O" as ALTEREDBaseThoughtID,
+        id: "OG_MW3XpLWl0qYbH2ar4O" as ALTEREDThoughtID,
 
         kind: null,
 
@@ -200,7 +198,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     CAPTURE_THOUGHT_ACTION_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "yM3HR3M_oqqiYtnAVsUSz" as ALTEREDBaseThoughtID,
+        id: "yM3HR3M_oqqiYtnAVsUSz" as ALTEREDThoughtID,
 
         kind: null,
 
@@ -210,7 +208,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     CAPTURE_THOUGHT_INTERFACE_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "kRQG-b4XJ4KhXQ2oJH240" as ALTEREDBaseThoughtID,
+        id: "kRQG-b4XJ4KhXQ2oJH240" as ALTEREDThoughtID,
 
         kind: null,
 
@@ -220,7 +218,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     SET_UP_SHORTCUTS_ACTION_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "5swzvnuISqUWySg2WWvZ3" as ALTEREDBaseThoughtID,
+        id: "5swzvnuISqUWySg2WWvZ3" as ALTEREDThoughtID,
 
         kind: null,
 
@@ -231,7 +229,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     SET_UP_SHORTCUTS_INTERFACE_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "WYIYw5MCIDsMa7gyXlzN0" as ALTEREDBaseThoughtID,
+        id: "WYIYw5MCIDsMa7gyXlzN0" as ALTEREDThoughtID,
 
         kind: null,
 
@@ -242,7 +240,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     ALTERED_ONBOARDING_ACTION_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "sGCsweuj2RCnTGqCpt0hQ" as ALTEREDBaseThoughtID,
+        id: "sGCsweuj2RCnTGqCpt0hQ" as ALTEREDThoughtID,
 
         kind: null,
 
@@ -253,7 +251,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     ALTERED_ONBOARDING_INTERFACE_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "YHpqBUyjK1gcFbZGL8e2t" as ALTEREDBaseThoughtID,
+        id: "YHpqBUyjK1gcFbZGL8e2t" as ALTEREDThoughtID,
 
         kind: null,
 
@@ -264,7 +262,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     VIEW_THOUGHTS_ACTION_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "QiqKmej3R82_WmJMlJRSu" as ALTEREDBaseThoughtID,
+        id: "QiqKmej3R82_WmJMlJRSu" as ALTEREDThoughtID,
 
         kind: null,
 
@@ -275,7 +273,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     VIEW_THOUGHTS_INTERFACE_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "VTXccgqn1at_Flza5Kdr2" as ALTEREDBaseThoughtID,
+        id: "VTXccgqn1at_Flza5Kdr2" as ALTEREDThoughtID,
 
         kind: null,
 
@@ -286,7 +284,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     DISTILL_MESSAGE_TOOL_POC_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "Zg4RIXPeVUf6Mmt6mcZnk" as ALTEREDBaseThoughtID,
+        id: "Zg4RIXPeVUf6Mmt6mcZnk" as ALTEREDThoughtID,
 
         kind: null,
 
@@ -297,7 +295,7 @@ const BUILTIN_THOUGHTS_MAP = {
 
     QUERY_MEMORY_TOOL_POC_THOUGHT: {
         // @spell-checker: disable-next-line
-        id: "Mo7b7yv0uf3GQONLTSoQY" as ALTEREDBaseThoughtID,
+        id: "Mo7b7yv0uf3GQONLTSoQY" as ALTEREDThoughtID,
 
         kind: null,
 

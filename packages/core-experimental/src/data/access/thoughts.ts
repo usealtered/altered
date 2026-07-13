@@ -7,6 +7,10 @@ import {
     getBuiltinThoughts
 } from "../builtins/access/thoughts"
 
+/**
+ * @todo P2: Surface incomplete thoughts (missing required dataset schemas) as a
+ * `DraftThought`-style status when fetching from builtins or the database.
+ */
 async function getThought({
     query
 }: {

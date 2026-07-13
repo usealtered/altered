@@ -15,14 +15,14 @@ const BUILTIN_ATTRIBUTES_MAP = {
         // @spell-checker: disable-next-line
         id: "9dnnIk2Urp7lKfjZM5-dZ" as ALTEREDAttributeID,
 
-        value: null
+        value: ""
     },
 
     ACTION_PALETTE_INTERFACE_GROUPS_ATTRIBUTE: {
         // @spell-checker: disable-next-line
         id: "C7dPE07LXGhE0XXX5ayso" as ALTEREDAttributeID,
 
-        value: null
+        value: ""
     },
 
     ACTION_PALETTE_CORE_INTERFACE_GROUP_TITLE_ATTRIBUTE: {
@@ -198,7 +198,7 @@ const BUILTIN_ATTRIBUTES_MAP = {
         // @spell-checker: disable-next-line
         id: "pyZAN3h5jVnBcEncx_8TN" as ALTEREDAttributeID,
 
-        value: null
+        value: ""
     },
 
     DISTILL_MESSAGE_TOOL_POC_TITLE_ATTRIBUTE: {

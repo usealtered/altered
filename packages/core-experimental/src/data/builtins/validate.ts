@@ -13,6 +13,8 @@ import { BUILTIN_THOUGHT_RELATIONS } from "./relations/thoughts"
  * - Ensure all relations to related primitives are bidirectional, and that required ones exist.
  * - Verify all IDs are unique and meet an ID spec.
  * - Validate non-relation-specific properties, such as `associatedId` and discriminated union variants.
+ * - For "required" schemas on a dataset, flag thoughts missing those attributes as incomplete.
+ * - For `type: "thought"` / `type: "dataset"` attribute values, ensure the referenced ID exists.
  * - Prune for redundant definitions, correct misaligned naming, optimize attribute structures, etc.
  * - Use AI to explore further validation opportunities.
  *
