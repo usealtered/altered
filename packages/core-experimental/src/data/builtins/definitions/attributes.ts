@@ -67,6 +67,13 @@ const BUILTIN_ATTRIBUTES_MAP = {
         value: "c"
     },
 
+    CAPTURE_THOUGHT_ACTION_INTERFACE_ATTRIBUTE: {
+        // @spell-checker: disable-next-line
+        id: "Uy3NtoX4N2ztXvggK_D_g" as ALTEREDAttributeID,
+
+        value: "kRQG-b4XJ4KhXQ2oJH240"
+    },
+
     CAPTURE_THOUGHT_INTERFACE_TYPE_ATTRIBUTE: {
         // @spell-checker: disable-next-line
         id: "MrgenSlO514LFhANl4NEu" as ALTEREDAttributeID,
@@ -95,6 +102,13 @@ const BUILTIN_ATTRIBUTES_MAP = {
         value: "Set up Raycast Script Commands for ALTERED shortcuts."
     },
 
+    SET_UP_SHORTCUTS_ACTION_INTERFACE_ATTRIBUTE: {
+        // @spell-checker: disable-next-line
+        id: "jUOARoi0NRADuDlDEJ1hM" as ALTEREDAttributeID,
+
+        value: "WYIYw5MCIDsMa7gyXlzN0"
+    },
+
     SET_UP_SHORTCUTS_INTERFACE_TYPE_ATTRIBUTE: {
         // @spell-checker: disable-next-line
         id: "LVDmhg_-pf8z5rNX2wjM8" as ALTEREDAttributeID,
@@ -121,6 +135,13 @@ const BUILTIN_ATTRIBUTES_MAP = {
         id: "DTw0lPD7pyuKb4W7x8JE3" as ALTEREDAttributeID,
 
         value: "Learn how set up and use your ALTERED brain."
+    },
+
+    ALTERED_ONBOARDING_ACTION_INTERFACE_ATTRIBUTE: {
+        // @spell-checker: disable-next-line
+        id: "6g9LBCMRUPOmLaKGoHBlF" as ALTEREDAttributeID,
+
+        value: "YHpqBUyjK1gcFbZGL8e2t"
     },
 
     ALTERED_ONBOARDING_INTERFACE_TYPE_ATTRIBUTE: {
@@ -156,6 +177,14 @@ const BUILTIN_ATTRIBUTES_MAP = {
         id: "ezrmfmF66CBtcyJsOcFGV" as ALTEREDAttributeID,
 
         value: "v"
+    },
+
+    VIEW_THOUGHTS_ACTION_INTERFACE_ATTRIBUTE: {
+        // @spell-checker: disable-next-line
+        id: "9Q97FXHe-F5vPYVBROIPH" as ALTEREDAttributeID,
+
+        // @spell-checker: disable-next-line
+        value: "VTXccgqn1at_Flza5Kdr2"
     },
 
     VIEW_THOUGHTS_INTERFACE_TYPE_ATTRIBUTE: {

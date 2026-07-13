@@ -4,6 +4,13 @@ import type {
 } from "../../../models/schemas/definitions"
 
 const BUILTIN_SCHEMAS_MAP = {
+    ACTION_INTERFACE_ID_SCHEMA: {
+        // @spell-checker: disable-next-line
+        id: "8SK5oehs7mP5ZJjnB5fHR" as ALTEREDSchemaID,
+
+        type: "text"
+    },
+
     INTERFACE_TYPE_SCHEMA: {
         // @spell-checker: disable-next-line
         id: "PaViBZDzoFqEbtk1B0RlX" as ALTEREDSchemaID,

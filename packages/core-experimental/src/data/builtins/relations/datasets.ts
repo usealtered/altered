@@ -20,7 +20,7 @@ const BUILTIN_DATASET_RELATIONS_MAP = {
 
         thoughtId: BUILTIN_THOUGHTS_MAP.ACTIONS_DATASET_THOUGHT.id,
 
-        schemaIds: [],
+        schemaIds: [BUILTIN_SCHEMAS_MAP.ACTION_INTERFACE_ID_SCHEMA.id],
         thoughtIds: []
     },
 

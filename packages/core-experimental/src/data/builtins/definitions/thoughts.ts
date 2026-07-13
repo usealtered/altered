@@ -47,6 +47,16 @@ const BUILTIN_THOUGHTS_MAP = {
         content: "[EDIT] The user interfaces used to compose actions."
     },
 
+    ACTION_INTERFACE_ID_SCHEMA_THOUGHT: {
+        // @spell-checker: disable-next-line
+        id: "1PVbbhYZXyRgaXFvieaf2" as ALTEREDSchemaThoughtID,
+
+        kind: "schema",
+
+        alias: "Action Interface ID Schema",
+        content: "A schema for the interface thought ID linked from an action."
+    },
+
     INTERFACE_TYPE_SCHEMA_THOUGHT: {
         // @spell-checker: disable-next-line
         id: "U6XSN6sc0AZMJ8NQQ-7Ps" as ALTEREDSchemaThoughtID,
@@ -198,6 +208,16 @@ const BUILTIN_THOUGHTS_MAP = {
         content: "An action for capturing a thought to your ALTERED Brain."
     },
 
+    CAPTURE_THOUGHT_INTERFACE_THOUGHT: {
+        // @spell-checker: disable-next-line
+        id: "kRQG-b4XJ4KhXQ2oJH240" as ALTEREDBaseThoughtID,
+
+        kind: null,
+
+        alias: "Capture Thought Interface",
+        content: "An interface for capturing a thought to your ALTERED Brain."
+    },
+
     SET_UP_SHORTCUTS_ACTION_THOUGHT: {
         // @spell-checker: disable-next-line
         id: "5swzvnuISqUWySg2WWvZ3" as ALTEREDBaseThoughtID,
@@ -207,6 +227,17 @@ const BUILTIN_THOUGHTS_MAP = {
         alias: "Set Up Shortcuts Action",
         content:
             "An action for configuring Raycast Script Commands for ALTERED shortcuts."
+    },
+
+    SET_UP_SHORTCUTS_INTERFACE_THOUGHT: {
+        // @spell-checker: disable-next-line
+        id: "WYIYw5MCIDsMa7gyXlzN0" as ALTEREDBaseThoughtID,
+
+        kind: null,
+
+        alias: "Set Up Shortcuts Interface",
+        content:
+            "An interface for configuring Raycast Script Commands for ALTERED shortcuts."
     },
 
     ALTERED_ONBOARDING_ACTION_THOUGHT: {
@@ -220,6 +251,17 @@ const BUILTIN_THOUGHTS_MAP = {
             "An action for learning how to set up and use your ALTERED Brain."
     },
 
+    ALTERED_ONBOARDING_INTERFACE_THOUGHT: {
+        // @spell-checker: disable-next-line
+        id: "YHpqBUyjK1gcFbZGL8e2t" as ALTEREDBaseThoughtID,
+
+        kind: null,
+
+        alias: "ALTERED Onboarding Interface",
+        content:
+            "An interface for learning how to set up and use your ALTERED Brain."
+    },
+
     VIEW_THOUGHTS_ACTION_THOUGHT: {
         // @spell-checker: disable-next-line
         id: "QiqKmej3R82_WmJMlJRSu" as ALTEREDBaseThoughtID,
@@ -229,6 +271,17 @@ const BUILTIN_THOUGHTS_MAP = {
         alias: "View Thoughts Action",
         content:
             "An action for viewing and managing the thoughts in your ALTERED Brain."
+    },
+
+    VIEW_THOUGHTS_INTERFACE_THOUGHT: {
+        // @spell-checker: disable-next-line
+        id: "VTXccgqn1at_Flza5Kdr2" as ALTEREDBaseThoughtID,
+
+        kind: null,
+
+        alias: "View Thoughts Interface",
+        content:
+            "An interface for viewing and managing the thoughts in your ALTERED Brain."
     },
 
     DISTILL_MESSAGE_TOOL_POC_THOUGHT: {

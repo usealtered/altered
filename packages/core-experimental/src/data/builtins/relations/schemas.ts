@@ -4,6 +4,14 @@ import { BUILTIN_SCHEMAS_MAP } from "../definitions/schemas"
 import { BUILTIN_THOUGHTS_MAP } from "../definitions/thoughts"
 
 const BUILTIN_SCHEMA_RELATIONS_MAP = {
+    ACTION_INTERFACE_ID_SCHEMA: {
+        id: BUILTIN_SCHEMAS_MAP.ACTION_INTERFACE_ID_SCHEMA.id,
+
+        thoughtId: BUILTIN_THOUGHTS_MAP.ACTION_INTERFACE_ID_SCHEMA_THOUGHT.id,
+
+        datasetIds: [BUILTIN_DATASETS_MAP.ACTIONS_DATASET.id]
+    },
+
     INTERFACE_TYPE_SCHEMA: {
         id: BUILTIN_SCHEMAS_MAP.INTERFACE_TYPE_SCHEMA.id,
 
