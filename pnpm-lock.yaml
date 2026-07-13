@@ -131,21 +131,12 @@ importers:
 
   apps/raycast-internal-experimental:
     dependencies:
-      '@altered/core-experimental':
-        specifier: workspace:*
-        version: link:../../packages/core-experimental
       '@altered/raycast-internal-experimental':
         specifier: workspace:*
         version: link:../../packages/raycast-internal-experimental
       '@raycast/api':
         specifier: catalog:raycast
         version: 1.104.20(@types/node@22.19.17)(@types/react@19.0.10)
-      '@raycast/utils':
-        specifier: catalog:raycast
-        version: 2.2.6(@raycast/api@1.104.20(@types/node@22.19.17)(@types/react@19.0.10))(react@19.0.0)
-      arktype:
-        specifier: 'catalog:'
-        version: 2.2.3
     devDependencies:
       '@altered/tooling':
         specifier: workspace:*
@@ -215,6 +206,12 @@ importers:
       '@raycast/api':
         specifier: catalog:raycast
         version: 1.104.20(@types/node@22.19.17)(@types/react@19.0.10)
+      '@raycast/utils':
+        specifier: catalog:raycast
+        version: 2.2.6(@raycast/api@1.104.20(@types/node@22.19.17)(@types/react@19.0.10))(react@19.0.0)
+      arktype:
+        specifier: 'catalog:'
+        version: 2.2.3
     devDependencies:
       '@altered/tooling':
         specifier: workspace:*
