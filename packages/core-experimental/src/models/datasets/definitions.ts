@@ -2,13 +2,9 @@ import type { Brand } from "../../typescript/brand"
 import type { ALTEREDSchemaID } from "../schemas/definitions"
 import type { ALTEREDThoughtID } from "../thoughts/definitions"
 
-type ALTEREDDatasetID = Brand<string, "@altered:datasets:id">
+type ALTEREDDatasetID = Brand<string, "@altered/datasets/id">
 
-type ALTEREDDatasetDefinition = {
-    id: ALTEREDDatasetID
-}
-
-type ALTEREDDatasetRelations = {
+type ALTEREDDataset = {
     id: ALTEREDDatasetID
     thoughtId: ALTEREDThoughtID
 
@@ -16,11 +12,4 @@ type ALTEREDDatasetRelations = {
     thoughtIds: ALTEREDThoughtID[]
 }
 
-type ALTEREDDataset = ALTEREDDatasetDefinition & ALTEREDDatasetRelations
-
-export type {
-    ALTEREDDataset,
-    ALTEREDDatasetDefinition,
-    ALTEREDDatasetID,
-    ALTEREDDatasetRelations
-}
+export type { ALTEREDDataset, ALTEREDDatasetID }

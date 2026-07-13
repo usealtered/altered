@@ -3,7 +3,7 @@ import type { KebabToSnakeCase } from "../../typescript/case-transformations"
 import type { ALTEREDDatasetID } from "../datasets/definitions"
 import type { ALTEREDThoughtID } from "../thoughts/definitions"
 
-type ALTEREDSchemaID = Brand<string, "@altered:schemas:id">
+type ALTEREDSchemaID = Brand<string, "@altered/schemas/id">
 
 const ALTERED_SCHEMA_TYPE_IDS = [
     "text",
@@ -23,8 +23,9 @@ const ALTERED_SCHEMA_TYPE_ID_MAP = {
     ALTEREDSchemaTypeID
 >
 
-type ALTEREDSchemaDefinition = {
+type ALTEREDSchema = {
     id: ALTEREDSchemaID
+    thoughtId: ALTEREDThoughtID
 
     type: ALTEREDSchemaTypeID
 
@@ -44,23 +45,14 @@ type ALTEREDSchemaDefinition = {
      * serialized ArkType / JSON Schema string. Null when unused.
      */
     value: string | null
-}
-
-type ALTEREDSchemaRelations = {
-    id: ALTEREDSchemaID
-    thoughtId: ALTEREDThoughtID
 
     datasetIds: ALTEREDDatasetID[]
 }
-
-type ALTEREDSchema = ALTEREDSchemaDefinition & ALTEREDSchemaRelations
 
 export {
     ALTERED_SCHEMA_TYPE_ID_MAP,
     ALTERED_SCHEMA_TYPE_IDS,
     type ALTEREDSchema,
-    type ALTEREDSchemaDefinition,
     type ALTEREDSchemaID,
-    type ALTEREDSchemaRelations,
     type ALTEREDSchemaTypeID
 }
