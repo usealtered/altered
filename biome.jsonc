@@ -71,7 +71,7 @@
                  * @remarks Left on per Ultracite default, however stubbing out files with comments is useful and should not cause errors.
                  */
                 "noEmptySource": {
-                    "level": "on",
+                    "level": "error",
 
                     "options": { "allowComments": true }
                 }
