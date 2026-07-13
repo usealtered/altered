@@ -5,7 +5,7 @@ function resolveLaunchContext<const Schema>(
     context: LaunchProps["launchContext"],
     { schema }: { schema: type.validate<Schema> }
 ): type.infer.Out<Schema> | null {
-    const optionalSchema = type.raw(schema)
+    const optionalSchema = type.raw(schema).or("undefined")
 
     const parsedContext = optionalSchema(context)
 
