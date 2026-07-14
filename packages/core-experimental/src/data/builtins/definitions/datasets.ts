@@ -1,44 +1,149 @@
-import type {
-    ALTEREDDatasetDefinition,
-    ALTEREDDatasetID
-} from "../../../models/datasets/definitions"
+import type { ALTEREDDataset } from "../../../models/datasets/definitions"
+import { BUILTIN_DATASET_IDS_MAP } from "../ids/datasets"
+import { BUILTIN_SCHEMA_IDS_MAP } from "../ids/schemas"
+import { BUILTIN_THOUGHT_IDS_MAP } from "../ids/thoughts"
 
 const BUILTIN_DATASETS_MAP = {
-    BUILTINS_DATASET: {
-        // @spell-checker: disable-next-line
-        id: "YD5mp3rjpomObHUSw_jmE" as ALTEREDDatasetID
+    BUILTINS: {
+        id: BUILTIN_DATASET_IDS_MAP.BUILTINS,
+
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.BUILTINS_DATASET,
+
+        schemaIds: [],
+        thoughtIds: Object.values(BUILTIN_THOUGHT_IDS_MAP)
     },
 
-    ACTIONS_DATASET: {
-        // @spell-checker: disable-next-line
-        id: "4PIqHGzkkTMrn4uRZyOmh" as ALTEREDDatasetID
+    ACTIONS: {
+        id: BUILTIN_DATASET_IDS_MAP.ACTIONS,
+
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.ACTIONS_DATASET,
+
+        schemaIds: [BUILTIN_SCHEMA_IDS_MAP.INTERFACE_ID],
+        thoughtIds: [
+            BUILTIN_THOUGHT_IDS_MAP.CAPTURE_THOUGHT,
+            BUILTIN_THOUGHT_IDS_MAP.SET_UP_SHORTCUTS,
+            BUILTIN_THOUGHT_IDS_MAP.ALTERED_ONBOARDING,
+            BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS
+        ]
     },
 
-    ALTERED_CORE_ACTIONS_DATASET: {
-        // @spell-checker: disable-next-line
-        id: "m7fYp382UnMU3KIEqgft9" as ALTEREDDatasetID
+    ALTERED_CORE_ACTIONS: {
+        id: BUILTIN_DATASET_IDS_MAP.ALTERED_CORE_ACTIONS,
+
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.ALTERED_CORE_ACTIONS_DATASET,
+
+        schemaIds: [],
+        thoughtIds: [
+            BUILTIN_THOUGHT_IDS_MAP.CAPTURE_THOUGHT,
+            BUILTIN_THOUGHT_IDS_MAP.SET_UP_SHORTCUTS,
+            BUILTIN_THOUGHT_IDS_MAP.ALTERED_ONBOARDING,
+            BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS
+        ]
     },
 
-    INTERFACES_DATASET: {
-        // @spell-checker: disable-next-line
-        id: "B9PpoW7On9KK-_4KUDDgg" as ALTEREDDatasetID
+    INTERFACES: {
+        id: BUILTIN_DATASET_IDS_MAP.INTERFACES,
+
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.INTERFACES_DATASET,
+
+        schemaIds: [BUILTIN_SCHEMA_IDS_MAP.INTERFACE_TYPE],
+        thoughtIds: [
+            BUILTIN_THOUGHT_IDS_MAP.ACTION_PALETTE,
+            BUILTIN_THOUGHT_IDS_MAP.CAPTURE_THOUGHT,
+            BUILTIN_THOUGHT_IDS_MAP.SET_UP_SHORTCUTS,
+            BUILTIN_THOUGHT_IDS_MAP.ALTERED_ONBOARDING,
+            BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS,
+            BUILTIN_THOUGHT_IDS_MAP.DISTILL_MESSAGE_TOOL_POC,
+            BUILTIN_THOUGHT_IDS_MAP.QUERY_MEMORY_TOOL_POC
+        ]
     },
 
-    COLLECTION_INTERFACES_DATASET: {
-        // @spell-checker: disable-next-line
-        id: "L-X_StxqRjZiBh-8Q6jJm" as ALTEREDDatasetID
+    COLLECTION_INTERFACES: {
+        id: BUILTIN_DATASET_IDS_MAP.COLLECTION_INTERFACES,
+
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.COLLECTION_INTERFACES_DATASET,
+
+        schemaIds: [
+            BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_GROUPS,
+            BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEMS
+        ],
+        thoughtIds: [
+            BUILTIN_THOUGHT_IDS_MAP.ACTION_PALETTE,
+            BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS
+        ]
     },
 
-    COLLECTION_INTERFACE_ITEMS_DATASET: {
-        // @spell-checker: disable-next-line
-        id: "mu8iXfqA5e_fZ-QGX9b-r" as ALTEREDDatasetID
+    COLLECTION_INTERFACE_ITEMS: {
+        id: BUILTIN_DATASET_IDS_MAP.COLLECTION_INTERFACE_ITEMS,
+
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.COLLECTION_INTERFACE_ITEMS_DATASET,
+
+        schemaIds: [
+            BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_ICON,
+            BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_TITLE,
+            BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_SUBTITLE,
+            BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_TRIGGER_PHRASE,
+            BUILTIN_SCHEMA_IDS_MAP.INTERFACE_ID
+        ],
+        thoughtIds: [
+            BUILTIN_THOUGHT_IDS_MAP.CAPTURE_THOUGHT,
+            BUILTIN_THOUGHT_IDS_MAP.SET_UP_SHORTCUTS,
+            BUILTIN_THOUGHT_IDS_MAP.ALTERED_ONBOARDING,
+            BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS,
+            BUILTIN_THOUGHT_IDS_MAP.DISTILL_MESSAGE_TOOL_POC,
+            BUILTIN_THOUGHT_IDS_MAP.QUERY_MEMORY_TOOL_POC
+        ]
     },
 
-    COLLECTION_INTERFACE_ITEM_GROUPS_DATASET: {
-        // @spell-checker: disable-next-line
-        id: "8SuZQFXa4xL18vl6YgYg-" as ALTEREDDatasetID
+    COLLECTION_INTERFACE_ITEM_GROUPS: {
+        id: BUILTIN_DATASET_IDS_MAP.COLLECTION_INTERFACE_ITEM_GROUPS,
+
+        thoughtId:
+            BUILTIN_THOUGHT_IDS_MAP.COLLECTION_INTERFACE_ITEM_GROUPS_DATASET,
+
+        schemaIds: [
+            BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_GROUP_TITLE,
+            BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_GROUP_SUBTITLE,
+            BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEMS
+        ],
+        thoughtIds: [BUILTIN_THOUGHT_IDS_MAP.ACTION_PALETTE_CORE_GROUP]
+    },
+
+    ACTION_PALETTE_ITEMS: {
+        id: BUILTIN_DATASET_IDS_MAP.ACTION_PALETTE_ITEMS,
+
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.ACTION_PALETTE_ITEMS_DATASET,
+
+        schemaIds: [],
+        thoughtIds: [
+            BUILTIN_THOUGHT_IDS_MAP.CAPTURE_THOUGHT,
+            BUILTIN_THOUGHT_IDS_MAP.SET_UP_SHORTCUTS,
+            BUILTIN_THOUGHT_IDS_MAP.ALTERED_ONBOARDING,
+            BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS
+        ]
+    },
+
+    ACTION_PALETTE_GROUPS: {
+        id: BUILTIN_DATASET_IDS_MAP.ACTION_PALETTE_GROUPS,
+
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.ACTION_PALETTE_GROUPS_DATASET,
+
+        schemaIds: [],
+        thoughtIds: [BUILTIN_THOUGHT_IDS_MAP.ACTION_PALETTE_CORE_GROUP]
+    },
+
+    VIEW_THOUGHTS_ITEMS: {
+        id: BUILTIN_DATASET_IDS_MAP.VIEW_THOUGHTS_ITEMS,
+
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS_ITEMS_DATASET,
+
+        schemaIds: [],
+        thoughtIds: [
+            BUILTIN_THOUGHT_IDS_MAP.DISTILL_MESSAGE_TOOL_POC,
+            BUILTIN_THOUGHT_IDS_MAP.QUERY_MEMORY_TOOL_POC
+        ]
     }
-} as const satisfies Record<string, ALTEREDDatasetDefinition>
+} as const satisfies Record<string, ALTEREDDataset>
 
 const BUILTIN_DATASETS = Object.values(BUILTIN_DATASETS_MAP)
 

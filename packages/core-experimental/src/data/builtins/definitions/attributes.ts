@@ -1,248 +1,225 @@
-import type {
-    ALTEREDAttributeDefinition,
-    ALTEREDAttributeID
-} from "../../../models/attributes/definitions"
+import type { ALTEREDAttribute } from "../../../models/attributes/definitions"
+import { BUILTIN_ATTRIBUTE_IDS_MAP } from "../ids/attributes"
+import { BUILTIN_DATASET_IDS_MAP } from "../ids/datasets"
+import { BUILTIN_SCHEMA_IDS_MAP } from "../ids/schemas"
+import { BUILTIN_THOUGHT_IDS_MAP } from "../ids/thoughts"
 
 const BUILTIN_ATTRIBUTES_MAP = {
-    ACTION_PALETTE_INTERFACE_TYPE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "QK0CEnWTvwkkuZIMYpqNB" as ALTEREDAttributeID,
+    ACTION_PALETTE_INTERFACE_TYPE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.ACTION_PALETTE_INTERFACE_TYPE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.ACTION_PALETTE,
 
-        value: "collection"
+        value: "collection",
+
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.INTERFACE_TYPE
     },
 
-    ACTION_PALETTE_INTERFACE_ITEMS_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "9dnnIk2Urp7lKfjZM5-dZ" as ALTEREDAttributeID,
-
-        value: ""
+    ACTION_PALETTE_ITEMS: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.ACTION_PALETTE_ITEMS,
+        value: BUILTIN_DATASET_IDS_MAP.ACTION_PALETTE_ITEMS,
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEMS,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.ACTION_PALETTE
     },
 
-    ACTION_PALETTE_INTERFACE_GROUPS_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "C7dPE07LXGhE0XXX5ayso" as ALTEREDAttributeID,
-
-        value: ""
+    ACTION_PALETTE_GROUPS: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.ACTION_PALETTE_GROUPS,
+        value: BUILTIN_DATASET_IDS_MAP.ACTION_PALETTE_GROUPS,
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_GROUPS,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.ACTION_PALETTE
     },
 
-    ACTION_PALETTE_CORE_INTERFACE_GROUP_TITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "_wZuTar2P71nTwdxWk8tH" as ALTEREDAttributeID,
-
-        value: "ALTERED Core"
+    ACTION_PALETTE_CORE_GROUP_TITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.ACTION_PALETTE_CORE_GROUP_TITLE,
+        value: "ALTERED Core",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_GROUP_TITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.ACTION_PALETTE_CORE_GROUP
     },
 
-    ACTION_PALETTE_CORE_INTERFACE_GROUP_SUBTITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "QvW9i3nbWmfpWeJpMcjc7" as ALTEREDAttributeID,
-
-        value: "Manage your Brain"
+    ACTION_PALETTE_CORE_GROUP_SUBTITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.ACTION_PALETTE_CORE_GROUP_SUBTITLE,
+        value: "Manage your Brain",
+        schemaId:
+            BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_GROUP_SUBTITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.ACTION_PALETTE_CORE_GROUP
     },
 
-    CAPTURE_THOUGHT_ACTION_ICON_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "2Sdn_7My3C4OBawP-qj_x" as ALTEREDAttributeID,
-
-        value: "icon-16"
+    CAPTURE_THOUGHT_ICON: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.CAPTURE_THOUGHT_ICON,
+        value: "icon-16",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_ICON,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.CAPTURE_THOUGHT
     },
 
-    CAPTURE_THOUGHT_ACTION_TITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "-OAd_w54UjEGGlkCQEwxu" as ALTEREDAttributeID,
-
-        value: "Capture Thought"
+    CAPTURE_THOUGHT_TITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.CAPTURE_THOUGHT_TITLE,
+        value: "Capture Thought",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_TITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.CAPTURE_THOUGHT
     },
 
-    CAPTURE_THOUGHT_ACTION_SUBTITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "KBPRDUk0yBMDGqX_irgwW" as ALTEREDAttributeID,
-
-        value: "Capture a thought to your ALTERED brain."
+    CAPTURE_THOUGHT_SUBTITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.CAPTURE_THOUGHT_SUBTITLE,
+        value: "Capture a thought to your ALTERED brain.",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_SUBTITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.CAPTURE_THOUGHT
     },
 
-    CAPTURE_THOUGHT_ACTION_TRIGGER_PHRASE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "GWNNKoHreswKEp2RztEkm" as ALTEREDAttributeID,
-
-        value: "c"
+    CAPTURE_THOUGHT_TRIGGER_PHRASE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.CAPTURE_THOUGHT_TRIGGER_PHRASE,
+        value: "c",
+        schemaId:
+            BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_TRIGGER_PHRASE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.CAPTURE_THOUGHT
     },
 
-    CAPTURE_THOUGHT_ACTION_INTERFACE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "Uy3NtoX4N2ztXvggK_D_g" as ALTEREDAttributeID,
-
-        value: "kRQG-b4XJ4KhXQ2oJH240"
+    CAPTURE_THOUGHT_INTERFACE_TYPE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.CAPTURE_THOUGHT_INTERFACE_TYPE,
+        value: "form",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.INTERFACE_TYPE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.CAPTURE_THOUGHT
     },
 
-    CAPTURE_THOUGHT_INTERFACE_TYPE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "MrgenSlO514LFhANl4NEu" as ALTEREDAttributeID,
-
-        value: "form"
+    SET_UP_SHORTCUTS_ICON: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.SET_UP_SHORTCUTS_ICON,
+        value: "cog-16",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_ICON,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.SET_UP_SHORTCUTS
     },
 
-    SET_UP_SHORTCUTS_ACTION_ICON_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "b7RCNHUpCPr0LwYL_bMDf" as ALTEREDAttributeID,
-
-        value: "cog-16"
+    SET_UP_SHORTCUTS_TITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.SET_UP_SHORTCUTS_TITLE,
+        value: "Set Up Shortcuts",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_TITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.SET_UP_SHORTCUTS
     },
 
-    SET_UP_SHORTCUTS_ACTION_TITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "CUG6_UMRqiCK-yixaYfB3" as ALTEREDAttributeID,
-
-        value: "Set Up Shortcuts"
+    SET_UP_SHORTCUTS_SUBTITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.SET_UP_SHORTCUTS_SUBTITLE,
+        value: "Set up Raycast Script Commands for ALTERED shortcuts.",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_SUBTITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.SET_UP_SHORTCUTS
     },
 
-    SET_UP_SHORTCUTS_ACTION_SUBTITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "rqfoiRT3Sn6tIVP9NYg27" as ALTEREDAttributeID,
-
-        value: "Set up Raycast Script Commands for ALTERED shortcuts."
+    SET_UP_SHORTCUTS_INTERFACE_TYPE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.SET_UP_SHORTCUTS_INTERFACE_TYPE,
+        value: "custom",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.INTERFACE_TYPE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.SET_UP_SHORTCUTS
     },
 
-    SET_UP_SHORTCUTS_ACTION_INTERFACE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "jUOARoi0NRADuDlDEJ1hM" as ALTEREDAttributeID,
-
-        value: "WYIYw5MCIDsMa7gyXlzN0"
+    ALTERED_ONBOARDING_ICON: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.ALTERED_ONBOARDING_ICON,
+        value: "info-01-16",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_ICON,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.ALTERED_ONBOARDING
     },
 
-    SET_UP_SHORTCUTS_INTERFACE_TYPE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "LVDmhg_-pf8z5rNX2wjM8" as ALTEREDAttributeID,
-
-        value: "custom"
+    ALTERED_ONBOARDING_TITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.ALTERED_ONBOARDING_TITLE,
+        value: "ALTERED Onboarding",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_TITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.ALTERED_ONBOARDING
     },
 
-    ALTERED_ONBOARDING_ACTION_ICON_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "aMjX6Dq3s9JPnFU3S68GV" as ALTEREDAttributeID,
-
-        value: "info-01-16"
+    ALTERED_ONBOARDING_SUBTITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.ALTERED_ONBOARDING_SUBTITLE,
+        value: "Learn how set up and use your ALTERED brain.",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_SUBTITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.ALTERED_ONBOARDING
     },
 
-    ALTERED_ONBOARDING_ACTION_TITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "3pDac6KDiK2yYsT0a25Wh" as ALTEREDAttributeID,
-
-        value: "ALTERED Onboarding"
+    ALTERED_ONBOARDING_INTERFACE_TYPE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.ALTERED_ONBOARDING_INTERFACE_TYPE,
+        value: "markdown",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.INTERFACE_TYPE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.ALTERED_ONBOARDING
     },
 
-    ALTERED_ONBOARDING_ACTION_SUBTITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "DTw0lPD7pyuKb4W7x8JE3" as ALTEREDAttributeID,
-
-        value: "Learn how set up and use your ALTERED brain."
+    VIEW_THOUGHTS_ICON: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.VIEW_THOUGHTS_ICON,
+        value: "speech-bubble-16",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_ICON,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS
     },
 
-    ALTERED_ONBOARDING_ACTION_INTERFACE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "6g9LBCMRUPOmLaKGoHBlF" as ALTEREDAttributeID,
-
-        value: "YHpqBUyjK1gcFbZGL8e2t"
+    VIEW_THOUGHTS_TITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.VIEW_THOUGHTS_TITLE,
+        value: "View Thoughts",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_TITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS
     },
 
-    ALTERED_ONBOARDING_INTERFACE_TYPE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "dkZ21yNnSlJRtHlLrnuGF" as ALTEREDAttributeID,
-
-        value: "markdown"
+    VIEW_THOUGHTS_SUBTITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.VIEW_THOUGHTS_SUBTITLE,
+        value: "View and manage the thoughts in your ALTERED brain.",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_SUBTITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS
     },
 
-    VIEW_THOUGHTS_ACTION_ICON_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "X2Innv4i8tLzqrNNloa8l" as ALTEREDAttributeID,
-
-        value: "speech-bubble-16"
+    VIEW_THOUGHTS_TRIGGER_PHRASE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.VIEW_THOUGHTS_TRIGGER_PHRASE,
+        value: "v",
+        schemaId:
+            BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_TRIGGER_PHRASE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS
     },
 
-    VIEW_THOUGHTS_ACTION_TITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "eBIb7Z2-4IuQMI6Sm1mlQ" as ALTEREDAttributeID,
-
-        value: "View Thoughts"
+    VIEW_THOUGHTS_INTERFACE_TYPE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.VIEW_THOUGHTS_INTERFACE_TYPE,
+        value: "collection",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.INTERFACE_TYPE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS
     },
 
-    VIEW_THOUGHTS_ACTION_SUBTITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "oIhs_NFOTfDSbrUYwVmLP" as ALTEREDAttributeID,
-
-        value: "View and manage the thoughts in your ALTERED brain."
+    VIEW_THOUGHTS_ITEMS: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.VIEW_THOUGHTS_ITEMS,
+        value: BUILTIN_DATASET_IDS_MAP.VIEW_THOUGHTS_ITEMS,
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEMS,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS
     },
 
-    VIEW_THOUGHTS_ACTION_TRIGGER_PHRASE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "ezrmfmF66CBtcyJsOcFGV" as ALTEREDAttributeID,
-
-        value: "v"
+    DISTILL_MESSAGE_TOOL_POC_TITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.DISTILL_MESSAGE_TOOL_POC_TITLE,
+        value: "Distill Message Tool POC",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_TITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.DISTILL_MESSAGE_TOOL_POC
     },
 
-    VIEW_THOUGHTS_ACTION_INTERFACE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "9Q97FXHe-F5vPYVBROIPH" as ALTEREDAttributeID,
-
-        // @spell-checker: disable-next-line
-        value: "VTXccgqn1at_Flza5Kdr2"
+    DISTILL_MESSAGE_TOOL_POC_SUBTITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.DISTILL_MESSAGE_TOOL_POC_SUBTITLE,
+        value: "Ingest user messages to their ALTERED brain via message distillation.",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_SUBTITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.DISTILL_MESSAGE_TOOL_POC
     },
 
-    VIEW_THOUGHTS_INTERFACE_TYPE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "mw-TWoX3mMjZNw4p6Moo1" as ALTEREDAttributeID,
-
-        value: "collection"
+    DISTILL_MESSAGE_TOOL_POC_INTERFACE_TYPE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.DISTILL_MESSAGE_TOOL_POC_INTERFACE_TYPE,
+        value: "markdown",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.INTERFACE_TYPE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.DISTILL_MESSAGE_TOOL_POC
     },
 
-    VIEW_THOUGHTS_INTERFACE_ITEMS_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "pyZAN3h5jVnBcEncx_8TN" as ALTEREDAttributeID,
-
-        value: ""
+    QUERY_MEMORY_TOOL_POC_TITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.QUERY_MEMORY_TOOL_POC_TITLE,
+        value: "Query Memory Tool POC",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_TITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.QUERY_MEMORY_TOOL_POC
     },
 
-    DISTILL_MESSAGE_TOOL_POC_TITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "isYxuDTstH8n3jJfsg79D" as ALTEREDAttributeID,
-
-        value: "Distill Message Tool POC"
+    QUERY_MEMORY_TOOL_POC_SUBTITLE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.QUERY_MEMORY_TOOL_POC_SUBTITLE,
+        value: "Fetch thoughts from the user's ALTERED brain for contextual memory queries.",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_SUBTITLE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.QUERY_MEMORY_TOOL_POC
     },
 
-    DISTILL_MESSAGE_TOOL_POC_SUBTITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "NIp3VF4TkJaQyh4xgmR3P" as ALTEREDAttributeID,
-
-        value: "Ingest user messages to their ALTERED brain via message distillation."
-    },
-
-    DISTILL_MESSAGE_TOOL_POC_INTERFACE_TYPE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "5FwkqBF6VSXundk_ss4Ax" as ALTEREDAttributeID,
-
-        value: "markdown"
-    },
-
-    QUERY_MEMORY_TOOL_POC_TITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "5WtGEYy8KKN8HS3OzDXWu" as ALTEREDAttributeID,
-
-        value: "Query Memory Tool POC"
-    },
-
-    QUERY_MEMORY_TOOL_POC_SUBTITLE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "wh84qVgY4SApae-ANA_04" as ALTEREDAttributeID,
-
-        value: "Fetch thoughts from the user's ALTERED brain for contextual memory queries."
-    },
-
-    QUERY_MEMORY_TOOL_POC_INTERFACE_TYPE_ATTRIBUTE: {
-        // @spell-checker: disable-next-line
-        id: "beV7eXPAmh5NkMB23jej_" as ALTEREDAttributeID,
-
-        value: "markdown"
+    QUERY_MEMORY_TOOL_POC_INTERFACE_TYPE: {
+        id: BUILTIN_ATTRIBUTE_IDS_MAP.QUERY_MEMORY_TOOL_POC_INTERFACE_TYPE,
+        value: "markdown",
+        schemaId: BUILTIN_SCHEMA_IDS_MAP.INTERFACE_TYPE,
+        thoughtId: BUILTIN_THOUGHT_IDS_MAP.QUERY_MEMORY_TOOL_POC
     }
-} as const satisfies Record<string, ALTEREDAttributeDefinition>
+} as const satisfies Record<string, ALTEREDAttribute>
 
 const BUILTIN_ATTRIBUTES = Object.values(BUILTIN_ATTRIBUTES_MAP)
 
