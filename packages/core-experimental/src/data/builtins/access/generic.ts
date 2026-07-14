@@ -7,38 +7,27 @@ type BuiltinDataTypeID = "dataset" | "schema" | "thought" | "attribute"
 
 type DataDefinitionBase = { id: string }
 
-type DataRelationsBase<DataDefinition extends DataDefinitionBase> = {
-    id: DataDefinition["id"]
-}
-
-type CreateBuiltinDataGetterOptions<
-    DataDefinition extends DataDefinitionBase,
-    DataRelations extends DataRelationsBase<DataDefinition>
-> = {
-    definitions: DataDefinition[]
-    relations: DataRelations[]
-    meta: { typeId: BuiltinDataTypeID }
-}
+type CreateBuiltinDataGetterOptions<DataDefinition extends DataDefinitionBase> =
+    {
+        definitions: DataDefinition[]
+        meta: { typeId: BuiltinDataTypeID }
+    }
 
 type CreateBuiltinDataGetterResult<DataID extends string, Data> = {
     getMany: (options: { query: { ids?: DataID[] } }) => Data[] | null
     getOne: (options: { query: { id?: DataID } }) => Data | null
 }
 
-function createBuiltinDataGetter<
-    DataDefinition extends DataDefinitionBase,
-    DataRelations extends DataRelationsBase<DataDefinition>,
-    Data = DataDefinition & DataRelations
->({
+function createBuiltinDataGetter<DataDefinition extends DataDefinitionBase>({
     definitions,
-    relations,
     meta
-}: CreateBuiltinDataGetterOptions<
-    DataDefinition,
-    DataRelations
->): CreateBuiltinDataGetterResult<DataDefinition["id"], Data> {
-    type Result = ReturnType<
-        typeof createBuiltinDataGetter<DataDefinition, DataRelations, Data>
+}: CreateBuiltinDataGetterOptions<DataDefinition>): CreateBuiltinDataGetterResult<
+    DataDefinition["id"],
+    DataDefinition
+> {
+    type Result = CreateBuiltinDataGetterResult<
+        DataDefinition["id"],
+        DataDefinition
     >
 
     const getMany: Result["getMany"] = ({ query }) => {
@@ -66,26 +55,9 @@ function createBuiltinDataGetter<
                     return null
                 }
 
-                const dataRelations = relations.find(
-                    relation => relation.id === dataItem.id
-                )
-
-                if (!dataRelations) {
-                    console.warn(
-                        `Builtin ${toTitleCase(meta.typeId)} Retrieval Failed: No relations were found for the provided ${meta.typeId} ID.`,
-                        { query: { id: queryId } }
-                    )
-
-                    return null
-                }
-
-                return {
-                    ...dataItem,
-
-                    ...dataRelations
-                } as Data
+                return dataItem
             })
-            .filter(data => data !== null)
+            .filter(dataItem => dataItem !== null)
 
         return data.length ? data : null
     }
