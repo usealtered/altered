@@ -1,0 +1,25 @@
+import type { ALTEREDSchemaID } from "../../../models/schemas/definitions"
+
+const BUILTIN_SCHEMA_IDS = {
+    // @spell-checker: disable
+
+    INTERFACE_ID: "8SK5oehs7mP5ZJjnB5fHR",
+    INTERFACE_TYPE: "PaViBZDzoFqEbtk1B0RlX",
+    COLLECTION_INTERFACE_ITEM_GROUPS: "KVGqP0ElWC0CdpPczwSGK",
+    COLLECTION_INTERFACE_ITEM_GROUP_TITLE: "cuG7ldURv_Q3ZKaOR5Ztx",
+    COLLECTION_INTERFACE_ITEM_GROUP_SUBTITLE: "3Z23Zz_OESVyF1sx00iPh",
+    COLLECTION_INTERFACE_ITEMS: "Aes-0nNMM1bojYqrJb0mx",
+    COLLECTION_INTERFACE_ITEM_ICON: "9NNiHkGc_uDPVkWXv71Nt",
+    COLLECTION_INTERFACE_ITEM_TITLE: "mPUXn0NVGmo_StvPSzjrA",
+    COLLECTION_INTERFACE_ITEM_SUBTITLE: "y74HiQ_qRBa487R8x6okT",
+    COLLECTION_INTERFACE_ITEM_TRIGGER_PHRASE: "hL4f1fyRtKmMeW7LM2Qd4"
+
+    // @spell-checker: enable
+} as const satisfies Record<string, string>
+
+const BUILTIN_SCHEMA_IDS_MAP = BUILTIN_SCHEMA_IDS as Record<
+    keyof typeof BUILTIN_SCHEMA_IDS,
+    ALTEREDSchemaID
+>
+
+export { BUILTIN_SCHEMA_IDS_MAP }
