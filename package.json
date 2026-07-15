@@ -39,5 +39,5 @@
         "ultracite": "^7.6.1"
     },
 
-    "packageManager": "pnpm@11.8.0"
+    "packageManager": "pnpm@11.13.0"
 }
