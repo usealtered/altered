@@ -25,10 +25,11 @@
         "build": "tsc -p tsconfig.build.json"
     },
     "dependencies": {
-        "arktype": "catalog:",
         "@altered/core-experimental": "workspace:*",
         "@raycast/api": "catalog:raycast",
-        "@raycast/utils": "catalog:raycast"
+        "@raycast/utils": "catalog:raycast",
+        "arktype": "catalog:",
+        "nanoid": "catalog:"
     },
     "devDependencies": {
         "@altered/tooling": "workspace:*",
