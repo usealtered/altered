@@ -2,6 +2,9 @@ packages:
   - apps/*
   - packages/*
 
+allowBuilds:
+  esbuild: true
+
 catalog:
   '@chat-adapter/state-redis': ^4.27.0
   '@hono/node-server': ^2.0.1
@@ -35,14 +38,7 @@ catalogs:
     react: 19.0.0
 
 linkWorkspacePackages: true
-
 nodeLinker: hoisted
-
-onlyBuiltDependencies:
-  - esbuild
-  - msw
-  - sharp
-  - unrs-resolver
 
 patchedDependencies:
   '@raycast/api@1.104.20': patches/@raycast__api@1.104.20.patch
