@@ -84,6 +84,11 @@ catalogs:
       specifier: 19.0.10
       version: 19.0.10
 
+patchedDependencies:
+  '@raycast/api@1.104.20':
+    hash: be5fe32fda86831db8353534be150ef135a37b1349b427e91c9471821ab93ce5
+    path: patches/@raycast__api@1.104.20.patch
+
 importers:
 
   .:
@@ -136,7 +141,7 @@ importers:
         version: link:../../packages/raycast-internal-experimental
       '@raycast/api':
         specifier: catalog:raycast
-        version: 1.104.20(@types/node@22.19.17)(@types/react@19.0.10)
+        version: 1.104.20(patch_hash=be5fe32fda86831db8353534be150ef135a37b1349b427e91c9471821ab93ce5)(@types/node@22.19.17)(@types/react@19.0.10)
     devDependencies:
       '@altered/tooling':
         specifier: workspace:*
@@ -205,10 +210,10 @@ importers:
         version: link:../core-experimental
       '@raycast/api':
         specifier: catalog:raycast
-        version: 1.104.20(@types/node@22.19.17)(@types/react@19.0.10)
+        version: 1.104.20(patch_hash=be5fe32fda86831db8353534be150ef135a37b1349b427e91c9471821ab93ce5)(@types/node@22.19.17)(@types/react@19.0.10)
       '@raycast/utils':
         specifier: catalog:raycast
-        version: 2.2.6(@raycast/api@1.104.20(@types/node@22.19.17)(@types/react@19.0.10))(react@19.0.0)
+        version: 2.2.6(@raycast/api@1.104.20(patch_hash=be5fe32fda86831db8353534be150ef135a37b1349b427e91c9471821ab93ce5)(@types/node@22.19.17)(@types/react@19.0.10))(react@19.0.0)
       arktype:
         specifier: 'catalog:'
         version: 2.2.3
@@ -2995,7 +3000,7 @@ snapshots:
 
   '@opentelemetry/api@1.9.0': {}
 
-  '@raycast/api@1.104.20(@types/node@22.19.17)(@types/react@19.0.10)':
+  '@raycast/api@1.104.20(patch_hash=be5fe32fda86831db8353534be150ef135a37b1349b427e91c9471821ab93ce5)(@types/node@22.19.17)(@types/react@19.0.10)':
     dependencies:
       '@oclif/core': 4.11.11
       '@oclif/plugin-autocomplete': 3.2.52
@@ -3009,9 +3014,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@raycast/utils@2.2.6(@raycast/api@1.104.20(@types/node@22.19.17)(@types/react@19.0.10))(react@19.0.0)':
+  '@raycast/utils@2.2.6(@raycast/api@1.104.20(patch_hash=be5fe32fda86831db8353534be150ef135a37b1349b427e91c9471821ab93ce5)(@types/node@22.19.17)(@types/react@19.0.10))(react@19.0.0)':
     dependencies:
-      '@raycast/api': 1.104.20(@types/node@22.19.17)(@types/react@19.0.10)
+      '@raycast/api': 1.104.20(patch_hash=be5fe32fda86831db8353534be150ef135a37b1349b427e91c9471821ab93ce5)(@types/node@22.19.17)(@types/react@19.0.10)
       dequal: 2.0.3
     optionalDependencies:
       react: 19.0.0

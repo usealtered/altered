@@ -43,3 +43,6 @@ onlyBuiltDependencies:
   - msw
   - sharp
   - unrs-resolver
+
+patchedDependencies:
+  '@raycast/api@1.104.20': patches/@raycast__api@1.104.20.patch
