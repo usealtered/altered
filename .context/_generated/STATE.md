@@ -1,12 +1,18 @@
 # PLAN STATE (Generated)
 
-Last updated: 2026-05-24
+Last updated: 2026-07-15
 
 ## Focus
 
-Current focus is the iMessage POC path with production webhook flow, owned Postgres memory, and controlled local-dev routing for rapid message testing.
+Current focus is the distillation + memory-query POC (3–7 day timebox): auto-distill Koa chat messages into indexed thoughts, then keyword-based querying — targeting a usable infinite-memory loop for the V1 marketing push. Both master plans are approved and commit-ready; tool loop bugs are fixed.
 
 ## Plan linkage
+
+- Distillation master plan (approved, next up):
+  - `.context/_generated/plans/thought-distillation-poc.md`
+
+- Memory query master plan (approved, follows/overlaps distillation):
+  - `.context/_generated/plans/memory-query-poc.md`
 
 - Primary vertical scaffold:
   - `.context/_generated/plans/imessage-server-poc.md`
@@ -123,10 +129,10 @@ Current focus is the iMessage POC path with production webhook flow, owned Postg
 
 ## Next execution order
 
-1. Expand the admin lightweight-model command surface beyond forwarding target updates (replace remaining slash commands where needed, including `/new` if product confirms).
+1. Distillation POC per `thought-distillation-poc.md`: schema/models → chunker + context tools → distillation subagent in `scripts/tmp-distill-poc.ts` → keyword job → save-path integration (message-persistence stripping refactor + on-save trigger) → reindex script → Apple Notes upload utility.
 
-2. Add provider message-id dedupe guards in persistence path.
+2. Memory query POC per `memory-query-poc.md`: retrieval SQL + exclusion window (simple 512-token v1) → keyword inference (shared codepath) → relevance pass → replace `query-memory` placeholder → E2E.
 
-3. POC solidification: multi-bubble send pipeline (defer full timing emulation; see `.context/_generated/plans/imessage-human-timing-emulation.md`).
+3. After both are tested to satisfaction: structured-thinking prototype (datasets layered on refined thoughts, likely Raycast interface).
 
-4. Final refactor/polish, then evaluate Effect migration effort for retries and error handling.
+4. Previously queued (still pending, deprioritized): admin command surface expansion, provider message-id dedupe, multi-bubble send pipeline, Effect migration evaluation.
