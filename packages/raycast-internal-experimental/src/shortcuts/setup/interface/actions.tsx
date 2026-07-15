@@ -34,8 +34,8 @@ function CopyDirectoryAndOpenSettingsAction({
     return (
         <Action
             icon={Icon.ArrowRightCircle}
-            onAction={() => {
-                copyDirectoryAndOpenSettings()
+            onAction={async () => {
+                await copyDirectoryAndOpenSettings()
 
                 setHasOpenedSettings?.(true)
             }}
