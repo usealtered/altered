@@ -3,9 +3,9 @@ import type { ALTEREDThoughtID } from "@altered/core-experimental/models/thought
 import type { LaunchProps } from "@raycast/api"
 import { type } from "arktype"
 import { getActionInterfaceId } from "../../data/access/get-action-interface-id"
+import { InterfaceRenderer } from "../../renderer/implementation"
+import { encodeNavigationPath } from "../../renderer/navigation/encode-path"
 import { resolveLaunchContext } from "../../utils/resolve-launch-context"
-import { createNavigationPath } from "./interfaces/navigation/paths"
-import { InterfaceRenderer } from "./interfaces/renderer"
 
 function ActionPaletteCommand(props: LaunchProps) {
     const launchContext = resolveLaunchContext(props.launchContext, {
@@ -17,7 +17,7 @@ function ActionPaletteCommand(props: LaunchProps) {
     })
 
     const navigationHistory = [
-        createNavigationPath({
+        encodeNavigationPath({
             components: targetInterfaceId
                 ? [BUILTIN_THOUGHTS_MAP.ACTION_PALETTE.id, targetInterfaceId]
                 : [BUILTIN_THOUGHTS_MAP.ACTION_PALETTE.id]
