@@ -129,7 +129,7 @@ Current focus is the distillation + memory-query POC (3–7 day timebox): auto-d
 
 ## Next execution order
 
-1. Distillation POC per `thought-distillation-poc.md`: complete schema/models (thoughts table started) → chunker + context tools → distillation subagent in `scripts/tmp-distill-poc.ts` → keyword job → save-path integration (message-persistence stripping refactor + on-save trigger) → reindex script → Apple Notes upload utility.
+1. Distillation POC per `thought-distillation-poc.md`: complete schema/models (thoughts, datasets, and their join table complete) → chunker + context tools → distillation subagent in `scripts/tmp-distill-poc.ts` → keyword job → save-path integration (message-persistence stripping refactor + on-save trigger) → reindex script → Apple Notes upload utility.
 
 2. Memory query POC per `memory-query-poc.md`: retrieval SQL + exclusion window (simple 512-token v1) → keyword inference (shared codepath) → relevance pass → replace `query-memory` placeholder → E2E.
 
