@@ -1,8 +1,8 @@
 import { showToast, Toast, useNavigation } from "@raycast/api"
 import { useEffect, useMemo } from "react"
-import { resolveCurrentNavigationInterface } from "../commands/action-palette/interfaces/navigation/paths"
 import { INTERFACE_COMPONENT_MAP } from "./definitions"
 import type { NavigationPath } from "./navigation/definitions"
+import { resolveCurrentNavigationInterface } from "./navigation/resolve-current-interface"
 import { resolveInterfaceType } from "./resolvers/interface-type"
 
 /**
