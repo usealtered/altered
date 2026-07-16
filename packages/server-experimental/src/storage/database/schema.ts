@@ -1,5 +1,6 @@
 import { conversations } from "../../chat/conversations/schema"
 import { chatMessages } from "../../chat/messages/schema"
+import { attributes } from "../../models/attributes/storage/schema"
 import { datasets } from "../../models/datasets/storage/schema"
 import { thoughts } from "../../models/thoughts/storage/schema"
 import { thoughtsToDatasets } from "../../models/thoughts-to-datasets/storage/schema"
@@ -11,6 +12,7 @@ const schema = {
     datasets,
     thoughts,
     thoughtsToDatasets,
+    attributes,
     externalResources
 }
 

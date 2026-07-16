@@ -33,6 +33,31 @@ const relations = defineRelations(schema, r => ({
             from: r.externalResources.messageId,
             to: r.chatMessages.id
         })
+    },
+
+    thoughts: {
+        datasets: r.many.datasets({
+            from: r.thoughts.id.through(r.thoughtsToDatasets.thoughtId),
+            to: r.datasets.id.through(r.thoughtsToDatasets.datasetId)
+        }),
+        attributes: r.many.attributes({
+            from: r.thoughts.id,
+            to: r.attributes.thoughtId
+        })
+    },
+
+    datasets: {
+        thoughts: r.many.thoughts({
+            from: r.datasets.id.through(r.thoughtsToDatasets.datasetId),
+            to: r.thoughts.id.through(r.thoughtsToDatasets.thoughtId)
+        })
+    },
+
+    attributes: {
+        thought: r.one.thoughts({
+            from: r.attributes.thoughtId,
+            to: r.thoughts.id
+        })
     }
 }))
 
