@@ -4,7 +4,7 @@ Last updated: 2026-07-16
 
 ## Focus
 
-Current focus is the distillation + memory-query POC (3–7 day timebox): auto-distill Koa chat messages into indexed thoughts, then keyword-based querying — targeting a usable infinite-memory loop for the V1 marketing push. Both master plans are approved; Phase 1 schema is mid-flight (thoughts, datasets, join, attributes + RQB v2 relations); tool loop bugs are fixed.
+Current focus is the distillation + memory-query POC (3–7 day timebox): auto-distill Koa chat messages into indexed thoughts, then keyword-based querying — targeting a usable infinite-memory loop for the V1 marketing push. Both master plans are approved; Phase 1 schema nearly done (thoughts, datasets, join, attributes, tags + RQB v2 relations; agent_runs remains); tool loop bugs are fixed.
 
 ## Plan linkage
 
@@ -129,7 +129,7 @@ Current focus is the distillation + memory-query POC (3–7 day timebox): auto-d
 
 ## Next execution order
 
-1. Distillation POC per `thought-distillation-poc.md`: finish schema/models (tags + agent_runs remain; attributes stub + thoughts↔datasets/attributes relations landed) → chunker + context tools → distillation subagent in `scripts/tmp-distill-poc.ts` → keyword job → save-path integration (message-persistence stripping refactor + on-save trigger) → reindex script → Apple Notes upload utility.
+1. Distillation POC per `thought-distillation-poc.md`: finish schema/models (`agent_runs` remains; tags landed) → `pnpm db:push` → chunker + context tools → distillation subagent in `scripts/tmp-distill-poc.ts` → keyword job → save-path integration (message-persistence stripping refactor + on-save trigger) → reindex script → Apple Notes upload utility.
 
 2. Memory query POC per `memory-query-poc.md`: retrieval SQL + exclusion window (simple 512-token v1) → keyword inference (shared codepath) → relevance pass → replace `query-memory` placeholder → E2E.
 

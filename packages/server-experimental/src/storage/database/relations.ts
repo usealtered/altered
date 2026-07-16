@@ -43,6 +43,10 @@ const relations = defineRelations(schema, r => ({
         attributes: r.many.attributes({
             from: r.thoughts.id,
             to: r.attributes.thoughtId
+        }),
+        tags: r.many.tags({
+            from: r.thoughts.id,
+            to: r.tags.thoughtId
         })
     },
 
@@ -56,6 +60,13 @@ const relations = defineRelations(schema, r => ({
     attributes: {
         thought: r.one.thoughts({
             from: r.attributes.thoughtId,
+            to: r.thoughts.id
+        })
+    },
+
+    tags: {
+        thought: r.one.thoughts({
+            from: r.tags.thoughtId,
             to: r.thoughts.id
         })
     }
