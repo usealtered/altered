@@ -1,5 +1,6 @@
 import { conversations } from "../../chat/conversations/schema"
 import { chatMessages } from "../../chat/messages/schema"
+import { agentRuns } from "../../models/agent-runs/storage/schema"
 import { attributes } from "../../models/attributes/storage/schema"
 import { datasets } from "../../models/datasets/storage/schema"
 import { tags } from "../../models/tags/storage/schema"
@@ -15,6 +16,7 @@ const schema = {
     thoughtsToDatasets,
     attributes,
     tags,
+    agentRuns,
     externalResources
 }
 

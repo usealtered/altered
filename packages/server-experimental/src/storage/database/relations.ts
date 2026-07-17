@@ -10,6 +10,10 @@ const relations = defineRelations(schema, r => ({
         externalResources: r.many.externalResources({
             from: r.conversations.id,
             to: r.externalResources.conversationId
+        }),
+        agentRuns: r.many.agentRuns({
+            from: r.conversations.id,
+            to: r.agentRuns.conversationId
         })
     },
 
@@ -21,6 +25,10 @@ const relations = defineRelations(schema, r => ({
         externalResources: r.many.externalResources({
             from: r.chatMessages.id,
             to: r.externalResources.messageId
+        }),
+        agentRuns: r.many.agentRuns({
+            from: r.chatMessages.id,
+            to: r.agentRuns.chatMessageId
         })
     },
 
@@ -47,6 +55,10 @@ const relations = defineRelations(schema, r => ({
         tags: r.many.tags({
             from: r.thoughts.id,
             to: r.tags.thoughtId
+        }),
+        agentRuns: r.many.agentRuns({
+            from: r.thoughts.id,
+            to: r.agentRuns.thoughtId
         })
     },
 
@@ -67,6 +79,21 @@ const relations = defineRelations(schema, r => ({
     tags: {
         thought: r.one.thoughts({
             from: r.tags.thoughtId,
+            to: r.thoughts.id
+        })
+    },
+
+    agentRuns: {
+        conversation: r.one.conversations({
+            from: r.agentRuns.conversationId,
+            to: r.conversations.id
+        }),
+        chatMessage: r.one.chatMessages({
+            from: r.agentRuns.chatMessageId,
+            to: r.chatMessages.id
+        }),
+        thought: r.one.thoughts({
+            from: r.agentRuns.thoughtId,
             to: r.thoughts.id
         })
     }
