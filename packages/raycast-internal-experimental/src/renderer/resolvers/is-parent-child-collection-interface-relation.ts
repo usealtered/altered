@@ -2,7 +2,7 @@ import { BUILTIN_SCHEMAS_MAP } from "@altered/core-experimental/data/builtins/de
 import { resolveThoughtIdsFromDatasetAttribute } from "@altered/core-experimental/data/resolvers/thought-ids-from-dataset-attribute"
 import type { ALTEREDAttribute } from "@altered/core-experimental/models/attributes/definitions"
 import type { ALTEREDThoughtID } from "@altered/core-experimental/models/thoughts/definitions"
-import { getCollectionItemInterfaceId } from "../../data/access/get-collection-item-interface-id"
+import { resolveCollectionItemInterfaceThought } from "../../data/resolvers/collection-item-interface-thought"
 
 function isParentChildCollectionInterfaceRelation({
     parent,
@@ -29,11 +29,12 @@ function isParentChildCollectionInterfaceRelation({
     if (!collectionItemThoughtIds) return false
 
     for (const collectionItemThoughtId of collectionItemThoughtIds) {
-        const collectionItemInterfaceId = getCollectionItemInterfaceId({
-            itemId: collectionItemThoughtId
+        const collectionItemInterface = resolveCollectionItemInterfaceThought({
+            collectionItemThoughtId
         })
 
-        if (collectionItemInterfaceId === child.id) return true
+        if (collectionItemInterface && collectionItemInterface.id === child.id)
+            return true
     }
 
     return false
