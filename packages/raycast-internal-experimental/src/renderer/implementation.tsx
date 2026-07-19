@@ -1,8 +1,9 @@
-import { showToast, Toast, useNavigation } from "@raycast/api"
+import { showToast, Toast } from "@raycast/api"
 import { useEffect, useMemo } from "react"
 import { INTERFACE_COMPONENT_MAP } from "./definitions"
 import type { NavigationPath } from "./navigation/definitions"
 import { resolveCurrentNavigationInterface } from "./navigation/resolve-current-interface"
+import { useInterfaceRendererNavigation } from "./navigation/use"
 import { resolveInterfaceType } from "./resolvers/interface-type"
 
 /**
@@ -13,7 +14,7 @@ function InterfaceRenderer({
 }: {
     navigationHistory: NavigationPath[]
 }) {
-    const { pop } = useNavigation()
+    const { pop } = useInterfaceRendererNavigation({ navigationHistory })
 
     const currentNavigationPath = useMemo(
         () => navigationHistory.at(-1),
@@ -27,7 +28,7 @@ function InterfaceRenderer({
         )
 
     const {
-        status: pathResolutionStatus,
+        resolutionType: pathResolutionType,
         navigationPath: resolvedNavigationPath,
         thought,
         attributes
@@ -45,7 +46,7 @@ function InterfaceRenderer({
     )
 
     useEffect(() => {
-        if (pathResolutionStatus === "partial") {
+        if (pathResolutionType === "partial") {
             const errorTitle = "Navigation Path Unresolvable"
             const errorDescription = `The interface at '${currentNavigationPath}' could not be resolved, navigated to '${resolvedNavigationPath}' instead.`
 
@@ -77,7 +78,7 @@ function InterfaceRenderer({
     }, [
         currentNavigationPath,
         resolvedNavigationPath,
-        pathResolutionStatus,
+        pathResolutionType,
         interfaceTypeId,
         pop
     ])

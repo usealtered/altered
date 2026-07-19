@@ -15,7 +15,7 @@ function resolveCurrentNavigationInterface({
 }: {
     navigationPath: NavigationPath
 }): {
-    status: "partial" | "full"
+    resolutionType: "partial" | "full"
 
     navigationPath: NavigationPath
 
@@ -115,7 +115,8 @@ function resolveCurrentNavigationInterface({
     }
 
     return {
-        status: resolvedNavigationPath === navigationPath ? "full" : "partial",
+        resolutionType:
+            resolvedNavigationPath === navigationPath ? "full" : "partial",
 
         navigationPath: resolvedNavigationPath,
 
