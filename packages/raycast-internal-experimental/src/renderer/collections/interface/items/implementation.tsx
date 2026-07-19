@@ -3,10 +3,11 @@ import type { ALTEREDInterfaceIconID } from "@altered/core-experimental/icons/de
 import type { ALTEREDThought } from "@altered/core-experimental/models/thoughts/definitions"
 import { Color, Grid, Icon, List } from "@raycast/api"
 import { useMemo } from "react"
-import { CollectionInterfaceItemActions } from "../../../../commands/action-palette/global-actions"
 import { useInterfaceRendererContext } from "../../../../commands/action-palette/interfaces/context"
 import { toRaycastIcon } from "../../../../icons"
 import type { NavigationPath } from "../../../navigation/definitions"
+import { InterfaceOperationsRenderer } from "../../../operations/implementation"
+import { COLLECTION_INTERFACE_ITEM_OPERATIONS_DEFINITION } from "./operations/definitions"
 import { resolveCollectionItemIconId } from "./utils/resolve-icon-id"
 import { resolveCollectionItemSubtitle } from "./utils/resolve-subtitle"
 import { resolveCollectionItemTitle } from "./utils/resolve-title"
@@ -85,8 +86,9 @@ function CollectionInterfaceItem({
             accessories={accessories}
             accessory={undefined}
             actions={
-                <CollectionInterfaceItemActions
+                <InterfaceOperationsRenderer
                     navigationHistory={navigationHistory}
+                    operations={COLLECTION_INTERFACE_ITEM_OPERATIONS_DEFINITION}
                     thought={thought}
                 />
             }
