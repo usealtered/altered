@@ -1,7 +1,7 @@
 import type { ALTEREDAttribute } from "@altered/core-experimental/models/attributes/definitions"
 import type { ALTEREDThought } from "@altered/core-experimental/models/thoughts/definitions"
 import type { ComponentType } from "react"
-import { CollectionInterface } from "../commands/action-palette/interfaces/collections/implementation"
+import { CollectionInterface } from "./collections/interface/implementation"
 import { MarkdownInterface } from "./markdown/interface"
 import type { NavigationPath } from "./navigation/definitions"
 
@@ -10,8 +10,15 @@ type InterfaceTypeID = "collection" | "markdown"
 type InterfaceComponentProps = {
     navigationHistory: NavigationPath[]
 
+    /**
+     * @remarks Could this just be a thought ID?
+     */
     thought: ALTEREDThought
-    attributes: ALTEREDAttribute[]
+
+    /**
+     * @remarks Do we need this at all, or can we re-fetch from cache in components?
+     */
+    attributes: ALTEREDAttribute[] | null
 }
 
 const INTERFACE_COMPONENT_MAP = {
