@@ -1,10 +1,10 @@
 import type { ALTEREDThought } from "@altered/core-experimental/models/thoughts/definitions"
 import { Grid, List } from "@raycast/api"
 import { useMemo } from "react"
-import { CollectionInterfaceItem } from "../../../commands/action-palette/interfaces/collections/item"
 import { useInterfaceRendererContext } from "../../../commands/action-palette/interfaces/context"
 import type { InterfaceComponentProps } from "../../definitions"
-import { CollectionInterfaceItemGroup } from "./items/groups/interface"
+import { CollectionInterfaceItemGroup } from "./items/groups/implementation"
+import { CollectionInterfaceItem } from "./items/implementation"
 
 /**
  * @todo P3: Customize and create a serialization adapter for the `EmptyView` component.

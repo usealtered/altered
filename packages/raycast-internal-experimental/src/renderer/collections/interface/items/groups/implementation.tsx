@@ -7,7 +7,7 @@ import { Grid, List } from "@raycast/api"
 import { useMemo } from "react"
 import { useInterfaceRendererContext } from "../../../../../commands/action-palette/interfaces/context"
 import type { InterfaceComponentProps } from "../../../../definitions"
-import { CollectionInterfaceItem } from "../interface"
+import { CollectionInterfaceItem } from "../implementation"
 import { resolveCollectionItemGroupSubtitle } from "./utils/resolve-subtitle"
 import { resolveCollectionItemGroupTitle } from "./utils/resolve-title"
 
