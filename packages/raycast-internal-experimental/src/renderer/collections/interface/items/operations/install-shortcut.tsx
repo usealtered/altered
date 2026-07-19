@@ -1,5 +1,7 @@
 import { Action, Icon } from "@raycast/api"
+import { useMemo } from "react"
 import { ACTION_PALETTE_COMMAND_NAME } from "../../../../../commands/action-palette/definitions"
+import { useInterfaceRendererContext } from "../../../../../commands/action-palette/interfaces/context"
 import { installShortcutScriptCommand } from "../../../../../shortcuts/installation/implementation"
 import type {
     InterfaceOperationProps,
@@ -7,11 +9,22 @@ import type {
 } from "../../../../operations/definitions"
 
 function InstallShortcutOperation({ thought }: InterfaceOperationProps) {
+    const { tintColor, isIconVisible } = useInterfaceRendererContext()
+
+    const iconProps = useMemo(() => {
+        if (!isIconVisible.value) return null
+
+        return {
+            source: Icon.Download,
+            tintColor
+        }
+    }, [isIconVisible, tintColor])
+
     if (!thought.id) return null
 
     return (
         <Action
-            icon={Icon.Download}
+            icon={iconProps}
             onAction={() =>
                 installShortcutScriptCommand({
                     id: thought.id,

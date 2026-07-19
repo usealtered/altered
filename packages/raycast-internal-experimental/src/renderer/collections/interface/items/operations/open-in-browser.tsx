@@ -1,5 +1,7 @@
-import { Action, Icon, showHUD } from "@raycast/api"
+import { Action, Icon, open, showHUD } from "@raycast/api"
+import { useMemo } from "react"
 import { WEB_ORIGIN } from "../../../../../commands/action-palette/config"
+import { useInterfaceRendererContext } from "../../../../../commands/action-palette/interfaces/context"
 import type {
     InterfaceOperationProps,
     OperationDefinition
@@ -9,16 +11,30 @@ import type {
  * @remarks Demo, replace with actual implementation.
  */
 function OpenInBrowserOperation({ thought }: InterfaceOperationProps) {
+    const { tintColor, isIconVisible } = useInterfaceRendererContext()
+
+    const iconProps = useMemo(() => {
+        if (!isIconVisible.value) return null
+
+        return {
+            source: Icon.Globe,
+            tintColor
+        }
+    }, [isIconVisible, tintColor])
+
     return (
-        <Action.OpenInBrowser
-            icon={Icon.Globe}
-            onOpen={() => showHUD("Opening in browser...")}
+        <Action
+            icon={iconProps}
+            onAction={async () => {
+                await showHUD("Opening in browser...")
+
+                await open(`${WEB_ORIGIN}/t/${thought.id}`)
+            }}
             shortcut={{
                 modifiers: ["cmd", "shift"],
                 key: "o"
             }}
             title="Open In Browser"
-            url={`${WEB_ORIGIN}/t/${thought.id}`}
         />
     )
 }

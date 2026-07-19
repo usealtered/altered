@@ -7,18 +7,31 @@ import {
     Toast
 } from "@raycast/api"
 import { createDeeplink, DeeplinkType } from "@raycast/utils"
+import { useMemo } from "react"
 import { ACTION_PALETTE_COMMAND_NAME } from "../../../../../commands/action-palette/definitions"
+import { useInterfaceRendererContext } from "../../../../../commands/action-palette/interfaces/context"
 import type {
     InterfaceOperationProps,
     OperationDefinition
 } from "../../../../operations/definitions"
 
 function CopyDeeplinkOperation({ thought }: InterfaceOperationProps) {
+    const { tintColor, isIconVisible } = useInterfaceRendererContext()
+
+    const iconProps = useMemo(() => {
+        if (!isIconVisible.value) return null
+
+        return {
+            source: Icon.Link,
+            tintColor
+        }
+    }, [isIconVisible, tintColor])
+
     if (!thought) return null
 
     return (
         <Action
-            icon={Icon.Link}
+            icon={iconProps}
             onAction={async () => {
                 const url = createDeeplink({
                     command: ACTION_PALETTE_COMMAND_NAME,

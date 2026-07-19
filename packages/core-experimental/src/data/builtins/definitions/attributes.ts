@@ -64,7 +64,7 @@ const BUILTIN_ATTRIBUTES_MAP = {
         id: BUILTIN_ATTRIBUTE_IDS_MAP.CAPTURE_THOUGHT_ICON,
         thoughtId: BUILTIN_THOUGHT_IDS_MAP.CAPTURE_THOUGHT,
 
-        value: "icon-16",
+        value: "text-selection-16",
 
         schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_ICON
     },
@@ -110,7 +110,7 @@ const BUILTIN_ATTRIBUTES_MAP = {
         id: BUILTIN_ATTRIBUTE_IDS_MAP.SET_UP_SHORTCUTS_ICON,
         thoughtId: BUILTIN_THOUGHT_IDS_MAP.SET_UP_SHORTCUTS,
 
-        value: "cog-16",
+        value: "keyboard-16",
 
         schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_ICON
     },
@@ -182,7 +182,7 @@ const BUILTIN_ATTRIBUTES_MAP = {
         id: BUILTIN_ATTRIBUTE_IDS_MAP.VIEW_THOUGHTS_ICON,
         thoughtId: BUILTIN_THOUGHT_IDS_MAP.VIEW_THOUGHTS,
 
-        value: "speech-bubble-16",
+        value: "hard-drive-16",
 
         schemaId: BUILTIN_SCHEMA_IDS_MAP.COLLECTION_INTERFACE_ITEM_ICON
     },

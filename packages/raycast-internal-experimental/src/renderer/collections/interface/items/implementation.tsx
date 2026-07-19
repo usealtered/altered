@@ -27,7 +27,8 @@ function CollectionInterfaceItem({
 
     thought: ALTEREDThought
 }) {
-    const { collectionLayout, isIconVisible } = useInterfaceRendererContext()
+    const { collectionLayout, isIconVisible, tintColor } =
+        useInterfaceRendererContext()
 
     const Collection = collectionLayout.value === "list" ? List : Grid
 
@@ -45,12 +46,12 @@ function CollectionInterfaceItem({
 
         const iconProps = {
             source: icon ?? Icon.Cog,
-            tintColor: Color.SecondaryText,
+            tintColor,
             tooltip: "[EDIT] Placeholder icon tooltip."
         }
 
         return iconProps
-    }, [attributes])
+    }, [attributes, tintColor])
 
     const title = useMemo(
         () => resolveCollectionItemTitle({ attributes }) ?? thought.alias,
