@@ -1,11 +1,9 @@
+import { getBuiltinAttributes } from "@altered/core-experimental/data/builtins/access/attributes"
+import { getBuiltinThought } from "@altered/core-experimental/data/builtins/access/thoughts"
 import type { ALTEREDAttribute } from "@altered/core-experimental/models/attributes/definitions"
 import type { ALTEREDThought } from "@altered/core-experimental/models/thoughts/definitions"
-import {
-    getResolvedAttributes,
-    getResolvedThought
-} from "../placeholder/access"
 import { isChildOfCollectionInterface } from "../resolvers/is-child-of-collection-interface"
-import { isInterfaceThoughtId } from "../resolvers/is-interface-thought"
+import { isInterfaceThoughtId } from "../resolvers/is-interface-thought-id"
 import type { NavigationPath } from "./definitions"
 import { encodeNavigationPath } from "./encode-path"
 import { parseNavigationPath } from "./parse-path"
@@ -25,11 +23,11 @@ function resolveCurrentNavigationInterface({
     const pathComponents = parseNavigationPath(navigationPath)
 
     /**
-     * @todo P3: We could probably deduplicate and consolidate some of these checks.
+     * @todo P3: We could probably deduplicate and consolidate some of these checks. Either do each check inline (tedious, unclear), create clear separation boundaries for each entity type, and/or allow passing flags to skip completed checks. This may be over-engineered, but we could return a `meta` property that contains UIDs for each type of check performed. Or, for something like `isInterfaceThoughtId`, a `didCheckThought` boolean, or a way to pass in already-fetched attributes to validate. Not the biggest deal to re-fetch and re-check if data is cached, but using a different API path would bypass the potential savings.
      */
     const interfaceQueryResults = pathComponents.map(interfaceId => {
         try {
-            const thought = getResolvedThought({ query: { id: interfaceId } })
+            const thought = getBuiltinThought({ query: { id: interfaceId } })
 
             if (!thought)
                 throw new Error(
@@ -43,7 +41,7 @@ function resolveCurrentNavigationInterface({
                     { cause: { interfaceId } }
                 )
 
-            const attributes = getResolvedAttributes({
+            const attributes = getBuiltinAttributes({
                 query: { ids: thought.attributeIds }
             })
 
