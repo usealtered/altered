@@ -53,7 +53,7 @@
     "ai": {},
     "external": [],
     "scripts": {
-        "dev": "WATCH_PATHS=../../packages/raycast-internal-experimental/dist ray develop",
+        "dev": "WATCH_PATHS=../../packages/raycast-internal-experimental/dist,../../packages/core-experimental/dist ray develop",
 
         "check:types": "tsc --noEmit",
 
