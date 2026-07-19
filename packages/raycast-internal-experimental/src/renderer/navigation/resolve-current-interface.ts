@@ -2,8 +2,8 @@ import { getBuiltinAttributes } from "@altered/core-experimental/data/builtins/a
 import { getBuiltinThought } from "@altered/core-experimental/data/builtins/access/thoughts"
 import type { ALTEREDAttribute } from "@altered/core-experimental/models/attributes/definitions"
 import type { ALTEREDThought } from "@altered/core-experimental/models/thoughts/definitions"
-import { isChildOfCollectionInterface } from "../resolvers/is-child-of-collection-interface"
 import { isInterfaceThoughtId } from "../resolvers/is-interface-thought-id"
+import { isParentChildCollectionInterfaceRelation } from "../resolvers/is-parent-child-collection-interface-relation"
 import type { NavigationPath } from "./definitions"
 import { encodeNavigationPath } from "./encode-path"
 import { parseNavigationPath } from "./parse-path"
@@ -76,13 +76,13 @@ function resolveCurrentNavigationInterface({
 
         if (
             previousInterface &&
-            !isChildOfCollectionInterface({
-                collectionAttributes: previousInterface.attributes,
-                childInterfaceId: interfaceQueryResult.value.thought.id
+            !isParentChildCollectionInterfaceRelation({
+                parent: { attributes: previousInterface.attributes },
+                child: { id: interfaceQueryResult.value.thought.id }
             })
         ) {
             console.error(
-                "Navigation Path Resolution Failed: Thought is not a child interface of the previous collection interface.",
+                "Navigation Path Resolution Failed: Interface is not a child of the previous collection interface.",
                 {
                     cause: {
                         previousInterfaceId: previousInterface.thought.id,
