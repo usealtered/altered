@@ -1,10 +1,10 @@
 import { showToast, Toast } from "@raycast/api"
 import { useEffect, useMemo } from "react"
+import { resolveInterfaceTypeId } from "../data/resolvers/interface-type-id"
 import { INTERFACE_COMPONENT_MAP } from "./definitions"
 import type { NavigationPath } from "./navigation/definitions"
 import { resolveCurrentNavigationInterface } from "./navigation/resolve-current-interface"
 import { useInterfaceRendererNavigation } from "./navigation/use"
-import { resolveInterfaceType } from "./resolvers/interface-type"
 
 /**
  * @todo P2: Implement support for `navigationStyle: "full" | "direct"` (or similar) for optional deeplink history expansion. See [Cursor chat](file:///Users/inducingchaos/.cursor/projects/Users-inducingchaos-Workspace-containers-altered/agent-transcripts/d13781eb-7f15-47fd-9962-23c433f8e0cf/d13781eb-7f15-47fd-9962-23c433f8e0cf.jsonl).
@@ -30,8 +30,8 @@ function InterfaceRenderer({
     const {
         resolutionType: pathResolutionType,
         navigationPath: resolvedNavigationPath,
-        thought,
-        attributes
+        thought: interfaceThought,
+        attributes: interfaceThoughtAttributes
     } = useMemo(
         () =>
             resolveCurrentNavigationInterface({
@@ -41,8 +41,8 @@ function InterfaceRenderer({
     )
 
     const interfaceTypeId = useMemo(
-        () => resolveInterfaceType({ attributes }),
-        [attributes]
+        () => resolveInterfaceTypeId({ interfaceThoughtAttributes }),
+        [interfaceThoughtAttributes]
     )
 
     useEffect(() => {
@@ -91,9 +91,9 @@ function InterfaceRenderer({
 
     return InterfaceComponent ? (
         <InterfaceComponent
-            attributes={attributes}
+            attributes={interfaceThoughtAttributes}
             navigationHistory={navigationHistory}
-            thought={thought}
+            thought={interfaceThought}
         />
     ) : null
 }
