@@ -1,10 +1,10 @@
 # PLAN STATE (Generated)
 
-Last updated: 2026-07-17
+Last updated: 2026-07-19
 
 ## Focus
 
-Current focus is the distillation + memory-query POC (3–7 day timebox): auto-distill Koa chat messages into indexed thoughts, then keyword-based querying — targeting a usable infinite-memory loop for the V1 marketing push. Phase 1 schema pushed to Neon. Phase 2 context tools complete (`splitSourceIntoChunks`, `expandSourceContext`, `searchSourceText`). Next: distillation subagent + per-chunk loop in `scripts/tmp-distill-poc.ts`.
+Current focus is the distillation + memory-query POC (3–7 day timebox): auto-distill Koa chat messages into indexed thoughts, then keyword-based querying — targeting a usable infinite-memory loop for the V1 marketing push. Phase 3 started: distillation subagent wired (tools + instructions) and `scripts/tmp-distill-poc.ts` runs the sequential per-chunk loop against real chat messages (log-only; no thought persistence yet).
 
 ## Plan linkage
 
@@ -129,7 +129,7 @@ Current focus is the distillation + memory-query POC (3–7 day timebox): auto-d
 
 ## Next execution order
 
-1. Distillation POC per `thought-distillation-poc.md`: Phase 2 context tools done → distillation subagent + per-chunk loop in `scripts/tmp-distill-poc.ts` → keyword job → save-path integration (message-persistence stripping refactor + on-save trigger) → reindex script → Apple Notes upload utility.
+1. Distillation POC per `thought-distillation-poc.md`: Phase 3 loop scratchpad live → manual review one/few chunks → persist derived thoughts + attributes + agent_runs → keyword job → save-path integration → reindex script → Apple Notes upload utility.
 
 2. Memory query POC per `memory-query-poc.md`: retrieval SQL + exclusion window (simple 512-token v1) → keyword inference (shared codepath) → relevance pass → replace `query-memory` placeholder → E2E.
 

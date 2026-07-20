@@ -28,7 +28,8 @@
 
         "run:preview-generation-components": "tsx packages/server-experimental/scripts/preview-generation-components.ts",
 
-        "run:run-agent": "tsx packages/server-experimental/scripts/run-agent.ts"
+        "run:run-agent": "tsx packages/server-experimental/scripts/run-agent.ts",
+        "run:tmp-distill-poc": "tsx packages/server-experimental/scripts/tmp-distill-poc.ts"
     },
 
     "devDependencies": {
