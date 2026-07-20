@@ -6,8 +6,10 @@ import type { InterfaceTypeID } from "../../renderer/definitions"
 function resolveInterfaceTypeId({
     interfaceThoughtAttributes
 }: {
-    interfaceThoughtAttributes: ALTEREDAttribute[]
+    interfaceThoughtAttributes: ALTEREDAttribute[] | null
 }): InterfaceTypeID | null {
+    if (!interfaceThoughtAttributes) return null
+
     const interfaceTypeIdAttribute = findAttributeBySchemaId(
         interfaceThoughtAttributes,
         { schemaId: BUILTIN_SCHEMAS_MAP.INTERFACE_TYPE.id }

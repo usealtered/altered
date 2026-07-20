@@ -18,7 +18,7 @@ function GoToPreviousInterfaceOperation({
         if (!isIconVisible.value) return null
 
         return {
-            source: Icon.ArrowLeftCircleFilled,
+            source: Icon.ArrowLeftCircle,
             tintColor
         }
     }, [isIconVisible, tintColor])

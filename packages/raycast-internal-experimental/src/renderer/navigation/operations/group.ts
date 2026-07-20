@@ -1,4 +1,5 @@
 import type { OperationGroupDefinition } from "../../operations/definitions"
+import { CLOSE_INTERFACE_OPERATION_DEFINITION } from "./close-interface"
 import { GO_TO_INTERFACE_OPERATION_DEFINITION } from "./go-to-interface"
 import { GO_TO_PREVIOUS_INTERFACE_OPERATION_DEFINITION } from "./go-to-previous-interface"
 
@@ -8,6 +9,7 @@ const NAVIGATION_OPERATIONS_GROUP_DEFINITION = {
     title: "Navigation",
     items: [
         GO_TO_INTERFACE_OPERATION_DEFINITION,
+        CLOSE_INTERFACE_OPERATION_DEFINITION,
         GO_TO_PREVIOUS_INTERFACE_OPERATION_DEFINITION
     ]
 } satisfies OperationGroupDefinition

@@ -7,6 +7,11 @@ import type {
 } from "../../operations/definitions"
 import { useInterfaceRendererNavigation } from "../use"
 
+/**
+ * @todo P2: We should only show this in interfaces where there is a valid child interface. We might have to break out parts from `resolveCurrentNavigationInterface` to validate the provided thought.
+ *
+ * @todo P1: Related to above, but we should error on trying to push to the same interface instead of appending it to the stack.
+ */
 function GoToInterfaceOperation({
     navigationHistory,
 
