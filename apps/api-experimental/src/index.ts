@@ -10,6 +10,13 @@ if (!(app instanceof Hono)) throw new Error("'ALTEREDAPI' must extend 'Hono'.")
 //  TODO P0: Implement with Effect.
 
 const isVercel = process.env.VERCEL === "1"
-if (!isVercel) void app.serve()
+
+if (!isVercel) {
+    const { serveStatic } = await import("@hono/node-server/serve-static")
+
+    app.use("*", serveStatic({ root: "./public" }))
+
+    app.serve()
+}
 
 export default app

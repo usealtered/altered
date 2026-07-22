@@ -3,9 +3,12 @@ packages:
   - packages/*
 
 allowBuilds:
+  '@parcel/watcher': true
   esbuild: true
+  sharp: true
 
 catalog:
+  '@parcel/watcher': ^2.5.1
   '@upstash/redis': ^1.35.6
   '@chat-adapter/state-redis': ^4.27.0
   '@hono/node-server': ^2.0.1
@@ -25,6 +28,8 @@ catalog:
   nanoid: ^5.1.11
   pg: ^8.16.3
   redis: ^5.12.1
+  sharp: ^0.34.5
+  to-ico: ^1.1.5
   tsx: ^4.21.0
   typescript: ^6.0.3
 

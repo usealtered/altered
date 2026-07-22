@@ -13,6 +13,12 @@
             "types": "./src/*.ts",
             "bundler": "./src/*.ts",
             "import": "./dist/*.js"
+        },
+
+        "./sync-assets.config": {
+            "types": "./sync-assets.config.ts",
+            "bundler": "./sync-assets.config.ts",
+            "import": "./sync-assets.config.ts"
         }
     },
     "scripts": {

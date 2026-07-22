@@ -4,13 +4,13 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "tsx watch --env-file=../../.env --include ../../.env src/index.ts",
+        "dev": "altered-sync-assets --watch & tsx watch --env-file=../../.env --include ../../.env src/index.ts",
 
         "check:types": "tsc",
 
         "clean": "altered-clean-package",
 
-        "build": "altered-validate-environment && altered-bundle-application",
+        "build": "altered-sync-assets && altered-validate-environment && altered-bundle-application",
 
         "start": "node dist/index.js"
     },

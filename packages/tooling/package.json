@@ -8,7 +8,9 @@
 
         "altered-bundle-application": "./bin/bundle-application.ts",
 
-        "altered-preview-promote": "./bin/preview-promote.ts"
+        "altered-preview-promote": "./bin/preview-promote.ts",
+
+        "altered-sync-assets": "./bin/sync-assets.ts"
     },
     "exports": {
         "./*": {
@@ -16,6 +18,9 @@
             "import": "./src/*.ts"
         },
 
+        "./sync-assets/types": "./src/sync-assets/types.ts",
+        "./tooling.d.ts": "./tooling.d.ts",
+        "./types/asset-imports": "./src/types/asset-imports.d.ts",
         "./typescript/config/*.json": "./src/typescript/config/*.json"
     },
     "scripts": {
@@ -24,8 +29,11 @@
         "clean": "altered-clean-package"
     },
     "dependencies": {
+        "@parcel/watcher": "catalog:",
         "@vercel/sdk": "^1.21.7",
-        "esbuild": "catalog:"
+        "esbuild": "catalog:",
+        "sharp": "catalog:",
+        "to-ico": "catalog:"
     },
     "devDependencies": {
         "@types/node": "catalog:",
