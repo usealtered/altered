@@ -1,31 +1,51 @@
 import { isDevelopment } from "@altered/core-experimental/config/environment/is-development"
 import type { WebhookOptions } from "chat"
-import { getKvBoolean, toggleKvBoolean } from "../../../../storage/kv/basic"
+import type { SendblueMessagePayload } from "chat-adapter-sendblue"
 import { initializeAlteredChat } from "../../../instance"
 import { respondFromRaw } from "../behaviors/respond-from-raw"
+import {
+    createWebhookForwardingConfirmationMessage,
+    resolveAdminWebhookForwardingDecision
+} from "./admin-immediate-tasks"
 import { afterResponse } from "./after-response"
 import {
     checkPermissionToForwardWebhook,
-    containsForwardWebhookTriggerPhrase,
     forwardSendblueWebhook,
     isForwardedWebhook
 } from "./forwarding"
-import { getForwardWebhookToDevelopmentPreferenceKey } from "./forwarding/preference"
+import {
+    getWebhookForwardingTargetPreference,
+    setWebhookForwardingTargetPreference
+} from "./forwarding/preference"
+import { handleDesignatedWebhook } from "./handle/designated"
 import { parseSendblueWebhook } from "./parse"
 
-/**
- * @todo P3: Clean up the distinction between slash commands that immediately send a message and return regardless of additional message content, and those who detect a command but also handle the remaining message content.
- */
-async function processSendblueWebhook(
-    request: Request,
+type ProcessSendblueWebhookOptions = {
+    request: Request
     options?: Pick<WebhookOptions, "waitUntil">
-): Promise<Response> {
+}
+
+type SendblueWebhookContext = {
+    request: {
+        raw: Request
+        text: string
+        payload: SendblueMessagePayload
+        message: string
+    }
+
+    waitUntil: WebhookOptions["waitUntil"]
+}
+
+/**
+ * @todo P2: Extract this admin command flow into reusable command tools.
+ */
+async function processSendblueWebhook({
+    request,
+    options
+}: ProcessSendblueWebhookOptions): Promise<Response> {
     const chat = await initializeAlteredChat()
 
     const handleWebhook = chat.webhooks.sendblue
-
-    if (isDevelopment() || isForwardedWebhook(request))
-        return handleWebhook(request, options)
 
     const parsedRequest = await parseSendblueWebhook(request)
     if (!parsedRequest)
@@ -36,89 +56,65 @@ async function processSendblueWebhook(
 
     const messagePayload = parsedRequest.data
 
-    const hasPermissionToForwardWebhook = checkPermissionToForwardWebhook({
-        messagePayload
-    })
-
-    if (containsForwardWebhookTriggerPhrase({ messagePayload })) {
-        afterResponse(async () => {
-            if (!hasPermissionToForwardWebhook) {
-                await respondFromRaw({
-                    messagePayload,
-                    createResponse: _context =>
-                        "You do not have permission to use this feature."
-                })
-
-                return
-            }
-
-            const {
-                success: checkWasForwardingEnabledSuccess,
-                value: wasForwardingEnabled
-            } = await getKvBoolean({
-                key: getForwardWebhookToDevelopmentPreferenceKey({
-                    phoneNumber: messagePayload.from_number
-                })
-            })
-
-            if (!checkWasForwardingEnabledSuccess) {
-                console.error(
-                    "Failed to check if forwarding is enabled. No preference changes will be made."
-                )
-
-                await respondFromRaw({
-                    messagePayload,
-                    createResponse: _context =>
-                        "Unable to update forwarding preferences. Please try again later."
-                })
-
-                return
-            }
-
-            const { success, value: isForwardingEnabled } =
-                await toggleKvBoolean({
-                    previous: wasForwardingEnabled ?? false,
-
-                    key: getForwardWebhookToDevelopmentPreferenceKey({
-                        phoneNumber: messagePayload.from_number
-                    })
-                })
-
-            if (!success) {
-                await respondFromRaw({
-                    messagePayload,
-                    createResponse: _context =>
-                        "Unable to update forwarding preferences. Please try again later."
-                })
-
-                return
-            }
-
-            await respondFromRaw({
-                messagePayload,
-                createResponse: _context =>
-                    isForwardingEnabled
-                        ? "Webhook forwarding is now enabled. Messages will be directed to the development server."
-                        : "Webhook forwarding is now disabled. Messages will be handled in production."
-            })
-        }, options?.waitUntil)
-
-        return new Response("OK", { status: 200 })
+    const context: SendblueWebhookContext = {
+        request: {
+            raw: request,
+            text: parsedRequest.body.text,
+            payload: messagePayload,
+            message: messagePayload.content
+        },
+        waitUntil: options?.waitUntil
     }
 
-    if (hasPermissionToForwardWebhook) {
-        const {
-            success: checkIsForwardingEnabledSuccess,
-            value: isForwardingEnabled
-        } = await getKvBoolean({
-            key: getForwardWebhookToDevelopmentPreferenceKey({
-                phoneNumber: messagePayload.from_number
-            })
+    // afterResponse should wrap everything, except that of which may redirect the response (exclude forwarding) - meaning the only remaining factor is 200 vs 4XX (webhook handler) - so we must resolve whether Chat SDK is handling it (and return that, or alternatively, call it ourselves)
+
+    if (isDevelopment() || isForwardedWebhook(request))
+        return await handleDesignatedWebhook(context)
+
+    if (checkPermissionToForwardWebhook({ messagePayload })) {
+        const forwardingDecision = await resolveAdminWebhookForwardingDecision({
+            message: messagePayload.content
         })
 
-        if (!checkIsForwardingEnabledSuccess) {
+        if (forwardingDecision) {
+            afterResponse(async () => {
+                const { success } = await setWebhookForwardingTargetPreference({
+                    phoneNumber: messagePayload.from_number,
+                    target: forwardingDecision.target
+                })
+
+                if (!success) {
+                    await respondFromRaw({
+                        messagePayload,
+                        createResponse: _context =>
+                            "Unable to update webhook forwarding mode right now. Please try again later."
+                    })
+
+                    return
+                }
+
+                const confirmation =
+                    await createWebhookForwardingConfirmationMessage({
+                        target: forwardingDecision.target
+                    })
+
+                await respondFromRaw({
+                    messagePayload,
+                    createResponse: _context => confirmation
+                })
+            }, options?.waitUntil)
+
+            return new Response("OK", { status: 200 })
+        }
+
+        const { success, value: forwardingTarget } =
+            await getWebhookForwardingTargetPreference({
+                phoneNumber: messagePayload.from_number
+            })
+
+        if (!success) {
             console.error(
-                "Failed to check if forwarding is enabled. Falling back to production mode."
+                "Failed to check webhook forwarding target. Falling back to production mode."
             )
 
             return handleWebhook(
@@ -132,19 +128,19 @@ async function processSendblueWebhook(
             )
         }
 
-        if (isForwardingEnabled ?? false) {
+        if (forwardingTarget !== "none") {
             afterResponse(async () => {
-                const { success } = await forwardSendblueWebhook({
-                    request,
-                    messagePayload
-                })
-
-                if (!success)
-                    await respondFromRaw({
+                const { success: forwardSuccess } =
+                    await forwardSendblueWebhook({
+                        request,
                         messagePayload,
-                        createResponse: _context =>
-                            "Unable to reach the development server. Please try again later."
+                        target: forwardingTarget
                     })
+
+                if (!forwardSuccess)
+                    console.error(
+                        `Failed to forward Sendblue webhook to target "${forwardingTarget}".`
+                    )
             }, options?.waitUntil)
 
             return new Response("OK", { status: 200 })
@@ -162,4 +158,8 @@ async function processSendblueWebhook(
     )
 }
 
-export { processSendblueWebhook }
+export {
+    type ProcessSendblueWebhookOptions,
+    processSendblueWebhook,
+    type SendblueWebhookContext
+}

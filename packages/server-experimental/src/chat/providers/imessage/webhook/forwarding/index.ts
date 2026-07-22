@@ -1,14 +1,20 @@
 import { getEnvironmentConfig } from "@altered/core-experimental/config/environment/definitions"
-import { FORWARD_WEBHOOK_TRIGGER_PHRASES } from "@altered/server-experimental/chat/messages/commands/definitions"
 import type { SendblueMessagePayload } from "chat-adapter-sendblue"
-import { containsCommandTriggerPhrases } from "../../../../messages/commands/contains-trigger-phrases"
+import type { WebhookForwardingTarget } from "./preference"
 
 const SENDBLUE_SIGNING_HEADER_NAME = "sb-signing-secret"
 
 const FORWARDED_REQUEST_HEADER_NAME = "x-altered-forwarded-request"
 const FORWARDED_REQUEST_HEADER_VALUE = "1"
+const FORWARDED_REQUEST_TARGET_HEADER_NAME = "x-altered-forwarded-target"
 
-function createSendblueWebhookForwardingHeaders(headers: Headers): Headers {
+function createSendblueWebhookForwardingHeaders({
+    headers,
+    target
+}: {
+    headers: Headers
+    target: WebhookForwardingTarget
+}): Headers {
     const forwardingHeaders = new Headers()
 
     forwardingHeaders.set("content-type", "application/json")
@@ -21,6 +27,7 @@ function createSendblueWebhookForwardingHeaders(headers: Headers): Headers {
         FORWARDED_REQUEST_HEADER_NAME,
         FORWARDED_REQUEST_HEADER_VALUE
     )
+    forwardingHeaders.set(FORWARDED_REQUEST_TARGET_HEADER_NAME, target)
 
     return forwardingHeaders
 }
@@ -29,15 +36,13 @@ const isForwardedWebhook = (request: Request): boolean =>
     request.headers.get(FORWARDED_REQUEST_HEADER_NAME) ===
     FORWARDED_REQUEST_HEADER_VALUE
 
-const containsForwardWebhookTriggerPhrase = ({
-    messagePayload
-}: {
-    messagePayload: SendblueMessagePayload
-}): boolean =>
-    containsCommandTriggerPhrases({
-        message: messagePayload.content,
-        phrases: [...FORWARD_WEBHOOK_TRIGGER_PHRASES]
-    })
+const getForwardedWebhookTarget = (
+    request: Request
+): WebhookForwardingTarget | null => {
+    const target = request.headers.get(FORWARDED_REQUEST_TARGET_HEADER_NAME)
+
+    return target === "preview-development" ? target : null
+}
 
 const checkPermissionToForwardWebhook = ({
     messagePayload
@@ -48,18 +53,23 @@ const checkPermissionToForwardWebhook = ({
     getEnvironmentConfig().shared.admin.phoneNumber
 
 /**
- * @todo P3: Use a dynamic routing helper later.
+ * @todo P3: Use environment config once optional entries exist there.
  */
 function getSendblueWebhookUrl({
-    environment: _environment
+    target
 }: {
-    environment: "development"
-}): string {
-    const developmentOrigin = getEnvironmentConfig().shared.providers.ngrok.url
+    target: WebhookForwardingTarget
+}): string | null {
+    const targetOrigin =
+        target === "preview-development"
+            ? (process.env.SHARED_PROVIDER_PREVIEW_API_URL?.trim() ?? null)
+            : null
 
     const SENDBLUE_WEBHOOK_PATH = "/webhooks/sendblue"
 
-    return new URL(SENDBLUE_WEBHOOK_PATH, developmentOrigin).toString()
+    return targetOrigin
+        ? new URL(SENDBLUE_WEBHOOK_PATH, targetOrigin).toString()
+        : null
 }
 
 /**
@@ -67,16 +77,20 @@ function getSendblueWebhookUrl({
  */
 async function forwardSendblueWebhook({
     request,
-    messagePayload
+    messagePayload,
+    target
 }: {
     request: Request
     messagePayload: SendblueMessagePayload
+    target: WebhookForwardingTarget
 }): Promise<{ success: boolean }> {
-    const webhookUrl = getSendblueWebhookUrl({ environment: "development" })
+    const webhookUrl = getSendblueWebhookUrl({ target })
+    if (!webhookUrl) return { success: false }
 
-    const forwardingHeaders = createSendblueWebhookForwardingHeaders(
-        request.headers
-    )
+    const forwardingHeaders = createSendblueWebhookForwardingHeaders({
+        headers: request.headers,
+        target
+    })
 
     try {
         const response = await fetch(webhookUrl, {
@@ -93,9 +107,10 @@ async function forwardSendblueWebhook({
 
 export {
     checkPermissionToForwardWebhook,
-    containsForwardWebhookTriggerPhrase,
     FORWARDED_REQUEST_HEADER_NAME,
     FORWARDED_REQUEST_HEADER_VALUE,
+    FORWARDED_REQUEST_TARGET_HEADER_NAME,
     forwardSendblueWebhook,
+    getForwardedWebhookTarget,
     isForwardedWebhook
 }

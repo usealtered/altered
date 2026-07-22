@@ -50,6 +50,31 @@ async function getKv({
     }
 }
 
+async function deleteKv({
+    key
+}: {
+    key: string
+}): Promise<{ success: boolean }> {
+    const client = getUpstashRedisClient()
+    if (!client) {
+        console.error(
+            "Failed to delete KV: Upstash Redis client not found. This should never happen."
+        )
+
+        return { success: false }
+    }
+
+    try {
+        await client.del(key)
+
+        return { success: true }
+    } catch {
+        console.error(`Failed to delete KV: ${key}`)
+
+        return { success: false }
+    }
+}
+
 function setKvBoolean({
     key,
     value
@@ -134,4 +159,4 @@ async function toggleKvBoolean({
     return { success: true, value: nextValue }
 }
 
-export { getKv, getKvBoolean, setKv, setKvBoolean, toggleKvBoolean }
+export { deleteKv, getKv, getKvBoolean, setKv, setKvBoolean, toggleKvBoolean }
