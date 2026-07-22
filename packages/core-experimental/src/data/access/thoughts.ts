@@ -14,7 +14,7 @@ import {
 async function getThought({
     query
 }: {
-    query: { id?: ALTEREDThoughtID }
+    query: { id: ALTEREDThoughtID | null }
 }): Promise<ALTEREDThought | null> {
     const builtinThought = getBuiltinThought({ query })
     if (builtinThought) return builtinThought
@@ -29,7 +29,7 @@ async function getThought({
 async function getThoughts({
     query
 }: {
-    query: { ids?: ALTEREDThoughtID[] }
+    query: { ids: ALTEREDThoughtID[] | null }
 }): Promise<ALTEREDThought[] | null> {
     const builtinThoughts = getBuiltinThoughts({ query })
     if (builtinThoughts) return builtinThoughts

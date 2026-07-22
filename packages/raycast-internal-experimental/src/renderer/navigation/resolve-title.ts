@@ -6,8 +6,12 @@ import { parseNavigationPath } from "./parse-path"
 const DEFAULT_NAVIGATION_TITLE = "ALTERED"
 const NAVIGATION_TITLE_SEPARATOR = " > "
 
-function resolveNavigationTitle({ history }: { history: NavigationPath[] }) {
-    const currentNavigationPath = history.at(-1)
+function resolveNavigationTitle({
+    navigationHistory
+}: {
+    navigationHistory: NavigationPath[]
+}): string {
+    const currentNavigationPath = navigationHistory.at(-1)
     if (!currentNavigationPath) return DEFAULT_NAVIGATION_TITLE
 
     const pathComponents = parseNavigationPath(currentNavigationPath)

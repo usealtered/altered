@@ -14,8 +14,8 @@ type CreateBuiltinDataGetterOptions<DataDefinition extends DataDefinitionBase> =
     }
 
 type CreateBuiltinDataGetterResult<DataID extends string, Data> = {
-    getMany: (options: { query: { ids?: DataID[] } }) => Data[] | null
-    getOne: (options: { query: { id?: DataID } }) => Data | null
+    getMany: (options: { query: { ids: DataID[] | null } }) => Data[] | null
+    getOne: (options: { query: { id: DataID | null } }) => Data | null
 }
 
 function createBuiltinDataGetter<DataDefinition extends DataDefinitionBase>({

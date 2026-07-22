@@ -2,7 +2,7 @@ import type { ALTEREDAttribute } from "@altered/core-experimental/models/attribu
 import type { ALTEREDThought } from "@altered/core-experimental/models/thoughts/definitions"
 import type { ComponentType } from "react"
 import { CollectionInterface } from "./collections/interface/implementation"
-import { MarkdownInterface } from "./markdown/interface"
+import { MarkdownInterface } from "./markdown/interface/implementation"
 import type { NavigationPath } from "./navigation/definitions"
 
 type InterfaceTypeID = "collection" | "markdown"

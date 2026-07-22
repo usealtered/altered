@@ -10,7 +10,7 @@ import {
 async function getAttribute({
     query
 }: {
-    query: { id?: ALTEREDAttributeID }
+    query: { id: ALTEREDAttributeID | null }
 }): Promise<ALTEREDAttribute | null> {
     const builtinAttribute = getBuiltinAttribute({ query })
     if (builtinAttribute) return builtinAttribute
@@ -25,7 +25,7 @@ async function getAttribute({
 async function getAttributes({
     query
 }: {
-    query: { ids?: ALTEREDAttributeID[] }
+    query: { ids: ALTEREDAttributeID[] | null }
 }): Promise<ALTEREDAttribute[] | null> {
     const builtinAttributes = getBuiltinAttributes({ query })
     if (builtinAttributes) return builtinAttributes
